@@ -1,4 +1,4 @@
-mysqldb:
+database:
     type: "mysql:10.0"
     disk: 2048
     configuration:

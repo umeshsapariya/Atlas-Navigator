@@ -15,7 +15,8 @@ type: "php:7.2"
 # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
 # side is in the form `<service name>:<endpoint name>`.
 relationships:
-    atlas: 'mysqldb:atlas'
+    atlas: "database:atlas"
+    second: "database:second"
 #    solr: 'solrsearch:solr'
 #    redis: 'rediscache:redis'
 
@@ -27,7 +28,7 @@ disk: 2048
 # 'shared:files/PATH', where PATH is a relative path under the mount's source directory.
 mounts:
     "/sites/default/files": "shared:files/files"
-    '/web/sites/second/files': 'shared:files/files-second'
+    "/web/sites/second/files": "shared:files/files-second"
     "/tmp": "shared:files/tmp"
     "/private": "shared:files/private"
     "/.drush": "shared:files/.drush"
