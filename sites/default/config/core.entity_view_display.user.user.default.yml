@@ -1,0 +1,49 @@
+uuid: 690e6342-a588-42e4-be59-70637216ab29
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.user.user.field_is_manager
+    - field.field.user.user.field_tutorial_watched
+    - field.field.user.user.user_picture
+    - image.style.thumbnail
+  module:
+    - image
+    - options
+    - user
+_core:
+  default_config_hash: V51QPCKkgNREKtSmB9Iu2wmAMEpktVpnzklWaZV8UYo
+id: user.user.default
+targetEntityType: user
+bundle: user
+mode: default
+content:
+  field_is_manager:
+    weight: 3
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  masquerade:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  member_for:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  user_picture:
+    type: image
+    weight: 0
+    region: content
+    settings:
+      image_style: thumbnail
+      image_link: content
+    third_party_settings: {  }
+    label: hidden
+hidden:
+  field_tutorial_watched: true
+  profile_general_profile: true

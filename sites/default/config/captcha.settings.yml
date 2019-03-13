@@ -1,0 +1,9 @@
+administration_mode: false
+allow_on_admin_pages: false
+default_challenge: image_captcha/Image
+add_captcha_description: false
+description: ''
+default_validation: null
+persistence: null
+enable_stats: false
+log_wrong_responses: false

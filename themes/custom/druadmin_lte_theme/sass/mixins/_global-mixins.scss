@@ -1,0 +1,103 @@
+// Mixins
+
+// No margin & padding
+@mixin no-margin-padding {
+  margin: 0;
+  padding: 0;
+}
+
+// Fonts - icomoon & fontawesome
+@mixin base-fa {
+  display: inline-block;
+  font-family: FontAwesome;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: normal;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: auto;
+}
+
+// End Fonts - icomoon & fontawesome
+
+// Basic transition
+@mixin base-transition {
+  -webkit-transition: all .5s ease-in-out 0s;
+  -moz-transition: all .5s ease-in-out 0s;
+  -ms-transition: all .5s ease-in-out 0s;
+  -o-transition: all .5s ease-in-out 0s;
+  transition: all .5s ease-in-out 0s;
+}
+
+// End Basic transition
+
+// Dynamic transition
+@mixin different-transition($property, $duration, $effect) {
+  -webkit-transition: $property $duration $effect 0s;
+  -moz-transition: $property $duration $effect 0s;
+  -ms-transition: $property $duration $effect 0s;
+  -o-transition: $property $duration $effect 0s;
+  transition: $property $duration $effect 0s;
+}
+
+// End Dynamic transition
+
+// Border radius
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+// End Border radius
+
+// Generic transform
+@mixin transform($transforms) {
+  -webkit-transform: $transforms;
+  -moz-transform: $transforms;
+  -ms-transform: $transforms;
+  -o-transform: $transforms;
+  transform: $transforms;
+}
+
+// Rotate
+@mixin rotate($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+// End Generic transform
+
+// Flex strech & align item
+@mixin flex-strech {
+  -webkit-align-items: stretch;
+  align-items: stretch;
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin flex-verticle-center {
+  -webkit-align-items: center;
+  align-items: center;
+  display: -webkit-flex;
+  display: flex;
+}
+
+// End Flex strech & align item
+
+// Table
+@mixin table-no-odd-even-row {
+  tr {
+    @include base-transition;
+
+    &:nth-of-type(odd) {
+      background-color: transparent;
+    }
+
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+}
+
+// End Table

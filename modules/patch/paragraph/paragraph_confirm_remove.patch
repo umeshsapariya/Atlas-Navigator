@@ -1,0 +1,108 @@
+diff --git a/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php b/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
+index 48d6d2c..4e1dd38 100644
+--- a/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
++++ b/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
+@@ -526,48 +526,6 @@ public function formElement(FieldItemListInterface $items, $delta, array $elemen
+             '#access' => !$paragraphs_entity->access('update') && !$paragraphs_entity->access('delete'),
+           );
+         }
+-        elseif ($item_mode == 'remove') {
+-
+-          $element['top']['paragraph_type_title']['info'] = [
+-            '#markup' => $this->t('Deleted @title: %type', ['@title' => $this->getSetting('title'), '%type' => $bundle_info['label']]),
+-          ];
+-
+-          $links['confirm_remove_button'] = [
+-            '#type' => 'submit',
+-            '#value' => $this->t('Confirm removal'),
+-            '#name' => strtr($id_prefix, '-', '_') . '_confirm_remove',
+-            '#weight' => 503,
+-            '#submit' => [[get_class($this), 'paragraphsItemSubmit']],
+-            '#limit_validation_errors' => [array_merge($parents, [$field_name, 'add_more'])],
+-            '#delta' => $delta,
+-            '#ajax' => [
+-              'callback' => [get_class($this), 'itemAjax'],
+-              'wrapper' => $widget_state['ajax_wrapper_id'],
+-              'effect' => 'fade',
+-            ],
+-            '#prefix' => '<li class="confirm-remove">',
+-            '#suffix' => '</li>',
+-            '#paragraphs_mode' => 'removed',
+-          ];
+-
+-          $links['restore_button'] = [
+-            '#type' => 'submit',
+-            '#value' => $this->t('Restore'),
+-            '#name' => strtr($id_prefix, '-', '_') . '_restore',
+-            '#weight' => 504,
+-            '#submit' => [[get_class($this), 'paragraphsItemSubmit']],
+-            '#limit_validation_errors' => [array_merge($parents, [$field_name, 'add_more'])],
+-            '#delta' => $delta,
+-            '#ajax' => [
+-              'callback' => [get_class($this), 'itemAjax'],
+-              'wrapper' => $widget_state['ajax_wrapper_id'],
+-              'effect' => 'fade',
+-            ],
+-            '#prefix' => '<li class="restore">',
+-            '#suffix' => '</li>',
+-            '#paragraphs_mode' => 'edit',
+-          ];
+-        }
+ 
+         if (count($links)) {
+           $show_links = 0;
+@@ -714,7 +672,7 @@ public function formElement(FieldItemListInterface $items, $delta, array $elemen
+       $element['subform']['#attributes']['class'][] = 'paragraphs-subform';
+       $element['subform']['#access'] = $paragraphs_entity->access('update');
+ 
+-      if ($item_mode == 'removed') {
++      if ($item_mode == 'remove') {
+         $element['#access'] = FALSE;
+       }
+ 
+@@ -1328,7 +1286,7 @@ public function massageFormValues(array $values, array $form, FormStateInterface
+       }
+       // If our mode is remove don't save or reference this entity.
+       // @todo: Maybe we should actually delete it here?
+-      elseif($widget_state['paragraphs'][$item['_original_delta']]['mode'] == 'remove' || $widget_state['paragraphs'][$item['_original_delta']]['mode'] == 'removed') {
++      elseif($widget_state['paragraphs'][$item['_original_delta']]['mode'] == 'remove') {
+         $item['target_id'] = NULL;
+         $item['target_revision_id'] = NULL;
+       }
+diff --git a/modules/contrib/paragraphs/src/Tests/Classic/ParagraphsAccessTest.php b/modules/contrib/paragraphs/src/Tests/Classic/ParagraphsAccessTest.php
+index 78ba75f..1a9db38 100644
+--- a/modules/contrib/paragraphs/src/Tests/Classic/ParagraphsAccessTest.php
++++ b/modules/contrib/paragraphs/src/Tests/Classic/ParagraphsAccessTest.php
+@@ -183,7 +183,6 @@ public function testParagraphAccessCheck() {
+     $this->assertNotNull($this->xpath('//*[@name="field_paragraphs_demo_0_remove"]'));
+     // Delete the Paragraph and save.
+     $this->drupalPostAjaxForm(NULL, [], 'field_paragraphs_demo_0_remove');
+-    $this->drupalPostAjaxForm(NULL, [], 'field_paragraphs_demo_0_confirm_remove');
+     $this->drupalPostForm(NULL, [], t('Save'));
+     $node = $this->getNodeByTitle('delete_permissions');
+     $this->assertUrl('node/' . $node->id());
+
+diff --git a/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php b/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
+index 4e1dd38..ef8d25a 100644
+--- a/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
++++ b/modules/contrib/paragraphs/src/Plugin/Field/FieldWidget/InlineParagraphsWidget.php
+@@ -761,7 +761,10 @@ public function formMultipleElements(FieldItemListInterface $items, array &$form
+         $field_state['items_count'] = $max;
+       }
+     }
+-
++    if ($cardinality != FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED) {
++      $max = $cardinality;
++      $field_state['items_count'] = $max;
++    }
+     $this->realItemCount = $max;
+     $is_multiple = $this->fieldDefinition->getFieldStorageDefinition()->isMultiple();
+ 
+@@ -881,7 +884,7 @@ public function formMultipleElements(FieldItemListInterface $items, array &$form
+     $host = $items->getEntity();
+     $this->initIsTranslating($form_state, $host);
+ 
+-    if (($this->realItemCount < $cardinality || $cardinality == FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED) && !$form_state->isProgrammed() && !$this->isTranslating) {
++    if ((/*$this->realItemCount < $cardinality || */$cardinality == FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED) && !$form_state->isProgrammed() && !$this->isTranslating) {
+       $elements['add_more'] = $this->buildAddActions();
+     }

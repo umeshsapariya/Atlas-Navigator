@@ -1,0 +1,21 @@
+uuid: 0bd4ecd9-b1fa-4359-9a36-daf391a9ec60
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_activity_role
+field_name: field_activity_role
+entity_type: paragraph
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

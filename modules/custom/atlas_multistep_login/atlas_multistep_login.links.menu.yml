@@ -1,0 +1,5 @@
+atlas_multistep_login.video_popup:
+  title: 'Atlas configuration'
+  description: 'Atlas configuration'
+  parent: system.admin_config_development
+  route_name: 'atlas_multi_step.admin_settings'

@@ -1,0 +1,216 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+.page-title {
+  font-size: 26px;
+}
+.path-frontpage {
+  .nav-tabs-custom > .tab-content {
+    display: none;
+  }
+}
+.path-frontpage,
+.path-user {
+  position: relative;
+
+  .wrapper {
+    background-color: transparent;
+
+    .content-wrapper {
+      background: transparent;
+      margin: 0 auto;
+      max-width: 1280px;
+      text-align: center;
+      width: 100%;
+
+      .content {
+        padding: 0;
+        .nav-tabs-custom {
+          background: transparent;
+          box-shadow: none;
+        }
+
+        .main_wrapper {
+          display: inline-block;
+          left: 50%;
+          margin: 30px 0;
+          max-width: 350px;
+          position: absolute;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 350px;
+
+          @media (max-width: 420px) {
+            position: static;
+            transform: none;
+          }
+          .reset_pass_wrapper {
+            border: 1px solid #a7a7a7;
+            border-radius: 30px;
+            padding: 0 40px;
+            text-align: left;
+
+            @media (max-width: 767px) {
+              background: transparent;
+            }
+            @media (max-width: 420px) {
+              padding: 0 20px;
+            }
+            .nav-tabs-custom {
+              &.tabs.primary {
+                border-bottom: 0;
+              }
+              > li {
+                > a {
+                  @media (max-width: 420px) {
+                    padding: 10px 6px;
+                  }
+                }
+                &active {
+                  border-top-color: #46beff;
+                }
+              }
+              @media (max-width: 767px) {
+                background: transparent;
+              }
+              > .tab-content {
+                @media (max-width: 767px) {
+                  background: transparent;
+                }
+              }
+            }
+            h1 {
+              display: none;
+            }
+          }
+          label {
+            color: $label_color;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: normal;
+            margin-bottom: 5px;
+            padding: 0;
+
+            @media (max-width: 420px) {
+              font-size: 13px;
+            }
+          }
+          #edit-pass--description {
+            a {
+              color: $label_color;
+            }
+          }
+          input {
+            &.input_text {
+              border: 0;
+              border-bottom: 2px solid #46beff;
+              font-size: 16px;
+              height: 26px;
+              line-height: 16px;
+              padding: 0;
+            }
+            &.form-checkbox {
+              height: auto;
+            }
+          }
+          .btn {
+            box-shadow: none;
+            cursor: unset;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+
+            #edit-actions {
+              display: inline-block;
+              margin-top: 20px;
+              text-align: center;
+
+              input {
+                background: #46beff;
+                border: 0;
+                border-radius: 15px;
+                cursor: pointer;
+                height: 30px;
+                padding: 5px 40px;
+              }
+            }
+          }
+          #user-pass {
+            #edit-actions {
+              text-align: center;
+              .btn {
+                background: #46beff;
+                border: 0;
+                border-radius: 15px;
+                cursor: pointer;
+                height: 30px;
+                padding: 5px 40px;
+                width: auto;
+              }
+            }
+          }
+
+          .logo_wrapper {
+            display: inline-block;
+            padding-bottom: 33px;
+            width: 85%;
+            img {
+              height: auto;
+              width: 100%;
+            }
+          }
+          .login_wrapper {
+            .login_content {
+              border: 1px solid #a7a7a7;
+              border-radius: 30px;
+              padding: 10px 40px;
+              text-align: left;
+
+              #edit-captcha-response--description,
+              #edit-name--description {
+                font-size: 11px;
+                line-height: 21px;
+              }
+              .form-item-persistent-login {
+                #edit-persistent-login--description {
+                  float: right;
+                  line-height: 25px;
+                  margin-left: 3px;
+                  text-align: left;
+
+                  a {
+                    font-size: 13px;
+                  }
+                }
+              }
+              @media (max-width: 420px) {
+                padding: 10px 20px;
+              }
+            }
+          }
+          @media (max-width: 420px) {
+            box-sizing: border-box;
+            display: inline-block;
+            max-width: 100%;
+            padding: 0 30px;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  .dialog-off-canvas-main-canvas {
+    .main-header {
+      .navbar {
+        display: none;
+
+        .nav-tabs-custom {
+          > .tab-content {
+            background: transparent;
+          }
+        }
+      }
+    }
+  }
+}

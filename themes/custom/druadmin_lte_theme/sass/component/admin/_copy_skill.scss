@@ -1,0 +1,113 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+
+.admin_custom_theme {
+  #skill-name {
+    display: inline-block;
+  }
+  .copy-skill-div {
+    display: inline-block;
+    height: 34px;
+    margin-left: 20px;
+    position: absolute;
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+      margin: 0;
+      position: relative;
+    }
+    @media only screen and (max-width: 767px) {
+      display: block;
+      margin-left: 80px;
+      position: relative;
+    }
+    a {
+      background-color: #e2e2e2;
+      border-radius: 20px;
+      color: #5e5e5e;
+      font-family: $segoeui-regular;
+      height: 34px;
+      line-height: 20px;
+      padding: 0 15px;
+      &:before {
+        color: #008ec3;
+        content: "\e907";
+        cursor: pointer;
+        display: inline-block;
+        font-family: $icomoon-font;
+        font-size: 23px;
+        height: 26px;
+        margin-right: 10px;
+        position: relative;
+        top: 7px;
+        width: 26px;
+      }
+    }
+  }
+  .copy-skill-dialog {
+    .ui-dialog-titlebar,
+    .ui-dialog-buttonpane {
+      background: #fff;
+      border: none;
+    }
+    .modal-form-copy-skill-modal-form {
+      label {
+        width: 50%;
+        @media screen and (max-width: 767px) {
+          width: 40%;
+        }
+      }
+      .form-type-select {
+        position: relative;
+        &:after {
+          color: #1f363f  ;
+          content: "\e911";
+          cursor: pointer;
+          display: inline-block;
+          font-family: "icomoon";
+          pointer-events: none;
+          position: relative;
+          right: 30px;
+          top: 3px;
+          @media screen and (max-width: 767px) {
+            position: absolute;
+            right: 20px;
+            top: 7px;
+          }
+        }
+        select {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          display: inline-block;
+          padding: 0 24px;
+          position: relative;
+          width: 40%;
+          &.form-control {
+            @media screen and (max-width: 767px) {
+              width: 60%;
+            }
+          }
+        }
+        select::-ms-expand {
+          display: none;
+        }
+      }
+      .copy_skill_wrapper {
+        .content {
+          min-height: auto;
+          padding: 0;
+          @media screen and (max-width: 767px) {
+            height: auto !important;
+          }
+        }
+      }
+    }
+    &.ui-widget-content {
+      max-width: 450px !important;
+    }
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+      top: 200px !important;
+    }
+  }
+}

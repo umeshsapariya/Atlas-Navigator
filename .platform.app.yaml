@@ -4,10 +4,10 @@
 # See https://docs.platform.sh/user_guide/reference/platform-app-yaml.html
 
 # The name of this app. Must be unique within a project.
-name: 'app'
+name: "app"
 
 # The runtime the application uses.
-type: 'php:7.2'
+type: "php:7.2"
 
 # The relationships of the application with services or other applications.
 #
@@ -15,7 +15,7 @@ type: 'php:7.2'
 # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
 # side is in the form `<service name>:<endpoint name>`.
 relationships:
-    database: 'mysqldb:mysql'
+    atlas: 'mysqldb:atlas'
 #    solr: 'solrsearch:solr'
 #    redis: 'rediscache:redis'
 
@@ -26,38 +26,38 @@ disk: 2048
 # directory paths, relative to the application root. The values are strings such as
 # 'shared:files/PATH', where PATH is a relative path under the mount's source directory.
 mounts:
-    '/web/sites/default/files': 'shared:files/files'
-    '/tmp': 'shared:files/tmp'
-    '/private': 'shared:files/private'
-    '/.drush': 'shared:files/.drush'
-    '/drush-backups': 'shared:files/drush-backups'
-    '/.console': 'shared:files/console'
+    "/sites/default/files": "shared:files/files"
+    '/web/sites/second/files': 'shared:files/files-second'
+    "/tmp": "shared:files/tmp"
+    "/private": "shared:files/private"
+    "/.drush": "shared:files/.drush"
+    "/drush-backups": "shared:files/drush-backups"
+    "/.console": "shared:files/console"
 
 # Configuration of the build of this application.
 build:
     flavor: composer
-
 # The hooks executed at various points in the lifecycle of the application.
-hooks:
-    # The deploy hook runs after your application has been deployed and started.
-    deploy: |
-        set -e
-        ./drush/platformsh_generate_drush_yml.php
-        cd web
-        drush -y cache-rebuild
-        drush -y updatedb
-        drush -y config-import
-        drush -y entup
+#hooks:
+# The deploy hook runs after your application has been deployed and started.
+#    deploy: |
+#        set -e
+#        ./drush/platformsh_generate_drush_yml.php
+#        cd web
+#        drush -y cache-rebuild
+#        drush -y updatedb
+#        drush -y config-import
+#        drush -y entup
 
 # The configuration of app when it is exposed to the web.
 web:
     # Specific parameters for different URL prefixes.
     locations:
-        '/':
+        "/":
             # The folder from which to serve static assets, for this location.
             #
             # This is a filesystem path, relative to the application root.
-            root: 'web'
+            root: ""
 
             # How long to allow static assets from this location to be cached.
             #
@@ -71,7 +71,7 @@ web:
             # location to the application.
             #
             # Can be true, false or a URI path string.
-            passthru: '/index.php'
+            passthru: "/index.php"
 
             # Deny access to static files in this location.
             allow: false
@@ -79,8 +79,8 @@ web:
             # Rules for specific URI patterns.
             rules:
                 # Allow access to common static files.
-                '\.(jpe?g|png|gif|svgz?|css|js|map|ico|bmp|eot|woff2?|otf|ttf)$':
-                    allow: true
+                ? '\.(jpe?g|png|gif|svgz?|css|js|map|ico|bmp|eot|woff2?|otf|ttf)$'
+                : allow: true
                 '^/robots\.txt$':
                     allow: true
                 '^/sitemap\.xml$':
@@ -92,23 +92,22 @@ web:
                 '^/sites/[^/]+/settings.*?\.php$':
                     scripts: false
 
-        '/sites/default/files':
+        "/sites/default/files":
             # Allow access to all files in the public files directory.
             allow: true
             expires: 5m
-            passthru: '/index.php'
-            root: 'web/sites/default/files'
+            passthru: "/index.php"
+            root: "web/sites/default/files"
 
             # Do not execute PHP scripts.
             scripts: false
 
             rules:
                 # Provide a longer TTL (2 weeks) for aggregated CSS and JS files.
-                '^/sites/default/files/(css|js)':
+                "^/sites/default/files/(css|js)":
                     expires: 2w
-
 # The configuration of scheduled execution.
-crons:
-    drupal:
-        spec: '*/20 * * * *'
-        cmd: 'cd web ; drush core-cron'
+#crons:
+#    drupal:
+#        spec: '*/20 * * * *'
+#        cmd: 'cd web ; drush core-cron'

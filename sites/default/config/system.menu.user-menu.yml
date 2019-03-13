@@ -1,0 +1,8 @@
+uuid: 0648cbeb-1fcc-46c6-96c2-07c605832f5f
+langcode: en
+status: true
+dependencies: {  }
+id: user-menu
+label: 'User Menu'
+description: 'User Menu For sidebar'
+locked: false

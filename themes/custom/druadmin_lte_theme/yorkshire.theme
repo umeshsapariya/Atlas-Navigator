@@ -1,0 +1,284 @@
+<?php
+
+use Drupal\taxonomy\Entity\Term;
+use Drupal\user\Entity\User;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
+
+function yorkshire_preprocess(&$variables) {
+  $variables['base_path'] = base_path();
+}
+
+/**
+ * Implements THEME_preprocess_node().
+ */
+function yorkshire_preprocess_node(&$variables) {
+  // Add blocks in home page
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node) {
+    if ($node->id() == 1) {
+      //Loads custom blocks for homepage
+      $block_manager = \Drupal::service('plugin.manager.block');
+      $config = [];
+
+      //360 results page
+      $plugin_Results360Block = $block_manager->createInstance('Results360Block', $config);
+      $variables['results_custom_block'] = $plugin_Results360Block->build();
+
+      //Developing plan Homepage
+      $plugin_DevelopingPlanBlock = $block_manager->createInstance('DevelopingPlanBlock', $config);
+      $variables['developing_plan_block'] = $plugin_DevelopingPlanBlock->build();
+
+      //Overall Proficiency
+      $plugin_OverallProficiency = $block_manager->createInstance('OverallProficiency', $config);
+      $variables['overall_proficiency_block'] = $plugin_OverallProficiency->build();
+    }
+  }
+}
+
+function yorkshire_preprocess_html(&$variables) {
+  $variables['skin'] = theme_get_setting('skin');
+  $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
+
+  // Adds class for user reset page
+  $path = \Drupal::request()->getpathInfo();
+  $arg = explode('/', $path);
+  if (isset($arg[1]) && $arg[1] == "user" && isset($arg[2]) && $arg[2] == "reset") {
+    $variables['attributes']['class'][] = 'user-reset-page';
+  }
+  // Add admin_custom_theme class for asassessment-form for anonymous user.
+  if (isset($arg[1]) && $arg[1] == "assessment-form") {
+    $variables['attributes']['class'][] = 'admin_custom_theme';
+  }
+  if (!in_array('anonymous', $user->getRoles())) {
+    $variables['attributes']['class'][] = 'admin_custom_theme';
+  }
+  if (isset($arg[1]) && $arg[1] == "home") {
+    $variables['attributes']['class'][] = 'atlas-home';
+  }
+}
+
+function yorkshire_preprocess_page(&$variables) {
+  // Get current URL.
+  $current_uri = \Drupal::request()->getRequestUri();
+  $current_user = \Drupal::currentUser();
+  // Check page is home page or not
+  if ($current_uri == "/home" && $current_user->id()) {
+    // Loads logged in user
+    $user = User::load($current_user->id());
+    // Checks first time login or not
+    $is_tutorial_watched = $user->get('field_tutorial_watched')->value;
+    if (!$is_tutorial_watched) {
+      // attach magnific video library
+      $variables['#attached']['library'][] = 'atlas_multistep_login/altas_magnific_popup';
+      $config = \Drupal::config('atlas_multistep_login.settings');
+      $variables['youtube_popup_link'] = $config->get('youtube_url');
+    }
+  }
+  $designation_name = "";
+  $user = User::load(\Drupal::currentUser()->id());
+  $user_profile = \Drupal::entityTypeManager()
+    ->getStorage('profile')
+    ->loadByProperties([
+    'uid' => \Drupal::currentUser()->id(),
+    'type' => 'general_profile',
+  ]);
+  if ($user_profile) {
+    $user_profile = reset($user_profile);
+    $designation_id = $user_profile->get('field_job_title')->target_id;
+    if (isset($designation_id)) {
+      $designation = Term::load($designation_id);
+      $designation_name = $designation->getName();
+    }
+  }
+  $variables['site_name'] = \Drupal::config('system.site')->get('name');
+  $variables['site_url'] = \Drupal::request()->getHost();
+  $picture = NULL;
+  if ($user->hasField('user_picture')) {
+    $picture = $user->get('user_picture')->entity;
+    if ($picture)
+      $picture = $picture->url();
+    else {
+      global $base_url;
+      $path = drupal_get_path('theme', 'yorkshire');
+      $picture = $base_url . '/' . $path . '/images/user_default.jpeg';
+    }
+  }
+  $variables['user'] = [];
+  $variables['user']['uid'] = $user->id();
+  $variables['user']['name'] = $user->getUsername();
+  $variables['user']['picture'] = $picture;
+  $variables['user']['created'] = $user->getCreatedtime();
+  $variables['relative_logo_url'] = file_url_transform_relative(file_create_url(theme_get_setting('logo.url')));
+  $variables['user']['designation'] = $designation_name;
+
+  if (\Drupal::service('masquerade')->isMasquerading()) {
+    $variables['switch_back_url'] = Url::fromRoute('masquerade.unmasquerade')->toString();
+  }
+}
+
+function yorkshire_preprocess_block(&$variables) {
+  $variables['favicon'] = theme_get_setting('favicon.url');
+}
+
+function yorkshire_preprocess_menu(&$variables) {
+  $icon_setting = explode("\n", theme_get_setting('menu_icons'));
+  $icons = [];
+  for ($i = 0; $i < sizeof($icon_setting); $i++) {
+    $icon_setting[$i] = explode('|', $icon_setting[$i]);
+    if (array_key_exists($i, $icon_setting) && sizeof($icon_setting[$i]) >= 2) {
+      $icons[$icon_setting[$i][0]] = $icon_setting[$i][1];
+    }
+  }
+  foreach ($variables['items'] as $id => $item) {
+    $title = (string) $item['title'];
+    if (array_key_exists($title, $icons) && $icons[$title]) {
+      $variables['items'][$id]['icon'] = $icons[$title];
+    }
+  }
+}
+
+function yorkshire_form_system_theme_settings_alter(&$form, $form_state) {
+  $form['skin'] = array(
+    '#type' => 'select',
+    '#title' => t('yorkshire Skin'),
+    '#options' => array(
+      "black" => t('Black'),
+      "black-light" => t('Black - Light'),
+      "blue" => t('Blue'),
+      "blue-light" => t('Blue - Light'),
+      "green" => t('Green'),
+      "green-light" => t('Green - Light'),
+      "purple" => t('Purple'),
+      "purple-light" => t('Purple - Light'),
+      "red" => t('Red'),
+      "red-light" => t('Red - Light'),
+      "yellow" => t('Yellow'),
+      "yellow-light" => t('Yellow - Light'),
+    ),
+    '#default_value' => theme_get_setting('skin')
+  );
+  $form['menu_icons'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Menu Icons'),
+    '#default_value' => theme_get_setting('menu_icons'),
+    '#description' => t("<a href='https://fortawesome.github.io/Font-Awesome/icons/' target='_blank'>Font Awesome</a> icon class with associated menu item. One per line. Format: Menu link title|class")
+  );
+}
+
+function yorkshire_preprocess_breadcrumb(&$variables) {
+  if ($variables['breadcrumb']) {
+    $request = \Drupal::request();
+    if ($route = $request->attributes->get(\Symfony\Cmf\Component\Routing\RouteObjectInterface::ROUTE_OBJECT)) {
+      $variables['breadcrumb'][] = array(
+        'text' => \Drupal::service('title_resolver')->getTitle($request, $route)
+      );
+    }
+    // Change text for category details page.
+    $path = \Drupal::request()->getpathInfo();
+    $arg = explode('/', $path);
+
+    if (isset($arg[1]) && $arg[1] == "category_details" && count($arg) == 4) {
+      $variables['breadcrumb'][1]['text'] = 'Category';
+    }
+
+    if (isset($arg[1]) && $arg[1] == "user" && count($arg) == 4) {
+      $variables['breadcrumb'][1]['text'] = 'User';
+    }
+  }
+}
+
+function yorkshire_preprocess_menu_local_action(&$variables) {
+  $link = $variables['element']['#link'];
+  $link += array('localized_options' => array());
+  $link['localized_options']['attributes']['class'][] = 'btn';
+  $link['localized_options']['attributes']['class'][] = 'btn-block';
+  $link['localized_options']['attributes']['class'][] = 'btn-primary';
+  $link['localized_options']['attributes']['class'][] = 'fa';
+  $link['localized_options']['attributes']['class'][] = 'fa-plus';
+
+  $variables['link'] = array(
+    '#type' => 'link',
+    '#title' => ' ' . $link['title'],
+    '#options' => $link['localized_options'],
+    '#url' => $link['url'],
+  );
+}
+
+function yorkshire_theme_suggestions_region_alter(&$suggestions, &$variables) {
+  if (in_array("region__content", $suggestions)) {
+    $page_manager_page = \Drupal::routeMatch()->getRouteObject()->getDefault('page_manager_page');
+    if ($page_manager_page) {
+      $suggestions[] = 'region__page_manager_page_content';
+      $suggestions[] = 'region__page_' . $page_manager_page . '_content';
+    }
+  }
+}
+
+function yorkshire_theme_suggestions_block_alter(&$suggestions, &$variables) {
+  if (in_array("block__system_main_block", $suggestions)) {
+    $page_manager_page = \Drupal::routeMatch()->getRouteObject()->getDefault('page_manager_page');
+    if ($page_manager_page) {
+      $suggestions[] = 'block__page_manager_page_system_main';
+      $suggestions[] = 'block__page_' . $page_manager_page . '_system_main';
+    }
+  }
+  else if (array_key_exists('elements', $variables) && array_key_exists('#cache', $variables['elements']) && array_key_exists('keys', $variables['elements']['#cache']) && in_array("page_manager_block_display", $variables['elements']['#cache']['keys'])) {
+    $suggestions[] = 'block__page_manager_page_block';
+    $type = $variables['elements']['content']['#block_content'] ?
+      $variables['elements']['content']['#block_content']->bundle() : $variables['elements']['#configuration']['id'];
+    $suggestions[] = 'block__page_manager_page_' . $type;
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ * Page template for content type page--contettype.html.twig
+ * For "page" content type we refine it further by adding page--alias--"the-alias"
+ * example: page content type wit alias "about/us"  => "page--alias--about-us" template file
+ */
+function yorkshire_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+  // Response codes for Access Denied and Page Not Found.
+  $system_codes = [403, 404];
+  if (Drupal::request()->attributes->get('exception') &&
+    $status_code = Drupal::request()->attributes->get('exception')->getStatusCode()) {
+    // Add Basic Page suggestion if one of above response codes.
+    if (in_array($status_code, $system_codes)) {
+      $suggestions[] = 'page';
+    }
+  }
+
+  if ($node = Drupal::routeMatch()->getParameter('node')) {
+    $content_type = $node->bundle();
+    $suggestions[] = 'page__' . $content_type;
+    if ($content_type == 'page') {
+      $current_path = Drupal::service('path.current')->getPath();
+      $alias = Drupal::service('path.alias_manager')->getAliasByPath($current_path);
+      if ($alias != '') {
+        $parts = explode('/', $alias);
+        $suggestion = 'page__alias';
+        foreach ($parts as $part) {
+          $suggestion .= "_" . "$part";
+        }
+        $suggestion = str_replace("-", "_", $suggestion);
+        $suggestions[] = $suggestion;
+      }
+    }
+  }
+}
+
+/**
+ * Implementation of hook_preprocess_form_element_label
+ * @param $variables
+ */
+function yorkshire_preprocess_form_element_label(&$variables) {
+  $variables['attributes']['class'][] = 'label';
+}
+
+/**
+ * Implementation of hook_preprocess_input
+ * @param $variables
+ */
+function yorkshire_preprocess_input(&$variables) {
+  $variables['attributes']['class'][] = 'input_text';
+}

@@ -1,0 +1,7 @@
+name: Atlas Overall Proficiency
+type: module
+description: Atlas overall Proficiency calulations and charts
+# core: 8.x
+package: Custom
+
+core: '8.x'

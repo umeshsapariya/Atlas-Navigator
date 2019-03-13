@@ -1,0 +1,7 @@
+atlas_overall_proficiency.details:
+  path: '/overall-proficiency-details/{invite_id}'
+  defaults:
+    _controller: '\Drupal\atlas_overall_proficiency\Controller\OverallProficiencyDetails::content'
+    _title: 'Assessment results'
+  requirements:
+    _access: 'TRUE'

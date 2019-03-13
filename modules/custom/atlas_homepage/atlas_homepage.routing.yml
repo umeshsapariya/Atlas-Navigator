@@ -1,0 +1,15 @@
+atlas_homepage_category.autocomplete:
+  path: '/atlas_homepage_category-autocomplete'
+  defaults:
+    _controller: '\Drupal\atlas_homepage\Controller\AutocompleteController::handleAutocomplete'
+    _format: json
+  requirements:
+    _permission: 'access content'
+
+atlas_homepage_category.getdata:
+  path: '/atlas_homepage_category-getdata'
+  defaults:
+    _controller: '\Drupal\atlas_homepage\Controller\GetChartDataByID::getdata'
+    _format: json
+  requirements:
+    _permission: 'access content'

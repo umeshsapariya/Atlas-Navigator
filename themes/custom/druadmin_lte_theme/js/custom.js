@@ -1,0 +1,149 @@
+$ = jQuery;
+
+// Ready function starts
+$(document).ready(function () {
+
+  /* To add Mcustom Scroll - GLobal */
+  $(".admin_custom_theme .content").addClass('scroll_div_content');
+  $("#overall-proficiency-right tbody").addClass('scroll_div_content');
+  $("#overall-proficiency-right tbody").addClass('scroll_div_content');
+  $(".role-container .role-tab-container tbody, .role-container .top-strengths tbody, .role-container .top-opportunities tbody").addClass('scroll_div_content');
+  $(".scroll_div_content").mCustomScrollbar({
+  });
+   /* End add Mcustom Scroll */
+
+   /* To add Scroll height as per page size - GLobal */
+   const scrollHeight = function () {
+    var heightWindow = $(window).height();
+    var height_top_strength = $('.top-strengths').height() /2 + 20;
+    var left_outer_section = $('.left-outer-section').height();
+    $(".admin_custom_theme .content").css({"height": heightWindow});
+    $(".admin_custom_theme .content .atlasnavigator_home").css({"height": heightWindow - 120 });
+    $(".admin_custom_theme .content .category_details_graph").css({"height": heightWindow - 150 });
+    $(".admin_custom_theme .content .skill_details_outer .inner_wrapper").css({"height": heightWindow - 150 });
+    $(".admin_custom_theme .content .overall-proficiency-wrapper").css({"height": heightWindow - 150 });
+    $(".admin_custom_theme .content .role-container").css({"height": heightWindow - 150 });
+    $(".role-container .top-strengths tbody, .role-container .top-opportunities tbody").css({"height": height_top_strength});
+  
+    var page_prof_content = $('.path-overall-proficiency-details .content').height();
+   var scroll_prof_box = page_prof_content - 220;
+   $("#overall-proficiency-right tbody").css({"height": scroll_prof_box});
+   var path_role_page = $('.path-role-page #left-outer-section').height() - $('.path-role-page #left-outer-section #filter-container').height() - 85;
+   $(".path-role-page #left-outer-section tbody").css({"height": path_role_page});
+  }
+   /* End croll height as per page size - GLobal*/
+
+
+   /*Add Class - Homepage*/
+    $('.atlasnavigator_home').parents('.content').addClass('atlasnavigator_home_content');
+   /*End add Class - Homepage*/
+
+   /* To Fade in % value   - GLobal*/
+  $(".centerLabel").delay(500).fadeIn();
+  /*End To Fade in % value   - GLobal */
+
+  /*if admin login then - Global*/
+  if ($('.toolbar-lining')[0]) {
+    $('.nav-tabs-custom').css("padding-bottom", "40px");
+    $('.nav-tabs-custom').css("margin-bottom", "10px");
+    $('.tab-content').css("padding-bottom", "25px");
+  }
+/*end if admin login then - Global*/
+
+/* Outside popup close functionality  - Global*/
+  $(document.body).on("click", ".ui-widget-overlay", function ()
+  {
+    $.each($(".ui-dialog"), function ()
+    {
+      var $dialog;
+      $dialog = $(this).children(".ui-dialog-content");
+      if ($dialog.dialog("option", "modal"))
+      {
+        $dialog.dialog("close");
+      }
+    });
+  });
+  /* End outside popup close functionality  - Global*/
+  
+  /* To add Star rating  - Overall Proficiency Page*/
+  $('tr .ratings').each(function () {
+    var star_width = $(this).find('.star-percentage').text();
+    star_width = star_width * 0.98;
+    $(this).find('.full-stars').css('width', star_width + '%');
+  });
+  /* End Star rating - Overall Proficiency Page*/
+
+  /* To toggle Strengths &  Opportunities  - Overall Proficiency Page*/
+  $('#overall-proficiency-right input').click(function () {
+    $('#overall-proficiency-right input').removeClass('active');
+    $(this).addClass('active');
+    var active_val = $(this).val();
+    if (active_val == 'Strengths') {
+      $('tr.Opportunities').hide();
+      $('tr.Strengths').show();
+    } else if (active_val == 'Opportunities') {
+      $('tr.Opportunities').show();
+      $('tr.Strengths').hide();
+    } else {
+      $('tr.Opportunities').show();
+      $('tr.Strengths').show();
+    }
+  });
+  /* End toggle Strengths &  Opportunities  - Overall Proficiency Page*/
+
+  $(window).resize(function () {
+    scrollHeight();
+  });
+
+  scrollHeight();
+
+  if ($(window).width() < 767) {
+    $(".admin_custom_theme .content .atlasnavigator_home, .admin_custom_theme .content .overall-proficiency-wrapper").css({"height" : "auto"});
+    $(".admin_custom_theme .content .category_details_graph").css({"height" : "auto", "padding-bottom" : "30px"});
+    $(".admin_custom_theme .content .skill_details_outer .inner_wrapper").css({"height" : "auto", "padding-bottom" : "30px"});
+   }
+
+if ($(window).width() < 900) {
+   var height_top_strength_mob = $('.top-strengths').height() /2 ;
+    $(".admin_custom_theme .content .role-container").css({"height" : "auto"});
+
+    $(".role-container .top-strengths tbody, .role-container .top-opportunities tbody").css({"height": height_top_strength_mob + 90});
+}
+/* Progress Bar  - Multistep Assessment Page*/
+  var $total_progress = $('.progress_bar .total_pages').text();
+  var $current_progress = $('.progress_bar .current_page').text();
+  var $progress = $current_progress / $total_progress * 100;
+  $('.progress_bar .current_page').css('width', $progress + '%');
+  /* End Progress Bar  - Multistep Assessment Page*/
+
+
+/* Display form field on value present  - Multistep Assessment Page*/
+  $('#node-assessment-form-form #edit-field-category-wrapper').hide();
+  $('#node-assessment-form-form #edit-actions').hide();
+  $('#node-assessment-form-form .clearfix').hide();
+  $('#node-assessment-form-form #edit-field-verbatim-comments-wrapper').hide();
+
+  $('#node-assessment-form-form #edit-title-0-value').on('keyup mouseenter', function () {
+    if (($(this).val().length) >= 1) {
+      $('#node-assessment-form-form #edit-field-category-wrapper').show();
+    }
+  });
+
+  $('#node-assessment-form-form #edit-field-category-0-subform-field-skills-wrapper').hide();
+  $('#node-assessment-form-form #edit-field-category-0-subform-field-new-category-0-value').on('keyup mouseenter', function () {
+    if (($(this).val().length) >= 1) {
+      $('#node-assessment-form-form .clearfix').show();
+      $('#node-assessment-form-form #edit-field-category-0-subform-field-skills-wrapper').show();
+      $('#node-assessment-form-form #edit-field-verbatim-comments-wrapper').show();
+      $('#node-assessment-form-form #edit-actions').show();
+    }
+  });
+
+  $('#node-assessment-form-form #edit-field-category-0-subform-field-skills-0-subform-field-skill-0-value').on('keyup mouseenter', function () {
+    if (($(this).val().length) >= 1) {
+      $('#node-assessment-form-form .clearfix').show();
+    }
+  });
+/* End Display form field on value present - Multistep Assessment Page*/
+});
+

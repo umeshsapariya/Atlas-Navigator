@@ -1,0 +1,40 @@
+uuid: 5e429a2e-d727-4df8-90e9-2f04aa791edf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_verbatim_comments
+    - node.type.assessment_form
+    - paragraphs.paragraphs_type.verbatim_comments
+  module:
+    - entity_reference_revisions
+id: node.assessment_form.field_verbatim_comments
+field_name: field_verbatim_comments
+entity_type: node
+bundle: assessment_form
+label: 'Verbatim Comments'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      verbatim_comments: verbatim_comments
+    target_bundles_drag_drop:
+      category:
+        weight: 5
+        enabled: false
+      skill:
+        weight: 6
+        enabled: false
+      skill_level_information:
+        weight: 7
+        enabled: false
+      verbatim_comments:
+        enabled: true
+        weight: 8
+field_type: entity_reference_revisions

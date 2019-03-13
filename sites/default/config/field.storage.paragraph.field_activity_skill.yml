@@ -1,0 +1,21 @@
+uuid: eeca06e0-dfc5-4e29-a926-dde372758d62
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.field_activity_skill
+field_name: field_activity_skill
+entity_type: paragraph
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,7 @@
+is_manager:
+  version: 1.x
+  js:
+    js/atlas_user.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings

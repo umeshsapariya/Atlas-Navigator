@@ -1,0 +1,91 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+
+.admin_custom_theme {
+  .main-sidebar {
+    background-color: #f4f9fc;
+    position: fixed;
+    .user-panel-custom {
+      display: none;
+    }
+    .nice-menu {
+      border-top: none;
+      margin-top: 65px;
+      width: 100%;
+      li {
+        background-color: transparent;
+        border: none;
+        max-width: 227px;
+        width: 100%;
+        &.menuparent {
+          background-position-y: 11px;
+          &:hover {
+            background-color: transparent;
+          }
+          > a {
+            background-color: transparent;
+            border-left-color: transparent;
+          }
+        }
+        a {
+          border-bottom: 1px solid #9a9a9a;
+          color: #474645;
+          font-family: $segoeui-regular;
+          margin: auto 10px;
+          max-width: 230px;
+          padding: 5px 25px 10px 0;
+          &.is-active {
+            color: $light-blue;
+            font-family: $segoeui-semibold;
+          }
+          &:hover {
+            background-color: transparent;
+            color: $light-blue;
+          }
+        }
+        ul {
+          background-color: #f4f9fc;
+          border: none;
+          left: 100%;
+          top: -5px;
+          width: 100%;
+        }
+      }
+      > li {
+        > .menuparent {
+          background-color: transparent;
+          > .toolbar-menu {
+            > a {
+              padding: 12px 5px 12px 15px;
+            }
+          }
+        }
+        &:last-child {
+          a {
+            border-bottom: none;
+          }
+        }
+      }
+      @media only screen and (max-width: 767px) {
+        margin-top: 0;
+      }
+    }
+  }
+  &.sidebar-collapse {
+    .main-sidebar {
+      .sidebar {
+        .nice-menu {
+          li {
+            display: none;
+            a {
+              border: none;
+              font-size: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+uuid: 972bc308-ba95-4dbc-8bcb-86551693a100
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - yorkshire
+_core:
+  default_config_hash: za-39d5WDUg6XvbyqSnuVYEeq6QM4qKJxW8MnoAha5A
+id: yorkshire_search
+theme: yorkshire
+region: brand
+weight: -1
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: Search
+  provider: search
+  label_display: visible
+visibility: {  }

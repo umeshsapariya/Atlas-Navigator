@@ -1,0 +1,34 @@
+{
+  "name": "mytheme",
+  "version": "1.0.0",
+  "description": "<!-- @file Instructions for subtheming using the Sass Starterkit. --> <!-- @defgroup subtheme_sass --> <!-- @ingroup subtheme --> # Sass Starterkit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sonal-bajage",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.24.6",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-csscomb": "^3.0.8",
+    "gulp-imagemin": "^3.2.0",
+    "gulp-jsbeautifier": "^2.1.2",
+    "gulp-jshint": "^2.0.4",
+    "gulp-livereload": "^3.8.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^3.2.1",
+    "gulp-scss-lint": "^0.4.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-uglify": "^2.1.2",
+    "gulp-uglifycss": "^1.0.8",
+    "gulp-watch": "^5.0.1",
+    "jshint": "^2.9.6",
+    "jshint-stylish": "^2.2.1",
+    "node-sass": "^4.11.0"
+  },
+  "dependencies": {
+    "gulp-cache-refresh": "^1.1.0"
+  }
+}

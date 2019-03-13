@@ -1,0 +1,3 @@
+role_page_dashbord:
+  js:
+    js/role_page_dashbord.js: {}

@@ -1,0 +1,15 @@
+atlas_multi_step.multi_step_form:
+  path: '/user/login'
+  defaults:
+    _form: '\Drupal\atlas_multistep_login\Form\AtlasMultiStepForm'
+    _title: ''
+  requirements:
+    _role: 'anonymous'
+
+atlas_multi_step.admin_settings:
+  path: '/admin/config/people/video-popup'
+  defaults:
+    _form: '\Drupal\atlas_multistep_login\Form\AtlasVideoConfigurationForm'
+    _title: 'Video Popup link'
+  requirements:
+    _permission: 'administer site configuration'

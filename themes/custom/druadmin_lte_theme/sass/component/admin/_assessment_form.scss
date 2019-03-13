@@ -1,0 +1,431 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file. 
+.nav-tabs-custom {
+  .node-assessment-form-form,
+  .node-assessment-form-edit-form {
+    /*border: 1px solid $border;*/
+    display: inline-block;
+    padding: 20px 30px;
+    width: 100%;
+
+    @media screen and (max-width: 767px) {
+      border: 1px solid $border_mobile;
+      padding: 20px 10px;
+    }
+    .form-item {
+      margin: 0;
+    }
+    .paragraphs-subform {
+      /*border: 1px solid $border;*/
+      display: inline-block;
+      padding: 20px 0;
+      width: 100%;
+
+      @media screen and (max-width: 767px) {
+        border: 1px solid $border_mobile;
+        padding: 20px 10px;
+      }
+    }
+    #edit-field-category-0,
+    #edit-field-category-0-subform-field-skills-0 {
+      position: relative;
+    }
+    .paragraph-type-top .paragraphs-dropbutton-wrapper {
+      background-color: transparent;
+      height: 23px;
+      position: absolute;
+      right: 10px;
+      top: 5px;
+      width: 20px;
+      input {
+        background-color: #008ec3;
+        border: 1px solid #008ec3;
+        padding: 0 6px;
+        &:hover {
+          background-color: #3ca8d0;
+          border: 1px solid #3ca8d0;
+        }
+      }
+    }
+    #edit-field-verbatim-comments-0-subform {
+      border: 0;
+      padding: 0 10px;
+    }
+    .paragraphs-dropbutton-wrapper {
+      display: inline-block;
+      margin-bottom: 15px;
+      text-align: right;
+      width: 100%;
+
+      .dropbutton-widget {
+        background-color: transparent;
+        border: 0;
+      }
+    }
+    .field--name-field-number-of-levels,
+    .field--name-field-target-proficiency {
+      display: inline-block;
+      margin-bottom: 10px;
+      width: 100%;
+
+      .form-composite > legend {
+        border: 0;
+        float: left;
+        line-height: 23px;
+        margin: 14px 10px 14px 0;
+        text-transform: capitalize;
+        width: 150px;
+
+        span {
+          font-family: $segoeui-semibold;
+          font-weight: normal;
+
+          @media screen and (max-width: 420px) {
+            font-size: 12px;
+          }
+        }
+
+        @media screen and (max-width: 767px) {
+          width: 100%;
+        }
+      }
+      .fieldset-wrapper {
+        display: inline-block;
+        width: auto;
+
+        .form-group.js-form-type-radio {
+          float: left;
+          margin: 10px 10px 10px -3px;
+          width: auto;
+
+          @media (max-width: 1024px) {
+            margin: 5px 5px 5px -3px;
+          }
+        }
+      }
+    }
+    .form-type-checkbox {
+      margin: 0;
+      margin-bottom: 4px !important;
+
+      input.form-checkbox.input_text {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -ms-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+      }
+      [type="checkbox"]:checked + label,
+      [type="checkbox"]:not(:checked) + label {
+        position: relative;
+
+        &:after {
+          background: #fff;
+          border: 1px solid $border-light;
+          content: "";
+          cursor: pointer;
+          display: inline-block;
+          font-size: 12px;
+          height: 23px;
+          left: 100%;
+          line-height: 30px;
+          margin-left: 10px;
+          margin-top: 5px;
+          padding: 0 5px;
+          position: absolute;
+          text-align: center;
+          width: 23px;
+        }
+      }
+      [type="checkbox"]:checked + label {
+        &:before {
+          border: solid #008ec3;
+          border-width: 0 3px 3px 0;
+          content: "";
+          height: 17px;
+          left: 100%;
+          margin-left: 17px;
+          position: absolute;
+          top: 7px;
+          transform: rotate(45deg);
+          width: 8px;
+          z-index: 1;
+        }
+      }
+      #edit-field-category-0-subform-field-skills-0-subform-field-include-na-value {
+        display: none;
+      }
+    }
+    .field-multiple-drag {
+      display: none !important;
+    }
+    .field--name-field-level-header {
+      display: inline-block;
+      float: left;
+      margin-bottom: 10px;
+      width: 15%;
+
+      @media (max-width: 1024px) {
+        width: 150px;
+      }
+
+      .form-type-textfield {
+        .label {
+          background: #e2e2e2;
+          border-radius: 30px;
+          font-family: $segoeui-regular;
+          font-weight: normal;
+          margin-right: 10px;
+          padding: 3px 0 3px 15px;
+          width: auto;
+        }
+        .form-control.input_text {
+          background-color: $level_background;
+          border-radius: 20px;
+          color: $level_color;
+          width: 100% !important;
+        }
+      }
+    }
+    .field--name-field-level-description {
+      display: inline-block;
+      margin-left: 2.5%;
+      width: 45%;
+      @media (max-width: 1024px) {
+        width: 100%;
+      }
+
+      .form-item {
+        .form-group {
+          margin: 0;
+        }
+      }
+      .filter-wrapper {
+        border: 1px solid #ccc;
+        display: inline-block;
+        width: 100%;
+      }
+    }
+    .field--name-field-activity {
+      display: inline-block;
+      float: right;
+      width: 35%;
+      .js-form-wrapper {
+        em,
+        strong {
+          display: none;
+        }
+      }
+      .field--name-field-url {
+        .description {
+          display: none;
+        }
+      }
+      .js-form-type-textarea {
+        .label {
+          float: none;
+        }
+      }
+    }
+
+    .fieldset-wrapper {
+      .form-radios {
+        .form-item {
+          [type="radio"]:checked,
+          [type="radio"]:not(:checked) {
+            left: -9999px;
+            position: absolute;
+          }
+          [type="radio"]:checked + label,
+          [type="radio"]:not(:checked) + label {
+            background: $level_unchecked;
+            border-radius: 50%;
+            color: $white-color;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 12px;
+            height: 30px;
+            line-height: 26px;
+            padding: 0 5px;
+            position: relative;
+            text-align: center;
+            width: 30px;
+          }
+          [type="radio"]:not(:checked) + label {
+            &:after {
+              opacity: 0;
+              -webkit-transform: scale(0);
+              transform: scale(0);
+            }
+          }
+          [type="radio"]:checked + label {
+            background-color: $level_checked;
+          }
+        }
+      }
+      .form-group {
+        &.js-form-type-radio {
+          float: left;
+          margin: 10px 5px;
+          width: auto;
+        }
+      }
+    }
+    .field-multiple-table {
+      h4.label {
+        font-family: $segoeui-semibold;
+        font-weight: normal;
+
+        @media screen and (max-width: 420px) {
+          font-size: 12px;
+        }
+      }
+    }
+    table {
+      background: transparent;
+
+      tbody {
+        background: transparent;
+        td,
+        th,
+        tr {
+          background: transparent;
+          border: 0;
+        }
+      }
+      &.table-bordered {
+        border: 0;
+
+        th.field-label {
+          padding-left: 0;
+        }
+      }
+    }
+    .table-responsive {
+      box-shadow: none;
+      td {
+        @media screen and (max-width: 767px) {
+          white-space: initial;
+        }
+      }
+      .paragraph-type-top {
+        position: relative;
+        .paragraph-type-title {
+          display: none;
+        }
+      }
+      .tabledrag-toggle-weight-wrapper {
+        display: none;
+      }
+
+      .draggable.paragraph-type--verbatim-comments {
+        .paragraphs-subform {
+          border: 0;
+          padding: 0 30px;
+        }
+      }
+      @media screen and (max-width: 767px) {
+        border: 0;
+        margin-bottom: 0;
+      }
+    }
+    .form-group {
+      display: inline-block;
+      margin-bottom: 15px;
+      width: 100% ;
+
+      .label {
+        color: $base-color;
+        color: $level_color;
+        display: inline-block;
+        float: left;
+        font-family: $segoeui-semibold;
+        font-size: $small-font-size;
+        font-weight: normal;
+        line-height: 33px;
+        margin-right: 10px;
+        text-align: left;
+        text-transform: capitalize;
+        width: 150px;
+
+        @media screen and (max-width: 1024px) {
+          width: 110px;
+        }
+        @media screen and (max-width: 767px) {
+          width: 80px;
+        }
+        @media screen and (max-width: 420px) {
+          font-size: 12px;
+          margin-right: 3px;
+        }
+      }
+      .form-control.input_text,
+      .form-select.form-control {
+        display: inline-block;
+        float: left;
+        width: 250px;
+
+        @media screen and (max-width: 1024px) {
+          width: 180px;
+        }
+
+        @media screen and (max-width: 767px) {
+          width: 150px;
+        }
+        @media screen and (max-width: 420px) {
+          font-size: 12px;
+          width: 130px;
+        }
+      }
+      &.form-type-textfield {
+        margin-bottom: 5px;
+      }
+    }
+    #edit-field-verbatim-comments-wrapper {
+      border-top: 1px solid $border;
+      display: inline-block;
+      width: 100%;
+
+      .field-multiple-table.responsive-enabled {
+        display: inline-block;
+        width: 100%;
+        tbody {
+          display: inline-block;
+          width: 100%;
+
+          .draggable.paragraph-type--verbatim-comments {
+            display: inline-block;
+            width: 60%;
+            td {
+              display: inline-block;
+              width: 100%;
+
+              .paragraphs-subform {
+                border: 0;
+                padding: 0 30px;
+              }
+              &:nth-child(1) {
+                border-top: 0;
+              }
+
+              @media (max-width: 1024px) {
+                width: 100%;
+              }
+              th {
+                border: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .assessment-invite-form {
+    @extend .node-assessment-form-form;
+  }
+  #edit-actions {
+    text-align: right;
+  }
+}

@@ -1,0 +1,112 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function atlas_assessment_schema() {
+  $schema = array();
+  $schema['assessment_data'] = [
+    'description' => 'Stores the data about Assessment (Assessment ID, Assess ID, Role ID, ...).',
+    'fields' => [
+      'assessment_id' => [
+        'description' => 'Assessment ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'assess_uid' => [
+        'description' => 'User ID who have assess to form.',
+        'type' => 'int',
+        'default' => 0,
+        'not null' => TRUE,
+      ],
+      'role_id' => [
+        'description' => "Role that user going to access.",
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'invite_id' => [
+        'description' => "Invite ID Corrosponding to hash value.",
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'step_id' => [
+        'description' => "Next Step ID.",
+        'type' => 'int',
+        'default' => 1,
+        'not null' => TRUE,
+      ],      
+      'atlas_assessment_id' => [
+        'description' => "A custom ID for Assessment form after submit.",
+        'type' => 'varchar',
+        'length' => 255,
+    ],
+    ],
+    'primary key' => ['assessment_id'],
+  ];
+  $schema['assessment_skill_data'] = [
+    'description' => 'Stores the data about Assessment (Assessment ID, Category ID, Skill ID, Score).',
+    'fields' => [
+      'assessment_skill_id' => [
+        'description' => 'Assessment Skill ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'assessment_id' => [
+        'description' => 'Assessment ID from table assessment_data.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'category_id' => [
+        'description' => "Category ID.",
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'skill_id' => [
+        'description' => "Skill ID.",
+        'type' => 'int',
+        'not null' => TRUE,
+      ], 
+      'score' => [
+        'description' => "Score.",
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['assessment_skill_id'],
+  ];
+  
+  $schema['assessment_verbatim_comments'] = [
+    'description' => 'Stores the data about about Assessment verbatim comments (Assessment ID, Assess ID, Role ID, ...).',
+    'fields' => [
+      'assessment_comment_id' => [
+        'description' => 'Assessment verbatim comment ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'assessment_id' => [
+        'description' => 'Assessment ID from table assessment_data.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'verbatim_id' => [
+        'description' => "verbatim ID.",
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'answer' => [
+        'description' => "Answer to verbatim question.",
+        'type' => 'text',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['assessment_comment_id'],
+  ];
+
+  return $schema;
+}

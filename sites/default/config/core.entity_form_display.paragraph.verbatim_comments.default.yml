@@ -1,0 +1,24 @@
+uuid: 8aa461c4-abbd-4941-a0b6-cc2d40a1343a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.verbatim_comments.field_question
+    - paragraphs.paragraphs_type.verbatim_comments
+id: paragraph.verbatim_comments.default
+targetEntityType: paragraph
+bundle: verbatim_comments
+mode: default
+content:
+  field_question:
+    weight: 0
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

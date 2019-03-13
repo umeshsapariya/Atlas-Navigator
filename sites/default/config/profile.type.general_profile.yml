@@ -1,0 +1,15 @@
+uuid: 6212435f-0bdb-4294-9dd8-e93506fc4949
+langcode: en
+status: true
+dependencies: {  }
+id: general_profile
+label: General
+registration: true
+multiple: false
+roles:
+  authenticated: '0'
+  administrator: '0'
+  res: '0'
+weight: 0
+use_revisions: false
+description: 'General Profile for user'

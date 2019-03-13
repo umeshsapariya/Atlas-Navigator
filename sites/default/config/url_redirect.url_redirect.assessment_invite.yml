@@ -1,0 +1,14 @@
+uuid: 3f925b69-10d0-4279-812c-9afa020968dc
+langcode: en
+status: '1'
+dependencies: {  }
+id: assessment_invite
+label: 'Assessment invite'
+message: 'No'
+path: /assessment-invite
+redirect_path: /
+checked_for: Role
+negate: false
+user: null
+roles:
+  anonymous: anonymous

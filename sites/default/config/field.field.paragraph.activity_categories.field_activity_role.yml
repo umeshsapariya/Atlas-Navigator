@@ -1,0 +1,19 @@
+uuid: 6f4d90a0-a817-4c8e-9a41-03cd57f9295c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_activity_role
+    - paragraphs.paragraphs_type.activity_categories
+id: paragraph.activity_categories.field_activity_role
+field_name: field_activity_role
+entity_type: paragraph
+bundle: activity_categories
+label: Role
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

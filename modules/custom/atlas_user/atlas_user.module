@@ -1,0 +1,109 @@
+<?php
+
+/**
+ * @file
+ * Contains custom_masquerade.module
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+use Drupal\user\Entity\User;
+use Drupal\user\UserInterface;
+
+/*
+ * Implements hook_form_alter().
+ */
+function atlas_user_form_alter(&$form, $form_state, $form_id) {
+  // Change placeholder text for masquerade form.
+  if ($form_id == 'masquerade_block_form') {
+    $form['autocomplete']['masquerade_as']['#placeholder'] = t('Search for the user you want to login as..');
+    //$form['#submit'][] = 'atlas_masquerade_switch_redirect';
+    array_unshift($form['#submit'], 'atlas_masquerade_form_switch_redirect');
+  }
+  // Attached js to check Restricted Admin role if is_manager is yes.
+  if ($form_id == 'user_register_form') {
+    $current_user = \Drupal::currentUser();
+    $roles = $current_user->getRoles();
+    // Email field is required.
+    $form['account']['mail']['#required'] = TRUE;
+    $form['account']['roles']['#required'] = TRUE;
+    unset($form['account']['mail']['#description']);
+    unset($form['account']['notify']);
+    // Add is_manger field account form;
+    $form['account']['manager'] = $form['field_is_manager'];
+    unset($form['field_is_manager']);
+    // Give role access to superadmin user.
+    if (in_array("super_admin", $roles)) {
+      $form['account']['roles']['#access'] = TRUE;
+      unset($form['account']['roles']['#options']['administrator']);
+    }
+    // Arrange roles at the last
+    $form['account']['roles']['#weight'] = 100;
+    // is_manager field just before roles field.
+    $form['account']['manager']['#weight'] = $form['account']['roles']['#weight'] -1;
+    $form['#attached']['library'][] = 'atlas_user/is_manager';
+  }
+}
+
+/**
+ * Implements hook_entity_operation_alter().
+ */
+function atlas_user_entity_operation_alter(array &$operations, \Drupal\Core\Entity\EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'user') {
+    if (masquerade_target_user_access($entity)) {
+      $operations['masquerade'] = [
+        'title' => t('Login as User'),
+        'weight' => 100,
+        'url' => $entity->toUrl('masquerade'),
+      ];
+    }
+  }
+}
+
+/*
+ * Implements Custom form Submit.
+ */
+function atlas_masquerade_form_switch_redirect($form, FormStateInterface $form_state) {
+  $user_id = $form_state->getValue('masquerade_as');
+  if (!empty($user_id)) {
+    $account = User::load($user_id);
+    $name = $account->getUsername();
+    $url = Url::fromRoute('<front>');
+    $form_state->setRedirectUrl($url);
+    drupal_set_message(t('You are now logged in as %usernm.', ['%usernm' => $name]));
+  }
+}
+
+/*
+ * Implements hook_preprocess_status_messages().
+ */
+function atlas_user_preprocess_status_messages(&$variables) {
+  if(isset($variables['message_list']['status'])){
+    $status_messages = $variables['message_list']['status'];
+    foreach($status_messages as $delta => $message) {
+      if ($message instanceof \Drupal\Component\Render\MarkupInterface) {
+        // Change switch back status message.
+        if (\strpos((string) $message, 'You are no longer masquerading as') !== false) {
+          // Replace masquerading with logged.
+          $new_messgae = str_replace('masquerading', 'logged in', (string) $message);
+          $variables['message_list']['status'][$delta] = $new_messgae;  
+          break;
+        }
+      }
+    }
+  }
+}
+
+/*
+ * Implements hook_user_presave().
+ */
+function atlas_user_user_presave(UserInterface $user) {
+  // Add Restricted admin role if is_manger is cheched.
+  $is_manager = $user->field_is_manager->value;
+  if ($is_manager == 1) {
+    $user->addRole('res');
+  }
+}

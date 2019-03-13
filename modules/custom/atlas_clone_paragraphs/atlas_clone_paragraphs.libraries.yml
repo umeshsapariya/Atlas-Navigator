@@ -1,0 +1,8 @@
+clone_paragraphs:
+  js:
+    js/clone_paragraph.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+    - core/drupal.dialog.ajax

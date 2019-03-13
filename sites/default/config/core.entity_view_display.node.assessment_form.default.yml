@@ -1,0 +1,50 @@
+uuid: 6cafb4c1-9b3a-4194-bc48-804f50da6051
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.assessment_form.field_category
+    - field.field.node.assessment_form.field_no_of_associates
+    - field.field.node.assessment_form.field_verbatim_comments
+    - node.type.assessment_form
+  module:
+    - entity_reference_revisions
+    - user
+id: node.assessment_form.default
+targetEntityType: node
+bundle: assessment_form
+mode: default
+content:
+  field_category:
+    type: entity_reference_revisions_entity_view
+    weight: 101
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_no_of_associates:
+    weight: 103
+    label: above
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    type: number_integer
+    region: content
+  field_verbatim_comments:
+    type: entity_reference_revisions_entity_view
+    weight: 102
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden: {  }

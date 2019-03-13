@@ -1,0 +1,5 @@
+services:
+  atlas_multistep_login.route_subscriber:
+    class: Drupal\atlas_multistep_login\Routing\RouteSubscriber
+    tags:
+      - { name: event_subscriber }

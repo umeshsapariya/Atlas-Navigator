@@ -1,0 +1,16 @@
+atlas_verbatim_comments.verbatile_comments:
+  path: '/verbatim-comments'
+  defaults:
+    _form: '\Drupal\atlas_verbatim_comments\Form\VerbatimComments'
+    _title: 'Verbatim comments'
+  requirements:
+    _permission: 'access content'
+
+atlas_verbatim_comments.comment_autocomplete:
+  path: '/verbatile-comments/data'
+  defaults:
+    _controller: '\Drupal\atlas_verbatim_comments\Controller\CommentsAutocompleteController::handleCommentsAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+

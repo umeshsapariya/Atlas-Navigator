@@ -1,0 +1,5 @@
+name: Atlas Verbatim Comments
+description: Verbatim Comments related to Assessments for End user.
+package: Custom
+type: module
+core: 8.x

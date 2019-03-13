@@ -1,0 +1,7 @@
+overall_proficiency_home:
+  js:
+    js/op_chart_home.js: {}
+
+overall_proficiency_innerpage:
+  js:
+    js/op_chart_inner.js: {}

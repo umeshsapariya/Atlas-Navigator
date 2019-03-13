@@ -1,0 +1,198 @@
+<?php
+
+/**
+ * @file
+ */
+
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_theme().
+ */
+function atlas_results_theme($existing, $type, $theme, $path) {
+  return [
+    'category_details' => [
+      'variables' => [
+        'category_details' => NULL,
+        'category_name' => NULL,
+      ],
+    ],
+    'skill_details' => [
+      'variables' => [
+        'skill_details' => NULL,
+        'skill_name' => NULL,
+        'skill_popup' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Returns skill wise 360 results array for others.
+ */
+function get_other_score_category($key, $skills_data) {
+  $skill_count = 0;
+  foreach ($skills_data as $skill_id => $skill_values) {
+    $others_score = 0;
+    foreach ($skill_values as $skill_value) {
+      $rel_total = 0;
+      foreach ($skill_value as $value) {
+        $rel_total = $rel_total + $value;
+      }
+      $rel_avg = $rel_total / count($skill_value);
+      $others_score = $others_score + $rel_avg;
+    }
+    $others_score = $others_score / count($skill_values);
+    $score_360[$key][$skill_id] = $others_score;
+    $skill_count = $skill_count + $others_score;
+  }
+  $score_360[$key]['avg'] = $skill_count / count($skills_data);
+  return $score_360;
+}
+
+/**
+ * Returns skill wise 360 results array for relations.
+ */
+function get_relationship_skill_rating($skills_data) {
+  foreach ($skills_data as $skill_id => $skill_values) {
+    $score = 0;
+    foreach ($skill_values as $skill_value) {
+      $score = $score + $skill_value;
+    }
+    $score = $score / count($skill_values);
+    $rel_arr[$skill_id]['score'] = $score;
+  }
+  return $rel_arr;
+}
+
+/**
+ * Returns raters data for skill.
+ */
+function get_raters_skill_data($current_user_id) {
+  $connection = Database::getConnection();
+  $query = $connection->select('assessment_invite', 'ai');
+  $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
+  $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
+  $query->Join('assessment_skill_data', 'asd', 'asd.assessment_id = ad.assessment_id');
+  $query->fields('ai');
+  $query->fields('aid', ['relationship_tid', 'id']);
+  $query->fields('ad', ['assessment_id']);
+  $query->fields('asd');
+  $query->condition('asd.score', 0, '>');
+  $query->condition('ai.uid', $current_user_id);
+  $query->condition('aid.completed', 1);
+  $raters_skill_data = $query->execute()->fetchAll();
+  return $raters_skill_data;
+}
+
+/**
+ * Returns peer benchmark skilldata.
+ */
+function get_peer_benchmark_skill_data($current_user_id) {
+  $connection = Database::getConnection();
+  $query = $connection->select('assessment_invite', 'ai');
+  $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
+  $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
+  $query->Join('assessment_skill_data', 'asd', 'asd.assessment_id = ad.assessment_id');
+  $query->fields('ai');
+  $query->fields('aid', ['relationship_tid', 'id']);
+  $query->fields('ad', ['assessment_id']);
+  $query->fields('asd');
+  $query->condition('asd.score', 0, '>');
+  $query->condition('ai.uid', $current_user_id);
+  $query->condition('aid.completed', 1);
+  $raters_skill_data = $query->execute()->fetchAll();
+
+  return $raters_skill_data;
+}
+
+/**
+ * Returns skill id for category id.
+ */
+function get_skill_id_by_category($category_id) {
+  $connection = Database::getConnection();
+  $query = $connection->select('paragraphs_item_field_data', 'p');
+  $query->fields('p', ['id']);
+  $query->condition('p.parent_id', $category_id);
+  $query->condition('p.type', 'skill');
+  $skill_id_arr = $query->execute()->fetchAll();
+
+  return $skill_id_arr;
+}
+
+/**
+ * Returns tid for self relationship.
+ */
+function get_self_relationship_tid() {
+  $term_name = 'Self';
+  $term = \Drupal::entityTypeManager()
+    ->getStorage('taxonomy_term')
+    ->loadByProperties(['name' => $term_name]);
+  if ($term) {
+    $term_obj = reset($term);
+    if (isset($term_obj)) {
+      if (is_numeric($term_obj->id()) && $term_obj->getVocabularyId() == "raters_relationship") {
+        $relationship_tid = $term_obj->id();
+      }
+    }
+  }
+  return $relationship_tid;
+}
+
+/**
+ * Returns total score for category skill wise.
+ */
+function get_total_score($category_id, $skills_data) {
+  $score_360 = [];
+  foreach ($skills_data as $skill_name => $skill_values) {
+    $relation_sum_value = 0;
+    foreach ($skills_data[$skill_name] as $relation => $rating_values) {
+      $relation_sum_value += array_sum($rating_values) / count($rating_values);
+      $num_of_relation = count($skills_data[$skill_name]);
+    }
+    $score = $relation_sum_value / $num_of_relation;
+    $score_360[$skill_name] = $score;
+  }
+  return $score_360;
+}
+
+/**
+ * Returns total score for category skill wise.
+ */
+function get_self_score($category_id, $skills_data) {
+  $relationship_tid = get_self_relationship_tid();
+  // Calculate self score.
+  $score = 0;
+  $count = count($skills_data);
+  $skill_total = 0;
+  foreach ($skills_data as $skill => $skill_wise_rating) {
+    $self_score[$category_id][$skill] = $skill_wise_rating[$relationship_tid][0];
+    $skill_total = $skill_total + $skill_wise_rating[$relationship_tid][0];
+    $category_360[$category_id]['skills'][$skill] = $skill;
+  }
+  $self_score[$category_id]['avg'] = $skill_total / count($skills_data);
+  return $self_score[$category_id];
+}
+
+/**
+ * Returns skill wise 360 results array for others.
+ */
+function get_others_score($key, $skills_data) {
+  $skill_count = 0;
+  foreach ($skills_data as $skill_id => $skill_values) {
+    $others_score = 0;
+    foreach ($skill_values as $skill_value) {
+      $rel_total = 0;
+      foreach ($skill_value as $value) {
+        $rel_total = $rel_total + $value;
+      }
+      $rel_avg = $rel_total / count($skill_value);
+      $others_score = $others_score + $rel_avg;
+    }
+    $others_score = $others_score / count($skill_values);
+    $score_360[$key][$skill_id] = $others_score;
+    $skill_count = $skill_count + $others_score;
+  }
+  $score_360[$key]['avg'] = $skill_count / count($skills_data);
+  return $score_360[$key];
+}

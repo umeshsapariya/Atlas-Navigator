@@ -1,0 +1,361 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+
+.path-category-details,
+.path-category-details {
+  .category_graph {
+    background-color: #fff;
+    display: inline-block;
+    width: 100%;
+
+    .inner_wrapper {
+      display: inline-block;
+      width: 100%;
+
+      .left_rating_section {
+        float: left;
+        padding-right: 10px;
+        width: 70%;
+
+        .category_name {
+          border-bottom: 1px solid #ccc;
+          display: inline-block;
+          margin-bottom: 22px;
+          padding: 20px 0;
+          text-align: center;
+          width: 100%;
+        }
+        @media screen and (max-width: 1024px) {
+          height: auto !important;
+          width: 100%;
+        }
+        #category_details_chart {
+          padding-top: 20px;
+        }
+      }
+      .right_rating_section {
+        float: right;
+        padding-top: 50px;
+        text-align: center;
+        width: 30%;
+        .table_wrap {
+          float: left;
+          width: 100%;
+          table {
+            border: solid 1px #a1a1a1;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            display: inline-block;
+            width: 100% !important;
+
+            @media screen and (max-width: 1024px) {
+              float: none !important;
+              padding: 0;
+              width: auto !important;
+            }
+            tbody {
+              background-color: transparent;
+              tr {
+                th {
+                  border-right: 1px solid #a1a1a1;
+                  border-top: 0;
+                  font-size: 13px;
+                  font-weight: normal;
+                  line-height: 15px;
+                  padding: 10px 1px;
+                  text-align: center;
+                  text-transform: capitalize;
+                  width: 33.33%;
+                  &:last-child {
+                    border-right: 0;
+                  }
+                  @media screen and (max-width: 1130px) {
+                    font-size: 12px;
+                    line-height: 15px;
+                    padding: 10px 2px;
+                  }
+                }
+                td {
+                  border-right: 1px solid #a1a1a1;
+                  font-size: 14px;
+                  font-weight: normal;
+                  line-height: 20px;
+                  padding: 10px 10px;
+                  text-align: center;
+                  text-transform: capitalize;
+                  width: 33.33%;
+
+                  &:last-child {
+                    border-right: 0;
+                  }
+                }
+                &.Opportunities {
+                  td {
+                    &:last-child {
+                      background-color: #d02323;
+                      color: #fff;
+                    }
+                  }
+                }
+                &.Strengths {
+                  td {
+                    &:last-child {
+                      background-color: #0598d8;
+                      border-bottom: 0;
+                      color: #fff;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        @media screen and (max-width: 1024px) {
+          width: 100%;
+        }
+        &.skill_right {
+          background-color: transparent !important;
+          background-color: #dbe8f0;
+          border: 0 !important;
+          border: 0;
+          border-radius: 10px;
+          border-radius: 10px;
+          padding: 0 !important;
+          text-align: left;
+          width: 30%;
+
+
+          @media screen and (max-width: 1024px) {
+            float: none;
+            width: 100%;
+          }
+          .top_section {
+            background-color: #fff;
+            border: 1px solid #d7d7d7;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 1%;
+            padding: 10px;
+            width: 100%;
+            .table_wrap {
+              float: left;
+              width: 75%;
+
+              @media screen and (max-width: 767px) {
+                width: auto;
+              }
+              table {
+                float: left;
+              }
+            }
+            .rubric {
+              display: inline-block;
+              float: left;
+              width: 25%;
+
+              @media screen and (max-width: 1024px) {
+                width: 17%;
+              }
+              a {
+                display: inline-block;
+
+                img {
+                  height: auto;
+                  width: 100%;
+                }
+              }
+            }
+          }
+        }
+        @media screen and (max-width: 1024px) {
+          display: inline-block;
+          float: none;
+          width: 100%;
+        }
+        &.cat_right {
+          .table_wrap {
+            table {
+              @media screen and (max-width: 1024px) {
+                width: auto !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.skill_details_outer {
+      background-color: transparent;
+
+      .inner_wrapper {
+        align-items: stretch;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: stretch;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        padding-top: 0;
+
+
+        @media screen and (max-width: 767px) {
+          display: inline-block;
+          float: none;
+          width: 100%;
+        }
+
+        .left_rating_section {
+          background-color: #fff;
+          border: 1px solid #d7d7d7;
+          border-radius: 10px;
+          padding: 10px;
+          width: 65%;
+
+          @media screen and (max-width: 1024px) {
+            height: auto !important;
+            margin-bottom: 20px;
+          }
+          @media screen and (max-width: 767px) {
+            margin-bottom: 1%;
+          }
+        }
+        .right_rating_section {
+          background-color: #fff;
+          border: 1px solid #d7d7d7;
+          border-radius: 10px;
+          display: flex;
+          margin-left: .5%;
+          padding: 10px;
+          width: 35%;
+        }
+        .common_rating {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: column;
+          flex-direction: column;
+
+          @media screen and (max-width: 767px) {
+            display: inline-block;
+            float: none;
+            width: 100%;
+          }
+        }
+        .skill_dev_plan {
+          background-color: #fff;
+          border: 1px solid #d7d7d7;
+          border-radius: 10px;
+          display: flex;
+          height: 100%;
+          padding: 10px;
+          width: 100%;
+
+          @media screen and (max-width: 767px) {
+            display: inline-block;
+          }
+
+          .box_title {
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+    &.category_details_graph {
+      border: 1px solid #d7d7d7;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    @media screen and (max-width: 1024px) {
+      padding: 0 10px;
+    }
+  }
+  .rating_desc_popup {
+    .ui-dialog-titlebar {
+      border: 0;
+      margin: 0;
+      padding: 0;
+
+      .ui-dialog-title {
+        background: #008ec3;
+        border: 0;
+        color: #fff;
+        display: inline-block;
+        font-family: "Conv_segoeuib",Sans-Serif;
+        margin: 0;
+        padding: 10px 20px;
+        text-transform: capitalize;
+        width: 100%;
+      }
+    }
+    #drupal-modal {
+      padding: 0;
+    }
+    .rating_main_wrapper {
+      border-bottom: 1px solid #ccc;
+      display: inline-block;
+      width: 100%;
+
+      .rating_heading {
+        background: #008ec3;
+        color: #fff;
+        display: inline-block;
+        font-family: $segoeui-semibold;
+        padding: 10px 20px;
+        text-transform: capitalize;
+        width: 100%;
+      }
+      .content_wrapper {
+        background: #fff;
+        display: inline-block;
+        width: 100%;
+
+        @media screen and (max-width: 767px) {
+          max-height: 170px;
+        }
+        .rating_outer_box {
+          border-bottom: 1px solid #ccc;
+          display: inline-block;
+          padding: 0 20px;
+          width: 100%;
+
+          .rating_label {
+            border-bottom: 1px solid #818181;
+            display: inline-block;
+            font-family: $segoeui-semibold;
+            padding: 10px;
+            text-transform: capitalize;
+            width: 100%;
+          }
+          .rating_desc {
+            display: inline-block;
+            padding: 10px 10px 0 10px;
+            width: 100%;
+          }
+          @media screen and (max-width: 1024px) {
+            padding: 0 10px;
+          }
+          &:last-child {
+            border-bottom: 0;
+          }
+        }
+        ul,
+        ol {
+          margin: .5em 0 1em;
+          padding: 0 0 0 2em;
+
+          li {
+            display: list-item;
+            line-height: 17px;
+            list-style-image: none;
+            list-style-type: disc;
+            margin: 0;
+            padding: 0 0 5px;
+          }
+          @media screen and (max-width: 1024px) {
+            padding: 0 0 0 1.4em;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+atlas_peer_invite.assessment:
+  path: '/assessment-invite'
+  defaults:
+    _form: '\Drupal\atlas_peer_invite\Form\AssessmentInviteForm'
+    _title: 'New Assessment'
+  requirements:
+   _permission: 'Assessment Invite Form'
+
+atlas_peer_invite.autocomplete:
+  path: '/atlas_peer_invite-autocomplete'
+  defaults:
+    _controller: '\Drupal\atlas_peer_invite\Controller\AutocompleteController::handleAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'
+
+atlas_peer_invite.take_assessment_list:
+  path: '/assessment-list'
+  defaults:
+    _controller: '\Drupal\atlas_peer_invite\Controller\TakeAssessmentList::display'
+    _title: 'Assessment List'
+  requirements:
+    _access: 'TRUE'
+  options:
+    no_cache: 'TRUE'
+
+atlas_peer_invite.begin_assessment_page:
+  path: '/begin-assessment/{hash}'
+  defaults:
+    _controller: '\Drupal\atlas_peer_invite\Controller\TakeAssessmentList::begin_assessment'
+    _title: 'Begin Assessment'
+  requirements:
+    _access: 'TRUE'
+
+atlas_peer_invite.test_email:
+  path: '/test-email'
+  defaults:
+    _controller: '\Drupal\atlas_peer_invite\Controller\TestEmail::SendMail'
+    _title: 'Assessment List'
+  requirements:
+    _access: 'TRUE'

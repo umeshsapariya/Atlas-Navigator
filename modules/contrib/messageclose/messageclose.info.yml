@@ -1,0 +1,11 @@
+name : 'Status Message Close'
+description : 'Add a close button to each status message.'
+
+# core: 8.x
+type: module
+
+# Information added by Drupal.org packaging script on 2017-10-06
+version: '8.x-1.0'
+core: '8.x'
+project: 'messageclose'
+datestamp: 1507285151

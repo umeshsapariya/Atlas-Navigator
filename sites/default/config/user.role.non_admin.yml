@@ -1,0 +1,9 @@
+uuid: c621c00c-2589-4ff1-9035-0888175a2381
+langcode: en
+status: true
+dependencies: {  }
+id: non_admin
+label: Non-Admin
+weight: 5
+is_admin: null
+permissions: {  }

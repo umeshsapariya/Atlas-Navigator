@@ -1,0 +1,3 @@
+atlas_homepage_results_chart:
+  js:
+    js/atlas_360_results.js: {}

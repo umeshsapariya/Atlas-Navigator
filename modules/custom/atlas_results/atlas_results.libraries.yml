@@ -1,0 +1,15 @@
+category_details_chart:
+  js:
+    js/category_details_chart.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once
+skill_details_chart:
+  js:
+    js/skill_details_chart.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once    
+    

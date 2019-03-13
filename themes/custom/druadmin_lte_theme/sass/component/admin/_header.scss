@@ -1,0 +1,154 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+
+.admin_custom_theme {
+  .main-header {
+    display: block;
+    position: fixed;
+    width: 100%;
+    .navbar {
+      margin-left: 0 !important;
+
+      .sidebar-menu {
+        display: none;
+      }
+    }
+    .logo {
+      background-color: #3c8dbc;
+      height: 60px;
+      padding: 8px 15px;
+      &:hover {
+        background-color: #3c8dbc;
+      }
+      @media (min-width: 768px) {
+        width: 188px !important;
+      }
+    }
+    .sidebar-toggle {
+      padding: 25px 15px;
+      &:hover {
+        background: none !important;
+      }
+    }
+  }
+  .navbar-custom-menu {
+    @media screen and (max-width: 420px) {
+      width: 55%;
+    }
+    .user-menu {
+      padding: 0;
+      a {
+        padding: 12px;
+        @media screen and (max-width: 420px) {
+          padding: 13px;
+        }
+        span {
+          display: inline-block;
+          font-size: 22px;
+          text-align: right;
+          text-transform: capitalize;
+          @media screen and (max-width: 420px) {
+            font-size: 16px;
+          }
+          &.image-wrapper {
+            float: right;
+          }
+          &.detail-wrapper {
+            span {
+              display: block;
+              margin-right: 10px;
+            }
+          }
+          &.user-designation {
+            font-family: $segoeui-regular;
+            font-size: 14px;
+            @media screen and (max-width: 420px) {
+              font-size: 12px;
+            }
+          }
+        }
+        img {
+          float: right;
+          height: 45px;
+          margin-right: 15px;
+          margin-top: 0;
+          width: 45px;
+          @media screen and (max-width: 767px) {
+            font-size: 10px;
+            margin-top: 1%;
+          }
+          @media screen and (max-width: 420px) {
+            height: 35px;
+            margin-right: 5px;
+            margin-top: 5px;
+            width: 35px;
+          }
+        }
+        &:hover {
+          background: none !important;
+        }
+      }
+      .dropdown-menu {
+        margin-top: 6px;
+        padding: 0 0 0 0;
+        li {
+          list-style-type: none;
+        }
+        .user-header {
+          p {
+            margin: 0;
+          }
+          .switch-back-wrapper {
+            margin-top: 15px;
+            a {
+              background-color: #f4f4f4;
+              border-color: #ddd;
+              color: #444;
+              padding: 10px 15px;
+              &:hover {
+                background-color: #f4f4f4 !important;
+              }
+            }
+          }
+        }
+        @media screen and (max-width: 991px) {
+          border: none;
+          margin-top: 0 !important;
+          right: 0;
+        }
+      }
+    }
+  }
+  .content-header {
+    position: relative;
+    > .breadcrumb {
+      background: transparent;
+      border-radius: 2px;
+      display: inline-block;
+      float: none;
+      font-size: 12px;
+      margin-bottom: 0;
+      margin-top: 0;
+      padding: 7px 10px;
+      position: relative;
+      right: 0;
+      top: 60px;
+      li {
+        color: #5b5b5b;
+        font-family: $segoeui-regular;
+        &:before {
+          color: #5b5b5b;
+        }
+        a {
+          color: #5b5b5b;
+          font-family: $segoeui-regular;
+          i {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

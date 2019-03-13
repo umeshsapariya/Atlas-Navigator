@@ -1,0 +1,14 @@
+{{ form | without('actions','actions.draft','actions.back','current_step','steps_count') }}
+{% if form.steps_count is not empty %}
+  <div class="bottom_content">
+    <div class="left_section">
+    <div class="progress_bar">
+    <div class="total_pages">{{ form.steps_count }}</div><div class="current_page">{{ form.current_step }}</div>
+    </div>
+    <div class="page_info">
+    	page {{ form.current_step }} of {{ form.steps_count }}
+    </div>
+    </div>
+    <div class="right_section">{{ form.actions.back }}{{ form.actions.draft }}{{ form.actions.submit }}</div>
+  </div>
+{% endif %}

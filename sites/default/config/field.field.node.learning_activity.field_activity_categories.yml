@@ -1,0 +1,43 @@
+uuid: af175124-57b9-487f-887e-d2e413127ceb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_activity_categories
+    - node.type.learning_activity
+    - paragraphs.paragraphs_type.activity_categories
+  module:
+    - entity_reference_revisions
+id: node.learning_activity.field_activity_categories
+field_name: field_activity_categories
+entity_type: node
+bundle: learning_activity
+label: 'Activity Categories'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      activity_categories: activity_categories
+    target_bundles_drag_drop:
+      category:
+        weight: 5
+        enabled: false
+      activity_categories:
+        enabled: true
+        weight: 6
+      skill:
+        weight: 6
+        enabled: false
+      skill_level_information:
+        weight: 7
+        enabled: false
+      verbatim_comments:
+        weight: 8
+        enabled: false
+field_type: entity_reference_revisions

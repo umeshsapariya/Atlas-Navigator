@@ -1,15 +1,16 @@
-# The services of the project.
-#
-# Each service listed will be deployed
-# to power your Platform.sh project.
-
 mysqldb:
-    type: mysql:10.2
+    type: "mysql:10.0"
     disk: 2048
-#
-#rediscache:
-#    type: redis:3.2
-#
-#solrsearch:
-#    type: solr:6.6
-#    disk: 1024
+    configuration:
+        schemas:
+            - atlasdb
+            - seconddb
+        endpoints:
+            atlas:
+                default_schema: atlasdb
+                privileges:
+                    atlasdb: admin
+            second:
+                default_schema: seconddb
+                privileges:
+                    seconddb: admin

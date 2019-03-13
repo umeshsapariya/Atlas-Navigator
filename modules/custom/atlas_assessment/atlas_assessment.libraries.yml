@@ -1,0 +1,7 @@
+altas_assessment_page:
+  js:
+    js/atlas_assessment.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once

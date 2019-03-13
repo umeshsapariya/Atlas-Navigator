@@ -1,0 +1,115 @@
+uuid: 1183c377-ec15-4014-92a8-0d60b4235684
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.general_profile.field_360_role
+    - field.field.profile.general_profile.field_department
+    - field.field.profile.general_profile.field_employee_id
+    - field.field.profile.general_profile.field_first_name
+    - field.field.profile.general_profile.field_job_title
+    - field.field.profile.general_profile.field_last_name
+    - field.field.profile.general_profile.field_manager
+    - field.field.profile.general_profile.field_phone
+    - field.field.profile.general_profile.field_preferred_name
+    - field.field.profile.general_profile.field_time_zone
+    - field.field.profile.general_profile.field_work_location
+    - profile.type.general_profile
+  module:
+    - telephone
+    - tzfield
+id: profile.general_profile.default
+targetEntityType: profile
+bundle: general_profile
+mode: default
+content:
+  field_360_role:
+    weight: 5
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_department:
+    weight: 8
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_employee_id:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_first_name:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_job_title:
+    weight: 4
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_last_name:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_manager:
+    weight: 6
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: entity_reference_autocomplete
+    region: content
+  field_phone:
+    weight: 10
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: telephone_default
+    region: content
+  field_preferred_name:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_time_zone:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: tzfield_default
+    region: content
+  field_work_location:
+    weight: 9
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden: {  }

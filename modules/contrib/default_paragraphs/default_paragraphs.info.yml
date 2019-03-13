@@ -1,0 +1,12 @@
+name: Default Paragraphs
+type: module
+description: Provides Paragraphs widget that allows us to select multiple paragraph types as defaults.
+# core: 8.x
+dependencies:
+  - paragraphs
+
+# Information added by Drupal.org packaging script on 2018-09-11
+version: '8.x-1.0'
+core: '8.x'
+project: 'default_paragraphs'
+datestamp: 1536654488

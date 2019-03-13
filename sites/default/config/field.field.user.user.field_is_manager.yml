@@ -1,0 +1,21 @@
+uuid: d2fd91a7-9eeb-4f69-8af1-705607f2d779
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.field_is_manager
+  module:
+    - options
+    - user
+id: user.user.field_is_manager
+field_name: field_is_manager
+entity_type: user
+bundle: user
+label: 'Is Manager'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_integer
