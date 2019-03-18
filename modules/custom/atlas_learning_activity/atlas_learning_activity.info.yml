@@ -1,0 +1,5 @@
+name: Atlas Learning Activity
+description: Learning Activity implementation.
+package: Custom
+type: module
+core: 8.x

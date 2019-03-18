@@ -1,0 +1,21 @@
+uuid: 520dfae8-2206-4ea6-80d5-61cc45e03c21
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_due_date
+    - node.type.developing_plan
+  module:
+    - datetime
+id: node.developing_plan.field_due_date
+field_name: field_due_date
+entity_type: node
+bundle: developing_plan
+label: 'Due date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -27,4 +27,7 @@ content:
     settings: {  }
     third_party_settings: {  }
     region: content
-hidden: {  }
+hidden:
+  field_activity_categories: true
+  field_activity_type: true
+  field_activity_url: true

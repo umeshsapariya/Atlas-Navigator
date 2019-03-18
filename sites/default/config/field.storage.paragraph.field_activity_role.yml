@@ -1,17 +1,16 @@
-uuid: 0bd4ecd9-b1fa-4359-9a36-daf391a9ec60
+uuid: e7238635-13d2-4b0a-a534-fd91790e03bb
 langcode: en
 status: true
 dependencies:
   module:
+    - node
     - paragraphs
 id: paragraph.field_activity_role
 field_name: field_activity_role
 entity_type: paragraph
-type: string
+type: entity_reference
 settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
+  target_type: node
 module: core
 locked: false
 cardinality: 1

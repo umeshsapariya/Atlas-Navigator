@@ -1,10 +1,12 @@
-uuid: 36f69f2c-96fc-40fc-9092-dd2e109fcbec
+uuid: 78bfbe20-95b1-4c4a-a9f6-d999b057b657
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_activity_skill
     - paragraphs.paragraphs_type.activity_categories
+  module:
+    - options
 id: paragraph.activity_categories.field_activity_skill
 field_name: field_activity_skill
 entity_type: paragraph
@@ -16,4 +18,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string
+field_type: list_integer

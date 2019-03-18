@@ -1,0 +1,38 @@
+<div class="home_dev_block">
+  <div class="dev_plan_cont scroll_div_content">
+    {% if development_plan %}
+      {% for development in development_plan %}
+        <div class="row_plan_block {{ development.class }}">
+          <div class="act_check">
+            <img src="{{base_path}}themes/custom/druadmin_lte_theme/images/checkbox.png">
+            <span class="hidded-nid">{{ development.nid }}</span>
+          </div>
+
+          <div class="act_title_details">
+
+            <div class="act_title">
+              {{ development.activity_title }}
+            </div>
+            <div class="act_detail">
+              {{ development.activity_detail }}
+            </div>
+          </div>
+          <div class="act_due">
+            <div class="due-btn {{ development.expired }}">{{ development.due_date }}</div>
+          </div>
+          <!--<div class="act_status {{ development.expired }}">
+            <div class="sts-btn"></div>
+          </div>-->
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="status-btn">
+    <div class="inprogress-btn">{{ progress_button }}
+    </div>
+    <div class="completed-btn"> {{ complete_button }}
+    </div>
+  </div>
+
+</div>

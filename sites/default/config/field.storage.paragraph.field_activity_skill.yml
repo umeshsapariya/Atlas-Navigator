@@ -1,18 +1,21 @@
-uuid: eeca06e0-dfc5-4e29-a926-dde372758d62
+uuid: 9481e9b4-eeb6-419c-b21e-63b6c581f33a
 langcode: en
 status: true
 dependencies:
   module:
+    - options
     - paragraphs
 id: paragraph.field_activity_skill
 field_name: field_activity_skill
 entity_type: paragraph
-type: string
+type: list_integer
 settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
-module: core
+  allowed_values:
+    -
+      value: 0
+      label: Select
+  allowed_values_function: ''
+module: options
 locked: false
 cardinality: 1
 translatable: true

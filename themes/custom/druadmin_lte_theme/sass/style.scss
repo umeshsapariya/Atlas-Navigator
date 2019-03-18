@@ -9,6 +9,8 @@
 
 // Theme specific.
 @import "component/admin/_common";
+@import "component/admin/checkbox-radio";
+@import "component/admin/form";
 @import "component/admin/_login";
 @import "component/admin/_homepage";
 @import "component/admin/_roles_list";
@@ -25,5 +27,6 @@
 @import "component/admin/_category_graph";
 @import "component/admin/_verbatim-comments";
 @import "component/admin/_role_dashboard";
-
+@import "component/admin/add-activity";
+@import "component/admin/development-plan-listing";
 

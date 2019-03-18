@@ -1,3 +1,7 @@
 atlas_homepage_results_chart:
   js:
     js/atlas_360_results.js: {}
+
+atlas_homepage_developing_plan:
+  js:
+    js/atlas_developing_plan.js: {}

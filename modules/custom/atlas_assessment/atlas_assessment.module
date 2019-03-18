@@ -37,6 +37,7 @@ function atlas_assessment_form_node_assessment_form_edit_form_alter(&$form, Form
     $form['revision_information']['#access'] = FALSE;
     $form['actions']['preview']['#access'] = FALSE;
   }
+  $form['field_no_of_associates']['#access'] = FALSE;
   $form['#attached']['library'][] = 'atlas_assessment/altas_assessment_page';
 }
 
@@ -117,8 +118,8 @@ function atlas_assessment_views_pre_render(\Drupal\views\ViewExecutable $view) {
 //      $query->condition('aid.relationship_tid', $relationship_tid);
 //
 //      $results = $query->execute()->fetchAll();
-//      
-          // Getroleassociates
+//
+      // Getroleassociates
       $connection = Database::getConnection();
       $associates_query = $connection->select('assessment_invite', 'ai');
       $associates_query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');

@@ -1,0 +1,7 @@
+# atlas_learning_activity.respondents:
+#   path: '/respondents'
+#   defaults:
+#     _form: '\Drupal\atlas_respondents\Form\RespondentList'
+#     _title: 'Respondents'
+#   requirements:
+#     _permission: 'access content'

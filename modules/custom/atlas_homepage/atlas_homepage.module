@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function atlas_homepage_theme($existing, $type, $theme, $path) {
+  return [
+    'developing_plan_home' => [
+      'variables' => [
+        'development_plan' => NULL,
+        'progress_button' => NULL,
+        'complete_button' => NULL,
+      ],
+    ],
+  ];
+}

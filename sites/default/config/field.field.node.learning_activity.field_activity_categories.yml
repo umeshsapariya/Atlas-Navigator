@@ -12,7 +12,7 @@ id: node.learning_activity.field_activity_categories
 field_name: field_activity_categories
 entity_type: node
 bundle: learning_activity
-label: 'Activity Categories'
+label: Categories
 description: ''
 required: false
 translatable: false

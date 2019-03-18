@@ -13,3 +13,11 @@ atlas_homepage_category.getdata:
     _format: json
   requirements:
     _permission: 'access content'
+
+atlas_homepage_developing.update:
+  path: '/atlas-homepage-developing-update'
+  defaults:
+    _controller: '\Drupal\atlas_homepage\Controller\DevelopingPlan::update'
+    _format: json
+  requirements:
+    _permission: 'access content'

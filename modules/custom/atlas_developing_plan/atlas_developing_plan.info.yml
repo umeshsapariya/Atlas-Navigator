@@ -1,0 +1,5 @@
+name: Atlas Developing plan
+type: module
+description: Custom Atlas developing plan related blocks and pages
+core: 8.x
+package: Custom

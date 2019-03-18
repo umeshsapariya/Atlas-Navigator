@@ -1,0 +1,199 @@
+.path-development-plan-details {
+  .page-title {
+    display: none;
+  }
+  .ui-dialog {
+    .container-inline {
+      display: flex;
+      width: 100%;
+      > .form-item {
+        margin-right: 15px;
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.dev-page-wrap {
+  background-color: $white-color;
+  @include border-radius(8px);
+  padding: 40px 35px;
+  @media screen and (max-width: 767px) {
+    padding: 10px;
+  }
+  .table {
+    border: none;
+    thead {
+      tr {
+        th {
+          display: none;
+        }
+      }
+    }
+    tbody {
+      tr {
+        &.selected {
+          .table-select {
+            .label {
+              &:after {
+                background-image: url("../images/tick.png");
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 70%;
+                content: "";
+                height: 30px;
+                left: 0;
+                position: absolute;
+                top: 0;
+                width: 30px;
+              }
+            }
+          }
+          td {
+            background-color: transparent;
+          }
+        }
+        td {
+          border-color: $border_mobile;
+          border-left: none;
+          border-right: none;
+          border-width: 2px;
+          font-family: $segoeui-regular;
+          vertical-align: middle;
+        }
+      }
+    }
+    .table-select {
+      width: 45px;
+      .label {
+        font-size: 0;
+        height: 30px;
+        position: relative !important;
+        width: 30px;
+        &:before {
+          border: 2px solid $border;
+          content: "";
+          height: 30px;
+          @include border-radius(7px);
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 30px;
+        }
+      }
+      .visually-hidden {
+        .activity-info {
+          clip: rect(1px, 1px, 1px, 1px);
+          height: 1px;
+          overflow: hidden;
+          position: absolute !important;
+          width: 1px;
+          word-wrap: normal;
+        }
+      }
+    }
+  }
+  .dropbutton-multiple {
+    .dropbutton-widget {
+      background-color: transparent;
+      border: none;
+      padding-right: 0;
+      .dropbutton {
+        border: none;
+        > li {
+          background-color: $level_checked;
+          @include border-radius(14px);
+          padding-bottom: 0;
+          padding-right: 26px;
+        }
+        .dropbutton-action {
+          > a {
+            color: $white-color;
+            font-family: $segoeui-regular;
+            margin-right: 0;
+            padding: 3px 13px;
+          }
+        }
+        .dropbutton-toggle {
+          border-bottom-left-radius: 0;
+          border-left: 1px solid $white-color;
+          border-top-left-radius: 0;
+          height: 26px;
+          button {
+            color: $white-color;
+            height: 100%;
+          }
+        }
+        .secondary-action {
+          border-top: 1px solid $white-color;
+          color: $white-color;
+          font-family: $segoeui-regular;
+          padding: 3px 13px;
+        }
+      }
+    }
+  }
+}
+
+.dev-page-head {
+  margin-bottom: 35px;
+  > .form-wrapper {
+    display: flex;
+    justify-content: space-between;
+    @media screen and (max-width: 767px) {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.dev-page-head-cta {
+  > .form-wrapper {
+    align-items: center;
+    display: flex;
+  }
+  .form-type-select {
+    margin: 0;
+    &:after {
+      position: absolute;
+      right: 10px;
+    }
+    select {
+      background-color: $level_background;
+      border: none;
+      border-radius: 20px;
+      padding-right: 30px;
+    }
+  }
+  .btn {
+    margin-right: 35px;
+    padding: 6px 30px !important;
+    @media screen and (max-width: 767px) {
+      margin-right: 5px;
+    }
+  }
+}
+
+.dev-page-title {
+  margin-bottom: 0;
+  @media screen and (max-width: 767px) {
+    margin-bottom: 10px;
+  }
+}
+
+.activity-info {
+  align-items: center;
+  display: flex;
+  .activity-image {
+    margin-right: 5px;
+    min-width: 50px;
+    @media screen and (max-width: 767px) {
+      min-width: 25px;
+    }
+    img {
+      height: 35px;
+      @media screen and (max-width: 767px) {
+        height: 20px;
+      }
+    }
+  }
+}

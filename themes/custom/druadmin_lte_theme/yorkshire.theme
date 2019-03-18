@@ -36,17 +36,25 @@ function yorkshire_preprocess_node(&$variables) {
   }
 }
 
+function yorkshire_preprocess_skill_details(&$variables) {
+  $block_manager = \Drupal::service('plugin.manager.block');
+  $config = [];
+
+  $skill_developing_block = $block_manager->createInstance('SkillDevelopingPlanBlock', $config);
+  $variables['skill_developing_block'] = $skill_developing_block->build();
+}
+
 function yorkshire_preprocess_html(&$variables) {
   $variables['skin'] = theme_get_setting('skin');
   $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
 
-  // Adds class for user reset page
+// Adds class for user reset page
   $path = \Drupal::request()->getpathInfo();
   $arg = explode('/', $path);
   if (isset($arg[1]) && $arg[1] == "user" && isset($arg[2]) && $arg[2] == "reset") {
     $variables['attributes']['class'][] = 'user-reset-page';
   }
-  // Add admin_custom_theme class for asassessment-form for anonymous user.
+// Add admin_custom_theme class for asassessment-form for anonymous user.
   if (isset($arg[1]) && $arg[1] == "assessment-form") {
     $variables['attributes']['class'][] = 'admin_custom_theme';
   }

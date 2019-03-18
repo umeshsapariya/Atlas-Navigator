@@ -88,7 +88,7 @@
                     if (cat_count < 5) {
                         var extra = 70;
                     }
-                    var height = cat_count * 45 + extra;
+                    var height = cat_count * 65 + extra;
                     var options = {
                         title: 'Category',
                         width: '50%',
@@ -101,7 +101,7 @@
                         chartArea: {
                             height: "90%",
                             width: "60%",
-                            bottom: '100',
+                            bottom: '80',
                             left: '20%',
                         },
                         'tooltip': {
@@ -132,12 +132,9 @@
                                 fontSize: 13
                             }
                         },
-                        //  width: $('.outer_wrapper').width()*0.85,
-                        // height: $('.outer_wrapper').height()*0.75,
-                        // chartArea:{width:'60%',height:'auto'},
                         seriesType: 'bars',
                         bar: {
-                            groupWidth: "12"
+                            groupWidth: "20"
                         },
                         annotations: {
                             textStyle: {
@@ -194,6 +191,14 @@
                             if (text.getAttribute('text-anchor') == 'end' || text.getAttribute('text-anchor') == 'start') {
                                 text.setAttribute('dominant-baseline', 'middle');
                             }
+                            if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '6' ) {
+                                text.setAttribute('x', '24%');
+                            }
+                            if ($(window).width() < 450) {
+                if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '6' ) {
+                                text.setAttribute('x', '27%');
+                            }
+            }
                         });
 
 
@@ -207,6 +212,14 @@
                             if (text.getAttribute('text-anchor') == 'end' || text.getAttribute('text-anchor') == 'start') {
                                 text.setAttribute('dominant-baseline', 'middle');
                             }
+                            if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '6' ) {
+                                text.setAttribute('x', '24%');
+                            }
+                            if ($(window).width() < 450) {
+                if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '6' ) {
+                                text.setAttribute('x', '27%');
+                            }
+            }
                         });
                     });
                     google.visualization.events.addListener(chart, 'click', function() {
@@ -218,6 +231,14 @@
                             if (text.getAttribute('text-anchor') == 'end' || text.getAttribute('text-anchor') == 'start') {
                                 text.setAttribute('dominant-baseline', 'middle');
                             }
+                            if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '6' ) {
+                                text.setAttribute('x', '24%');
+                            }
+                            if ($(window).width() < 450) {
+                if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '6' ) {
+                                text.setAttribute('x', '27%');
+                            }
+            }
                         });
                     });
                     google.visualization.events.addListener(chart, 'select', function() {
@@ -229,6 +250,14 @@
                             if (text.getAttribute('text-anchor') == 'end' || text.getAttribute('text-anchor') == 'start') {
                                 text.setAttribute('dominant-baseline', 'middle');
                             }
+                            if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '6' ) {
+                                text.setAttribute('x', '24%');
+                            }
+                            if ($(window).width() < 450) {
+                if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '6' ) {
+                                text.setAttribute('x', '27%');
+                            }
+            }
                         });
                     });
                     google.visualization.events.addListener(chart, 'onmouseout', function() {
@@ -240,6 +269,14 @@
                             if (text.getAttribute('text-anchor') == 'end' || text.getAttribute('text-anchor') == 'start') {
                                 text.setAttribute('dominant-baseline', 'middle');
                             }
+                            if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '6' ) {
+                                text.setAttribute('x', '24%');
+                            }
+                            if ($(window).width() < 450) {
+                if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '6' ) {
+                                text.setAttribute('x', '27%');
+                            }
+            }
                         });
                     });
 

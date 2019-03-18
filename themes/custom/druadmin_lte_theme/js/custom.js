@@ -2,7 +2,9 @@ $ = jQuery;
 
 // Ready function starts
 $(document).ready(function () {
-
+  $('input[type="date"]').change(function(){
+  $(this).parent().parent().find('.dev-date').html(this.value);
+});
   /* To add Mcustom Scroll - GLobal */
   $(".admin_custom_theme .content").addClass('scroll_div_content');
   $("#overall-proficiency-right tbody").addClass('scroll_div_content');
@@ -15,7 +17,7 @@ $(document).ready(function () {
    /* To add Scroll height as per page size - GLobal */
    const scrollHeight = function () {
     var heightWindow = $(window).height();
-    var height_top_strength = $('.top-strengths').height() /2 + 20;
+    var height_top_strength = $('.top-strengths').height() - $('.top-strengths table caption').outerHeight() -20;
     var left_outer_section = $('.left-outer-section').height();
     $(".admin_custom_theme .content").css({"height": heightWindow});
     $(".admin_custom_theme .content .atlasnavigator_home").css({"height": heightWindow - 120 });
@@ -30,6 +32,15 @@ $(document).ready(function () {
    $("#overall-proficiency-right tbody").css({"height": scroll_prof_box});
    var path_role_page = $('.path-role-page #left-outer-section').height() - $('.path-role-page #left-outer-section #filter-container').height() - 85;
    $(".path-role-page #left-outer-section tbody").css({"height": path_role_page});
+   var skill_dev_box = $('.skill_dev_plan').height() - 85;
+   $(".path-category-details .dev-plan-cont").css({"height": skill_dev_box    });
+   var home_content = $('.atlas-home .content').height();   
+   var left_box_size = home_content - home_content*5/100;
+   var scroll_ht = left_box_size -200;
+   $(".atlas-home  .chart_container").css({"height":scroll_ht});
+   var divide_size = left_box_size/2;
+   var dev_plan_scroll = divide_size - $('.box_title.blue_title').height() - $('.status-btn').height() -30;
+   $(".atlas-home .home_dev_block .dev_plan_cont").css({"height":dev_plan_scroll});
   }
    /* End croll height as per page size - GLobal*/
 
@@ -144,6 +155,7 @@ if ($(window).width() < 900) {
       $('#node-assessment-form-form .clearfix').show();
     }
   });
-/* End Display form field on value present - Multistep Assessment Page*/
+  /* End Display form field on value present - Multistep Assessment Page*/
+  jQuery('.paragraph-type-top .paragraphs-dropbutton-wrapper input[type=submit]').val('X');
 });
 

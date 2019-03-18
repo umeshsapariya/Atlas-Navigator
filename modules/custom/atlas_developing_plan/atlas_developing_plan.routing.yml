@@ -1,0 +1,33 @@
+development-plan-details-form:
+  path: 'development-plan-details'
+  defaults:
+    _form: '\Drupal\atlas_developing_plan\Form\DevelopmentPlanDetails'
+    _title: 'Development Plan'
+  requirements:
+    _permission: 'access content'
+
+change-activity-due-date-form:
+  path: 'change-activity-due-date/{id}'
+  defaults:
+    _form: '\Drupal\atlas_developing_plan\Form\ChangeActivityDueDate'
+    _title: 'Activity Due Date'
+  requirements:
+    _permission: 'access content'
+    
+confirm-remove-activity-form:
+  path: 'confirm-remove-activity/{id}'
+  defaults:
+    _form: '\Drupal\atlas_developing_plan\Form\ConfirmRemoveActivity'
+    _title: 'Confirm Activity Remove'
+  requirements:
+    _permission: 'access content'
+
+development-plan.activity_popup:
+  path: 'development-plan/activity/{activity_id}'
+  defaults:
+    _title: 'Modal'
+    _controller: '\Drupal\atlas_developing_plan\Controller\ActivityPopupController::display'
+  requirements:
+    _role: 'authenticated'
+    
+    

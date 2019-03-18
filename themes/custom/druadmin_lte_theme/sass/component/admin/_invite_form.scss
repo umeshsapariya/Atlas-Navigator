@@ -208,15 +208,7 @@
       .form-type-select {
         position: relative;
         &:after {
-          color: #1f363f  ;
-          content: "\e911";
-          cursor: pointer;
-          display: inline-block;
           float: left;
-          font-family: "icomoon";
-          pointer-events: none;
-          position: relative;
-          right: 23px;
           top: 7px;
         }
         select {

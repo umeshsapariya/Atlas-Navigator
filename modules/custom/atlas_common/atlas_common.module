@@ -160,10 +160,10 @@ function get_top_strengths_opportunities($role_id, $type, $number) {
             $floor_target_level = floor($normalised_target_proficiency_level * 2) / 2;
             $gap = $score - $floor_target_level;
             if ($gap >= 0) {
-              $all_strenghts[] = ["name" => $skill_name[0]['value'], "360_score" => $score, "gap" => $gap];
+              $all_strenghts[$skill_id] = ["name" => $skill_name[0]['value'], "360_score" => $score, "gap" => $gap];
             }
             else {
-              $all_opportunities[] = ["name" => $skill_name[0]['value'], "360_score" => $score, "gap" => $gap];
+              $all_opportunities[$skill_id] = ["name" => $skill_name[0]['value'], "360_score" => $score, "gap" => $gap];
             }
           }
         }
@@ -196,4 +196,18 @@ function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
   }
 
   array_multisort($sort_col, $dir, $arr);
+}
+
+/**
+ * Implements hook_system_breadcrumb_alter().
+ */
+function atlas_common_system_breadcrumb_alter(\Drupal\Core\Breadcrumb\Breadcrumb &$breadcrumb, \Drupal\Core\Routing\RouteMatchInterface $route_match, array $context) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name == "entity.node.edit_form") {
+    $breadcrumb_links = $breadcrumb->getLinks();
+    $node = \Drupal::routeMatch()->getParameter('node');
+    $breadcrumb_links[1]->setText($node->getTitle());
+    return $breadcrumb_links;
+  }
+  return $breadcrumb;
 }

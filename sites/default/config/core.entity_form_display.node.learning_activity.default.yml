@@ -22,8 +22,8 @@ content:
     weight: 1
     settings:
       rows: 9
+      placeholder: Text
       summary_rows: 3
-      placeholder: ''
     third_party_settings: {  }
     region: content
   field_activity_categories:
@@ -47,7 +47,7 @@ content:
   field_activity_url:
     weight: 3
     settings:
-      placeholder_url: ''
+      placeholder_url: www.book.com
       placeholder_title: ''
     third_party_settings: {  }
     type: link_default
@@ -58,7 +58,7 @@ content:
     region: content
     settings:
       size: 60
-      placeholder: ''
+      placeholder: 'New Example Activity'
     third_party_settings: {  }
 hidden:
   created: true

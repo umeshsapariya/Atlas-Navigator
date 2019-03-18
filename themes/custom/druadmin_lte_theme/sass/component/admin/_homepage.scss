@@ -17,7 +17,7 @@ body.admin_custom_theme {
 
       .outer_wrapper {
         display: flex;                 /* nested flex container */
-        display: inline-block;
+        /*display: inline-block;*/
         flex-direction: column;
         float: left;
         width: 59%;
@@ -147,7 +147,7 @@ body.admin_custom_theme {
                   }
                   @media screen and (max-width: 767px) {
                     margin-right: 3px;
-                    padding: 2px 3px;
+                    padding: 6px 3px;
                   }
                   a {
                     color: $white-color;
@@ -285,8 +285,8 @@ body.admin_custom_theme {
           &.welcome_text {
             background-color: transparent;
             border: 0;
-            padding: 0;
             padding: 0 15px;
+            padding: 0;
             position: relative;
 
             @media screen and (max-width: 767px) {
@@ -462,6 +462,87 @@ body.admin_custom_theme {
       margin-bottom: 0;
       .tab-content {
         padding-bottom: 0;
+      }
+    }
+    .home_dev_block {
+      .row_plan_block {
+        border-bottom: 1px solid #d7d7d7;
+        display: table;
+        width: 100%;
+        .act_check {
+          display: table-cell;
+          display: inline-block;
+          vertical-align: middle;
+          width: 10%;
+          img {
+            height: 20px;
+            width: 20px;
+          }
+        }
+        .act_title_details {
+          display: table-cell;
+          display: inline-block;
+          padding: 10px;
+          vertical-align: middle;
+          width: 65%;
+          .act_title {
+            color: #416e7f;
+            font-family: $segoeui-regular;
+            text-transform: capitalize;
+          }
+          .act_detail {
+            color: #5e5e5e;
+            font-family: $segoeui-regular;
+            font-size: 12px;
+            text-transform: capitalize;
+          }
+        }
+        .act_due {
+          display: table-cell;
+          display: inline-block;
+          min-width: 80px;
+          padding: 10px;
+          vertical-align: middle;
+          width: 20%;
+          .due-btn {
+            background-color: #d0cdc5;
+            border-radius: 25px;
+            color: #1d313a;
+            font-size: 12px;
+            padding: 5px;
+            text-align: center;
+            &.not-expired {
+              font-family: $segoeui-regular;
+            }
+            &.expired {
+              background-color: #ff2f2f;
+              /*color: #fff;*/
+            }
+          }
+        }
+      }
+    }
+    .status-btn {
+      text-align: center;
+      div {
+        display: inline-block;
+        input {
+          box-shadow: none;
+          margin: 10px;
+          padding: 6px 30px;
+          text-transform: capitalize;
+          &.inactive {
+            background-color: #e2e2e2;
+            border-color: #e2e2e2;
+            color: #5e5e5e;
+          }
+          @media screen and (max-width: 1100px) {
+            padding: 6px 15px;
+          }
+          @media screen and (max-width: 930px) {
+            margin: 10px 5px;
+          }
+        }
       }
     }
   }

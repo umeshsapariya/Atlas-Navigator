@@ -194,7 +194,7 @@
       margin-left: 2.5%;
       width: 45%;
       @media (max-width: 1024px) {
-        width: 100%;
+        width: 80%;
       }
 
       .form-item {
@@ -208,25 +208,13 @@
         width: 100%;
       }
     }
-    .field--name-field-activity {
+    .field--name-field-assigned-activity {
       display: inline-block;
       float: right;
       width: 35%;
-      .js-form-wrapper {
-        em,
-        strong {
-          display: none;
-        }
-      }
-      .field--name-field-url {
-        .description {
-          display: none;
-        }
-      }
-      .js-form-type-textarea {
-        .label {
-          float: none;
-        }
+      @media (max-width: 1024px) {
+        float: none;
+        width: 80%;
       }
     }
 
@@ -337,8 +325,8 @@
       width: 100% ;
 
       .label {
-        color: $base-color;
         color: $level_color;
+        color: $base-color;
         display: inline-block;
         float: left;
         font-family: $segoeui-semibold;

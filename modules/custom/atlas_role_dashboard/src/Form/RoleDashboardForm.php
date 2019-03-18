@@ -8,6 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\Core\Database\Database;
+use Drupal\node\Entity\Node;
 
 /**
  * Returns Role Page.
@@ -30,9 +31,12 @@ class RoleDashboardForm extends FormBase {
     $form_state->setFormState([
       'role_id' => $role_id,
     ]);
+    // To get role title.
+    $role = Node::load($role_id);
+    $role_name = $role->get('title')->value;
     $form['lef_section'] = [
       '#type' => 'container',
-      '#prefix' => '<div id="left-outer-section"  class="outer-section"><div class="insert_position_label">insert position name</div>',
+      '#prefix' => '<div id="left-outer-section"  class="outer-section"><div class="insert_position_label">'.$role_name.'</div>',
       '#suffix' => '</div>',
       '#attached' =>
       [
@@ -47,7 +51,7 @@ class RoleDashboardForm extends FormBase {
     ];
 
     $filter_by_role = [
-      t('Select Role'),
+      t('Everyone'),
       t('Primary role only'),
       t('Other roles'),
     ];
@@ -121,6 +125,7 @@ class RoleDashboardForm extends FormBase {
           'type' => 'none',
         ],
       ],
+      '#default_value' => 1,
     ];
 
     $header_table = ['Name', 'Average skill score'];
@@ -358,11 +363,13 @@ class RoleDashboardForm extends FormBase {
     $query->join('assessment_invite', 'ai', 'ai.invite_id = aid.invite_id');
     $query->join('assessment_invite', 'ai', 'ai.invite_id = aid.invite_id');
     $query->join('profile', 'pr', 'pr.uid = ai.uid');
+    $query->join('users_field_data', 'u', 'u.uid = ai.uid');
     $query->fields('ai', ['uid']);
     $query->fields('aid', ['invite_id']);
     $query->condition('ai.role_id', $role_id);
     $query->condition('aid.completed', 1);
     $query->condition('aid.relationship_tid', $relationship_tid);
+    $query->condition('u.status', 1);
     $query->orderBy('aid.invite_id', 'DESC');
     $query->distinct();
     $user_data = $query->execute()->fetchAll();

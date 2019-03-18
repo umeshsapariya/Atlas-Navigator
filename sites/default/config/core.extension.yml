@@ -5,7 +5,9 @@ module:
   atlas_assessment: 0
   atlas_clone_paragraphs: 0
   atlas_common: 0
+  atlas_developing_plan: 0
   atlas_homepage: 0
+  atlas_learning_activity: 0
   atlas_multistep_login: 0
   atlas_overall_proficiency: 0
   atlas_peer_invite: 0

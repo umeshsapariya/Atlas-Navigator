@@ -35,7 +35,7 @@
     var options = {
             title: 'Category',
             width: '70%',
-            height: cat_count*55 + 20,
+            height: cat_count*65 + 20,
             axisTitlesPosition: 'out',
             'isStacked': true,
             pieSliceText: 'percentage',
@@ -62,7 +62,7 @@
             // height: $('.outer_wrapper').height()*0.75,
             // chartArea:{width:'60%',height:'auto'},
             seriesType: 'bars',
-            bar: {groupWidth: "12"},
+            bar: {groupWidth: "20"},
             annotations: {
               textStyle: {
                 fontName: 'Times-Roman',
@@ -106,11 +106,14 @@
             if (text.getAttribute('text-anchor') == 'end') {
                 text.setAttribute('dominant-baseline', 'middle');
             }
-            // if (text.getAttribute('text-anchor') == 'start' && text.textContent == 0) {
-            //       text.textContent = '';
-            //       text.setAttribute('opacity', '0');
-            //       text.setAttribute('fill', '#ffffff');
-            // }
+           if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '2' ) {
+                                text.setAttribute('x', '24%');
+                            }
+                            if ($(window).width() < 450) {
+                if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '2' ) {
+                                text.setAttribute('x', '27%');
+                            }
+            }
         });
         // $("rect[fill-opacity=0]").remove();
       });
@@ -123,6 +126,14 @@
             if (text.getAttribute('text-anchor') == 'end') {
                 text.setAttribute('dominant-baseline', 'middle');
             }
+            if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '2' ) {
+                                text.setAttribute('x', '24%');
+                            }
+                            if ($(window).width() < 450) {
+                if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '2' ) {
+                                text.setAttribute('x', '27%');
+                            }
+            }
         });
       });
       google.visualization.events.addListener(chart, 'click', function (event) { 
@@ -133,6 +144,14 @@
             }
             if (text.getAttribute('text-anchor') == 'end') {
                 text.setAttribute('dominant-baseline', 'middle');
+            }
+            if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '2' ) {
+                                text.setAttribute('x', '24%');
+                            }
+                            if ($(window).width() < 450) {
+                if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '2' ) {
+                                text.setAttribute('x', '27%');
+                            }
             }
         });
       }); 
@@ -145,6 +164,14 @@
             if (text.getAttribute('text-anchor') == 'end') {
                 text.setAttribute('dominant-baseline', 'middle');
             }
+            if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '2' ) {
+                                text.setAttribute('x', '24%');
+                            }
+                            if ($(window).width() < 450) {
+                if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '2' ) {
+                                text.setAttribute('x', '27%');
+                            }
+            }
         });
       });
        google.visualization.events.addListener(chart, 'onmouseout', function (event) { 
@@ -155,6 +182,14 @@
             }
             if (text.getAttribute('text-anchor') == 'end') {
                 text.setAttribute('dominant-baseline', 'middle');
+            }
+            if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '2' ) {
+                                text.setAttribute('x', '24%');
+                            }
+                            if ($(window).width() < 450) {
+                if (text.getAttribute('text-anchor') == 'end' && text.getAttribute('font-size')  == '2' ) {
+                                text.setAttribute('x', '27%');
+                            }
             }
         });
       });   

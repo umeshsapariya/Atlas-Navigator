@@ -60,6 +60,5 @@ Drupal.behaviors.atlas_assessmentform = {
         }
       }
     });
-    jQuery('.paragraph-type-top .paragraphs-dropbutton-wrapper input[type=submit]').val('X'); 
   }
 };
