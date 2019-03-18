@@ -237,9 +237,14 @@ class DevelopmentPlanDetails extends FormBase {
     $nodes = Node::load($development_nid);
     $development_plan_completed_date = '';
     $development_plan_date = $nodes->get('field_due_date')->getValue()[0]['value'];
+
     if (isset ($nodes->get('field_completed_date')->getValue()[0]['value']))
     $development_plan_completed_date = $nodes->get('field_completed_date')->getValue()[0]['value'];
-    if (isset($development_plan_completed_date)) {
+    
+    // To check developement activity is completed 
+    
+    $development_status = $nodes->get('field_completed')->getValue()[0]['value'];
+    if (isset($development_plan_completed_date) && $development_status) {
       $development_plan_date = new DrupalDateTime($development_plan_completed_date, date_default_timezone_get());
    
     }else {

@@ -67,6 +67,11 @@ class SkillDevelopingPlan extends FormBase {
       '#attributes' => ['class' => ['dev-head']],
     ];
     // Development title.
+
+    $form['head']['title'] = [
+      '#markup' => '<div class="box_title blue_title" rel="box1"><a href="/development-plan-details">Development plan</a></div>',
+    ];
+
     // Development select list.
 
     if ($skill_related_activity) {

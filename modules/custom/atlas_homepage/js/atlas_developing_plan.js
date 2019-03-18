@@ -21,7 +21,7 @@ $(function () {
   $('.row_plan_block.plan_completed').hide();
   $('.inprogress-btn input').click(function () {
     $(this).removeClass('inactive');
-     $('.completed-btn input').addClass('inactive');
+    $('.completed-btn input').addClass('inactive');
     $('.dev_plan_cont .row_plan_block.plan_in_pregress').show();
     $('.dev_plan_cont .row_plan_block.plan_completed').hide();
   });
