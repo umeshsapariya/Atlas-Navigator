@@ -1,0 +1,14 @@
+uuid: 8ad4ebac-55fb-4115-815a-68a2c8677396
+langcode: en
+status: '1'
+dependencies: {  }
+id: assessment_list
+label: 'Assessment list'
+message: 'No'
+path: /assessment-list
+redirect_path: /
+checked_for: Role
+negate: false
+user: null
+roles:
+  anonymous: anonymous

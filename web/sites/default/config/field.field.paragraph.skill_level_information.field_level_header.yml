@@ -1,0 +1,19 @@
+uuid: 06c3a058-bac7-4e3f-8024-f8adeba1d334
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_level_header
+    - paragraphs.paragraphs_type.skill_level_information
+id: paragraph.skill_level_information.field_level_header
+field_name: field_level_header
+entity_type: paragraph
+bundle: skill_level_information
+label: 'Level Header'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

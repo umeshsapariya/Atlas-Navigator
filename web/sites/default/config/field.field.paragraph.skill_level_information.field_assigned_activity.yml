@@ -1,0 +1,28 @@
+uuid: 14e461d8-9df9-4d11-93dd-8d58b1ac3663
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_assigned_activity
+    - node.type.learning_activity
+    - paragraphs.paragraphs_type.skill_level_information
+id: paragraph.skill_level_information.field_assigned_activity
+field_name: field_assigned_activity
+entity_type: paragraph
+bundle: skill_level_information
+label: 'Assigned Activity'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      learning_activity: learning_activity
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

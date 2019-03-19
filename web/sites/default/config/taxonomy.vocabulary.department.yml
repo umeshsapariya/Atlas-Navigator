@@ -1,0 +1,9 @@
+uuid: dfb02d05-40eb-4d13-b7f4-72a9ee816372
+langcode: en
+status: true
+dependencies: {  }
+name: Department
+vid: department
+description: 'Department For User Profile'
+hierarchy: 0
+weight: 0

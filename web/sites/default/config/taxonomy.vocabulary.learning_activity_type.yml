@@ -1,0 +1,9 @@
+uuid: 3df65c2e-b134-4698-b9e3-b653af594281
+langcode: en
+status: true
+dependencies: {  }
+name: 'Learning activity type'
+vid: learning_activity_type
+description: ''
+hierarchy: 0
+weight: 0

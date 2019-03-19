@@ -1,0 +1,39 @@
+uuid: ff7d1453-e8f4-4630-a30c-171a5ad14e3c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.category.field_new_category
+    - field.field.paragraph.category.field_skills
+    - paragraphs.paragraphs_type.category
+  module:
+    - paragraphs
+id: paragraph.category.default
+targetEntityType: paragraph
+bundle: category
+mode: default
+content:
+  field_new_category:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: 'Enter Category'
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_skills:
+    type: entity_reference_paragraphs
+    weight: 1
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

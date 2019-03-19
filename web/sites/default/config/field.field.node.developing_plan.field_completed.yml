@@ -1,0 +1,23 @@
+uuid: ff5a776f-a834-479d-b051-2339dba0c1cf
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_completed
+    - node.type.developing_plan
+id: node.developing_plan.field_completed
+field_name: field_completed
+entity_type: node
+bundle: developing_plan
+label: Completed
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

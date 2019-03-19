@@ -1,0 +1,21 @@
+uuid: 01a451fb-cc29-4f29-856f-1d70672c75a2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_activity_category
+    - paragraphs.paragraphs_type.activity_categories
+  module:
+    - options
+id: paragraph.activity_categories.field_activity_category
+field_name: field_activity_category
+entity_type: paragraph
+bundle: activity_categories
+label: Category
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

@@ -1,0 +1,23 @@
+uuid: fbe303a6-7393-49cc-9256-73aa049e5e86
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_number_of_levels
+    - paragraphs.paragraphs_type.skill
+  module:
+    - options
+id: paragraph.skill.field_number_of_levels
+field_name: field_number_of_levels
+entity_type: paragraph
+bundle: skill
+label: 'Number of levels'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 1
+default_value_callback: ''
+settings: {  }
+field_type: list_integer

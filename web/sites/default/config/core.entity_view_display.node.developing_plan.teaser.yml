@@ -1,0 +1,25 @@
+uuid: 28174a6e-71ad-45a3-bc91-b0b4f54258e5
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - node.type.developing_plan
+  module:
+    - user
+id: node.developing_plan.teaser
+targetEntityType: node
+bundle: developing_plan
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_assigned_user: true
+  field_completed: true
+  field_completed_date: true
+  field_due_date: true
+  field_learning_activity: true

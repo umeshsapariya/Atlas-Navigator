@@ -1,0 +1,21 @@
+uuid: 2830f97d-b167-4645-a00c-6724be1f80ca
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_level_description
+    - paragraphs.paragraphs_type.skill_level_information
+  module:
+    - text
+id: paragraph.skill_level_information.field_level_description
+field_name: field_level_description
+entity_type: paragraph
+bundle: skill_level_information
+label: 'Level Description'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

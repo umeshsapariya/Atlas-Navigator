@@ -1,0 +1,27 @@
+uuid: 22151cd4-5da8-4eca-9a61-95d3b4825c58
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - yorkshire
+_core:
+  default_config_hash: 7rR9chwXvdM2H8OYMAYx9Zj3GGlPMrZp_M3ZA4thYTk
+id: yorkshire_page_title
+theme: yorkshire
+region: content
+weight: -9
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  provider: core
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: "/home\r\n/begin-assessment/*\r\n/overall-proficiency-details/*\r\n/category_details/*\r\n/skill_details/*\r\n/verbatim-comments\r\n/respondents"
+    negate: true
+    context_mapping: {  }

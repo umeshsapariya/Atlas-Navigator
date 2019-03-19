@@ -1,0 +1,34 @@
+uuid: 5a8f86a8-7974-4d7e-a12b-6523a6c98652
+langcode: en
+status: true
+dependencies:
+  module:
+    - atlas_multistep_login
+    - system
+    - user
+  theme:
+    - bartik
+id: multisteploginblock
+theme: bartik
+region: content
+weight: 0
+provider: null
+plugin: atlas_multistep_login_block
+settings:
+  id: atlas_multistep_login_block
+  label: 'Multi Step Login block'
+  provider: atlas_multistep_login
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }
+  user_role:
+    id: user_role
+    roles:
+      anonymous: anonymous
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

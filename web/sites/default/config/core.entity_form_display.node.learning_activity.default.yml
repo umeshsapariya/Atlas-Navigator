@@ -1,0 +1,69 @@
+uuid: 3bbc54a9-7d38-4fe7-918f-f665b0409f17
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.learning_activity.body
+    - field.field.node.learning_activity.field_activity_categories
+    - field.field.node.learning_activity.field_activity_type
+    - field.field.node.learning_activity.field_activity_url
+    - node.type.learning_activity
+  module:
+    - link
+    - paragraphs
+    - text
+id: node.learning_activity.default
+targetEntityType: node
+bundle: learning_activity
+mode: default
+content:
+  body:
+    type: text_textarea_with_summary
+    weight: 1
+    settings:
+      rows: 9
+      placeholder: Text
+      summary_rows: 3
+    third_party_settings: {  }
+    region: content
+  field_activity_categories:
+    type: entity_reference_paragraphs
+    weight: 26
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_activity_type:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_activity_url:
+    weight: 3
+    settings:
+      placeholder_url: www.book.com
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: 'New Example Activity'
+    third_party_settings: {  }
+hidden:
+  created: true
+  path: true
+  promote: true
+  status: true
+  sticky: true
+  uid: true

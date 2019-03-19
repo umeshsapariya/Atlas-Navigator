@@ -1,0 +1,40 @@
+uuid: c6722f31-bcbd-4a02-8a79-00c5b09ed53d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_category
+    - node.type.assessment_form
+    - paragraphs.paragraphs_type.category
+  module:
+    - entity_reference_revisions
+id: node.assessment_form.field_category
+field_name: field_category
+entity_type: node
+bundle: assessment_form
+label: Category
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      category: category
+    target_bundles_drag_drop:
+      category:
+        enabled: true
+        weight: 4
+      skill:
+        weight: 5
+        enabled: false
+      skill_level_information:
+        weight: 6
+        enabled: false
+      verbatim_comments:
+        weight: 8
+        enabled: false
+field_type: entity_reference_revisions

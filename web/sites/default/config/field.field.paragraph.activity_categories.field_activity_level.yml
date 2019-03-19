@@ -1,0 +1,21 @@
+uuid: 1b204fed-3415-4f5e-82ce-b4b1b88f0f74
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_activity_level
+    - paragraphs.paragraphs_type.activity_categories
+  module:
+    - options
+id: paragraph.activity_categories.field_activity_level
+field_name: field_activity_level
+entity_type: paragraph
+bundle: activity_categories
+label: Level
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_integer
