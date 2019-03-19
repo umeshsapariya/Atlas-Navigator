@@ -31,7 +31,6 @@ function atlas_assessment_form_alter(&$form, $form_state, $form_id) {
  * Implements hook_form_FORM_ID_edit_form_alter().
  */
 function atlas_assessment_form_node_assessment_form_edit_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
-
   $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
   if (!in_array('administrator', $user->getRoles())) {
     $form['revision_information']['#access'] = FALSE;
