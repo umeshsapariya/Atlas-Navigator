@@ -4,13 +4,13 @@ database:
     configuration:
         schemas:
             - atlasdb
-            - seconddb
+            - luckcompaniesdb
         endpoints:
             atlas:
                 default_schema: atlasdb
                 privileges:
                     atlasdb: admin
             second:
-                default_schema: seconddb
+                default_schema: luckcompaniesdb
                 privileges:
-                    seconddb: admin
+                    luckcompaniesdb: admin

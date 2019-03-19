@@ -16,7 +16,7 @@ type: "php:7.2"
 # side is in the form `<service name>:<endpoint name>`.
 relationships:
     atlas: "database:atlas"
-    second: "database:second"
+    luckcompanies: "database:luckcompanies"
 #    solr: 'solrsearch:solr'
 #    redis: 'rediscache:redis'
 
@@ -58,7 +58,7 @@ web:
             # The folder from which to serve static assets, for this location.
             #
             # This is a filesystem path, relative to the application root.
-            root: ""
+            root: "web"
 
             # How long to allow static assets from this location to be cached.
             #

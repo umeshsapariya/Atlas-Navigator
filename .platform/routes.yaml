@@ -7,6 +7,6 @@
     type: upstream
     upstream: "app:http"
 
-"https://second.{default}/":
+"https://luckcompanies.{default}/":
     type: upstream
     upstream: "app:http"
