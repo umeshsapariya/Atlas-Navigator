@@ -10,7 +10,7 @@ database:
                 default_schema: atlasdb
                 privileges:
                     atlasdb: admin
-            second:
+            luckcompanies:
                 default_schema: luckcompaniesdb
                 privileges:
                     luckcompaniesdb: admin
