@@ -15,8 +15,8 @@ type: "php:7.2"
 # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
 # side is in the form `<service name>:<endpoint name>`.
 relationships:
-    atlas: "database:atlas"
-    luckcompanies: "database:luckcompanies"
+    atlas: "mysqldb:atlas"
+    luckcompanies: "mysqldb:luckcompanies"
 #    solr: 'solrsearch:solr'
 #    redis: 'rediscache:redis'
 
@@ -27,8 +27,8 @@ disk: 2048
 # directory paths, relative to the application root. The values are strings such as
 # 'shared:files/PATH', where PATH is a relative path under the mount's source directory.
 mounts:
-    "/sites/default/files": "shared:files/files"
-    "/web/sites/second/files": "shared:files/files-second"
+    "/web/sites/default/files": "shared:files/files-atlas"
+    "/web/sites/luckcompanies/files": "shared:files/files-luckcompanies"
     "/tmp": "shared:files/tmp"
     "/private": "shared:files/private"
     "/.drush": "shared:files/.drush"
@@ -39,16 +39,14 @@ mounts:
 build:
     flavor: composer
 # The hooks executed at various points in the lifecycle of the application.
-#hooks:
-# The deploy hook runs after your application has been deployed and started.
-#    deploy: |
-#        set -e
-#        ./drush/platformsh_generate_drush_yml.php
-#        cd web
-#        drush -y cache-rebuild
-#        drush -y updatedb
-#        drush -y config-import
-#        drush -y entup
+hooks:
+ #The deploy hook runs after your application has been deployed and started.
+    deploy: |
+     cd web
+     drush -y cache-rebuild
+     drush -y updatedb
+     drush -y config-import
+     drush -y entup
 
 # The configuration of app when it is exposed to the web.
 web:
@@ -80,8 +78,8 @@ web:
             # Rules for specific URI patterns.
             rules:
                 # Allow access to common static files.
-                ? '\.(jpe?g|png|gif|svgz?|css|js|map|ico|bmp|eot|woff2?|otf|ttf)$'
-                : allow: true
+                ? '\.(jpe?g|png|gif|svgz?|css|js|map|ico|bmp|eot|woff2?|otf|ttf)$':
+                 allow: true
                 '^/robots\.txt$':
                     allow: true
                 '^/sitemap\.xml$':
