@@ -21,6 +21,7 @@ build:
 relationships:
     atlas: 'mysqldb:atlas'
     luckcompanies: 'mysqldb:luckcompanies'
+    atlastenant: 'mysqldb:atlastenant'
 #    solr: 'solrsearch:solr'
 #    redis: 'rediscache:redis'
 

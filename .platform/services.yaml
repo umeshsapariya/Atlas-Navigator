@@ -5,6 +5,7 @@ mysqldb:
         schemas:
             - atlasdb
             - luckcompaniesdb
+            - atlastenantdb
         endpoints:
             atlas:
                 default_schema: atlasdb
@@ -14,3 +15,7 @@ mysqldb:
                 default_schema: luckcompaniesdb
                 privileges:
                     luckcompaniesdb: admin
+            atlastenant:
+                default_schema: atlastenantdb
+                privileges:
+                    atlastenantdb: admin
