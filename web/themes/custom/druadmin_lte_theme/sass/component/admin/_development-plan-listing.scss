@@ -93,7 +93,8 @@
       }
     }
   }
-  .dropbutton-multiple {
+  .dropbutton-multiple,
+  .dropbutton-single {
     .dropbutton-widget {
       background-color: transparent;
       border: none;
@@ -111,7 +112,10 @@
             color: $white-color;
             font-family: $segoeui-regular;
             margin-right: 0;
-            padding: 3px 13px;
+            padding: 5px 13px;
+          }
+          .ajax-progress-throbber {
+            display: none;
           }
         }
         .dropbutton-toggle {
@@ -133,6 +137,16 @@
       }
     }
   }
+  .atlas-developing-plan-details-form {
+    td {
+      color: #416e7f;
+      font-family: $segoeui-regular;
+      .dropbutton-multiple,
+      .dropbutton-single {
+        padding-right: 3em;
+      }
+    }
+  }
 }
 
 .dev-page-head {
@@ -147,9 +161,32 @@
 }
 
 .dev-page-head-cta {
+  .activity-info-btn {
+    a {
+      padding: 8px 25px;
+      &:hover {
+        border: none;
+      }
+      @media screen and (max-width: 767px) {
+        margin: 6px 14px;
+      }
+    }
+    @media screen and (max-width: 767px) {
+      margin: 10px auto;
+    }
+  }
   > .form-wrapper {
     align-items: center;
     display: flex;
+    @media screen and (max-width: 767px) {
+      flex-wrap: wrap;
+    }
+    input {
+      text-transform: capitalize;
+      @media screen and (max-width: 767px) {
+        margin: 10px auto 10px;
+      }
+    }
   }
   .form-type-select {
     margin: 0;
@@ -163,9 +200,12 @@
       border-radius: 20px;
       padding-right: 30px;
     }
+    @media screen and (max-width: 767px) {
+      margin: 5px auto;
+    }
   }
   .btn {
-    margin-right: 35px;
+    /*margin-right: 35px;*/
     padding: 6px 30px !important;
     @media screen and (max-width: 767px) {
       margin-right: 5px;
@@ -194,6 +234,76 @@
       @media screen and (max-width: 767px) {
         height: 20px;
       }
+    }
+  }
+  .use-ajax {
+    color: #416e7f;
+    font-family: $segoeui-regular;
+    text-transform: capitalize;
+  }
+}
+
+
+.atlas-developing-plan-details-form {
+  tbody {
+    tr {
+      height: 70px;
+    }
+  }
+}
+
+.change-activity-due-date-form {
+  .js-form-item-date-time {
+    display: none;
+  }
+  .form-item-date-date {
+    position: relative;
+    &:after {
+      color: #1f363f;
+      content: "\e911";
+      cursor: pointer;
+      display: inline-block;
+      font-family: "icomoon";
+      pointer-events: none;
+      position: absolute;
+      right: 23px;
+      top: 7px;
+    }
+  }
+}
+
+.add-development-plan-form {
+  .form-type-textarea {
+    label {
+      float: none;
+    }
+  }
+  .form-type-select {
+    &:after {
+      position: absolute;
+      right: 11px;
+      top: 33px;
+    }
+    select {
+      @media screen and (max-width: 767px) {
+        width: 100%;
+      }
+    }
+  }
+
+  .js-form-type-date {
+    position: relative;
+    width: 200px;
+    &::after {
+      color: #1f363f;
+      content: "\e911";
+      cursor: pointer;
+      display: inline-block;
+      font-family: "icomoon";
+      pointer-events: none;
+      position: absolute;
+      right: 23px;
+      top: 33px;
     }
   }
 }

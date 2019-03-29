@@ -1,5 +1,5 @@
 atlas_results.result_360_skill_relationship:
-  path: '/category_details/{category_id}/{skill_id}'
+  path: '/category_details/{invite_id}/{category_id}/{skill_id}'
   defaults:
     _controller: '\Drupal\atlas_results\Controller\SkillDetails::display'
     _title: 'Skill'
@@ -8,7 +8,7 @@ atlas_results.result_360_skill_relationship:
 
 
 atlas_results.result_360_skill:
-  path: '/category_details/{category_id}'
+  path: '/category_details/{invite_id}/{category_id}'
   defaults:
     _controller: '\Drupal\atlas_results\Controller\CategoryDetails::display'
     _title: 'Category'

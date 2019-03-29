@@ -163,3 +163,11 @@
 .path-thank-you {
   @extend .admin_custom_theme;
 }
+
+.user-register-form {
+  .form-type-select {
+    &:after {
+      top: 0;
+    }
+  }
+}

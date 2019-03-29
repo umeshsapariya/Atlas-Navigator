@@ -9,8 +9,17 @@ $(document).once().ajaxComplete(function (event, xhr, settings) {
       var strengths = drupalSettings.my_strengths;
       var opportunities = drupalSettings.my_opportunities;
       var percentage = drupalSettings.my_overall_percentage;
-      $(".proficient_skill").html(strengths + " Proficient_skill")
-      $(".skill_gap").html(opportunities + " Skill gaps")
+      if( strengths == 1 || strengths == 0) {
+        $(".proficient_skill").html(strengths + " Proficient Skill")
+      } else {
+        $(".proficient_skill").html(strengths + " Proficient Skills")
+      }
+      if( opportunities == 1 || opportunities == 0) {
+        $(".skill_gap").html(opportunities + " Skill Gap")
+      } else {
+        $(".skill_gap").html(opportunities + " Skill Gaps")
+      }
+      
       $(".centerLabel").html(percentage + "%")
 //                $('.noresult').css("display", "none");
       $('.overall-proficiency-homepage-block').css("display", "block");

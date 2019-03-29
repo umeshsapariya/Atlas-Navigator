@@ -81,6 +81,7 @@ function getCategoriesByRolesID($role_id) {
   $node = Node::load($role_id);
   $paragraph = $node->field_category->getValue();
   foreach ($paragraph as $element) {
+
     $p = Paragraph::load($element['target_id']);
     $category_nm = $p->field_new_category->value;
     $category[$element['target_id']] = $category_nm;

@@ -28,7 +28,8 @@ content:
     region: content
   field_activity_categories:
     type: entity_reference_paragraphs
-    weight: 26
+    weight: 4
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -37,7 +38,6 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
-    region: content
   field_activity_type:
     weight: 2
     settings: {  }
@@ -58,7 +58,7 @@ content:
     region: content
     settings:
       size: 60
-      placeholder: 'New Example Activity'
+      placeholder: ''
     third_party_settings: {  }
 hidden:
   created: true

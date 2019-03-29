@@ -2,9 +2,22 @@ $ = jQuery;
 
 // Ready function starts
 $(document).ready(function () {
-  $('input[type="date"]').change(function(){
-  $(this).parent().parent().find('.dev-date').html(this.value);
-});
+  $('input[type="date"]').change(function () {
+    $(this).parent().parent().find('.dev-date').html(this.value);
+  });
+
+  $('.atlas-skill-developing-plan-form select').on('change', function (event) {
+    selectvalue();
+    $('.atlas-skill-developing-plan-form input[type="checkbox"]').prop('checked', false);
+  });
+
+  const selectvalue = function () {
+
+    var option_value = $('.atlas-skill-developing-plan-form select').val();
+    $('.dev_row_cont').hide();
+    $('.dev_row_cont.level_' + option_value).show();
+  }
+  selectvalue();
   /* To add Mcustom Scroll - GLobal */
   $(".admin_custom_theme .content").addClass('scroll_div_content');
   $("#overall-proficiency-right tbody").addClass('scroll_div_content');
@@ -12,44 +25,49 @@ $(document).ready(function () {
   $(".role-container .role-tab-container tbody, .role-container .top-strengths tbody, .role-container .top-opportunities tbody").addClass('scroll_div_content');
   $(".scroll_div_content").mCustomScrollbar({
   });
-   /* End add Mcustom Scroll */
+  /* End add Mcustom Scroll */
 
-   /* To add Scroll height as per page size - GLobal */
-   const scrollHeight = function () {
+  /* To add Scroll height as per page size - GLobal */
+  const scrollHeight = function () {
     var heightWindow = $(window).height();
-    var height_top_strength = $('.top-strengths').height() - $('.top-strengths table caption').outerHeight() -20;
+
+    // var height_top_strength = $('.top-strengths').outerHeight() - $('.top-strengths table caption').outerHeight() + 20;
+
+
     var left_outer_section = $('.left-outer-section').height();
     $(".admin_custom_theme .content").css({"height": heightWindow});
-    $(".admin_custom_theme .content .atlasnavigator_home").css({"height": heightWindow - 120 });
-    $(".admin_custom_theme .content .category_details_graph").css({"height": heightWindow - 150 });
-    $(".admin_custom_theme .content .skill_details_outer .inner_wrapper").css({"height": heightWindow - 150 });
-    $(".admin_custom_theme .content .overall-proficiency-wrapper").css({"height": heightWindow - 150 });
-    $(".admin_custom_theme .content .role-container").css({"height": heightWindow - 150 });
-    $(".role-container .top-strengths tbody, .role-container .top-opportunities tbody").css({"height": height_top_strength});
-  
+    $(".admin_custom_theme .content .atlasnavigator_home").css({"height": heightWindow - 120});
+    $(".admin_custom_theme .content .category_details_graph").css({"height": heightWindow - 150});
+    $(".admin_custom_theme .content .skill_details_outer .inner_wrapper").css({"height": heightWindow - 150});
+    $(".admin_custom_theme .content .overall-proficiency-wrapper").css({"height": heightWindow - 150});
+    $(".admin_custom_theme .content .role-container").css({"height": heightWindow - 150});
+    //$(".role-container .top-strengths tbody, .role-container .top-opportunities tbody").css({"height": height_top_strength});
+
+
     var page_prof_content = $('.path-overall-proficiency-details .content').height();
-   var scroll_prof_box = page_prof_content - 220;
-   $("#overall-proficiency-right tbody").css({"height": scroll_prof_box});
-   var path_role_page = $('.path-role-page #left-outer-section').height() - $('.path-role-page #left-outer-section #filter-container').height() - 85;
-   $(".path-role-page #left-outer-section tbody").css({"height": path_role_page});
-   var skill_dev_box = $('.skill_dev_plan').height() - 85;
-   $(".path-category-details .dev-plan-cont").css({"height": skill_dev_box    });
-   var home_content = $('.atlas-home .content').height();   
-   var left_box_size = home_content - home_content*5/100;
-   var scroll_ht = left_box_size -200;
-   $(".atlas-home  .chart_container").css({"height":scroll_ht});
-   var divide_size = left_box_size/2;
-   var dev_plan_scroll = divide_size - $('.box_title.blue_title').height() - $('.status-btn').height() -30;
-   $(".atlas-home .home_dev_block .dev_plan_cont").css({"height":dev_plan_scroll});
+    var scroll_prof_box = page_prof_content - 220;
+    $("#overall-proficiency-right tbody").css({"height": scroll_prof_box});
+    var path_role_page = $('.path-role-page #left-outer-section').height() - $('.path-role-page #left-outer-section #filter-container').height() - 85;
+    $(".path-role-page #left-outer-section tbody").css({"height": path_role_page});
+    var skill_dev_box = $('.skill_dev_plan').height() - 85;
+    $(".path-category-details .dev-plan-cont").css({"height": skill_dev_box});
+    var home_content = $('.atlas-home .content').height();
+    var left_box_size = home_content - home_content * 5 / 100;
+    var scroll_ht = left_box_size - 200;
+    $(".atlas-home  .chart_container").css({"height": scroll_ht});
+    var divide_size = left_box_size / 2;
+    var dev_plan_scroll = divide_size - $('.box_title.blue_title').height() - $('.status-btn').height() - 30;
+    $(".atlas-home .home_dev_block .dev_plan_cont").css({"height": dev_plan_scroll});
+    $(".path-development-plan-details #output-results").css({"min-height": heightWindow - 130});
   }
-   /* End croll height as per page size - GLobal*/
+  /* End croll height as per page size - GLobal*/
 
 
-   /*Add Class - Homepage*/
-    $('.atlasnavigator_home').parents('.content').addClass('atlasnavigator_home_content');
-   /*End add Class - Homepage*/
+  /*Add Class - Homepage*/
+  $('.atlasnavigator_home').parents('.content').addClass('atlasnavigator_home_content');
+  /*End add Class - Homepage*/
 
-   /* To Fade in % value   - GLobal*/
+  /* To Fade in % value   - GLobal*/
   $(".centerLabel").delay(500).fadeIn();
   /*End To Fade in % value   - GLobal */
 
@@ -59,9 +77,9 @@ $(document).ready(function () {
     $('.nav-tabs-custom').css("margin-bottom", "10px");
     $('.tab-content').css("padding-bottom", "25px");
   }
-/*end if admin login then - Global*/
+  /*end if admin login then - Global*/
 
-/* Outside popup close functionality  - Global*/
+  /* Outside popup close functionality  - Global*/
   $(document.body).on("click", ".ui-widget-overlay", function ()
   {
     $.each($(".ui-dialog"), function ()
@@ -75,7 +93,7 @@ $(document).ready(function () {
     });
   });
   /* End outside popup close functionality  - Global*/
-  
+
   /* To add Star rating  - Overall Proficiency Page*/
   $('tr .ratings').each(function () {
     var star_width = $(this).find('.star-percentage').text();
@@ -90,9 +108,17 @@ $(document).ready(function () {
     $(this).addClass('active');
     var active_val = $(this).val();
     if (active_val == 'Strengths') {
+      $('#overall-proficiency-right thead tr th:nth-child(3)').click();
+      if ($('#overall-proficiency-right thead tr th:nth-child(3)').hasClass("asc")) {
+        $('#overall-proficiency-right thead tr th:nth-child(3)').click();
+      }
       $('tr.Opportunities').hide();
       $('tr.Strengths').show();
     } else if (active_val == 'Opportunities') {
+      $('#overall-proficiency-right thead tr th:nth-child(4)').click();
+      if ($('#overall-proficiency-right thead tr th:nth-child(3)').hasClass("desc")) {
+        $('#overall-proficiency-right thead tr th:nth-child(3)').click();
+      }
       $('tr.Opportunities').show();
       $('tr.Strengths').hide();
     } else {
@@ -109,18 +135,18 @@ $(document).ready(function () {
   scrollHeight();
 
   if ($(window).width() < 767) {
-    $(".admin_custom_theme .content .atlasnavigator_home, .admin_custom_theme .content .overall-proficiency-wrapper").css({"height" : "auto"});
-    $(".admin_custom_theme .content .category_details_graph").css({"height" : "auto", "padding-bottom" : "30px"});
-    $(".admin_custom_theme .content .skill_details_outer .inner_wrapper").css({"height" : "auto", "padding-bottom" : "30px"});
-   }
+    $(".admin_custom_theme .content .atlasnavigator_home, .admin_custom_theme .content .overall-proficiency-wrapper").css({"height": "auto"});
+    $(".admin_custom_theme .content .category_details_graph").css({"height": "auto", "padding-bottom": "30px"});
+    $(".admin_custom_theme .content .skill_details_outer .inner_wrapper").css({"height": "auto", "padding-bottom": "30px"});
+  }
 
-if ($(window).width() < 900) {
-   var height_top_strength_mob = $('.top-strengths').height() /2 ;
-    $(".admin_custom_theme .content .role-container").css({"height" : "auto"});
+  if ($(window).width() < 900) {
+    var height_top_strength_mob = $('.top-strengths').height() / 2;
+    $(".admin_custom_theme .content .role-container").css({"height": "auto"});
 
     $(".role-container .top-strengths tbody, .role-container .top-opportunities tbody").css({"height": height_top_strength_mob + 90});
-}
-/* Progress Bar  - Multistep Assessment Page*/
+  }
+  /* Progress Bar  - Multistep Assessment Page*/
   var $total_progress = $('.progress_bar .total_pages').text();
   var $current_progress = $('.progress_bar .current_page').text();
   var $progress = $current_progress / $total_progress * 100;
@@ -128,7 +154,7 @@ if ($(window).width() < 900) {
   /* End Progress Bar  - Multistep Assessment Page*/
 
 
-/* Display form field on value present  - Multistep Assessment Page*/
+  /* Display form field on value present  - Multistep Assessment Page*/
   $('#node-assessment-form-form #edit-field-category-wrapper').hide();
   $('#node-assessment-form-form #edit-actions').hide();
   $('#node-assessment-form-form .clearfix').hide();
@@ -156,6 +182,18 @@ if ($(window).width() < 900) {
     }
   });
   /* End Display form field on value present - Multistep Assessment Page*/
-  jQuery('.paragraph-type-top .paragraphs-dropbutton-wrapper input[type=submit]').val('X');
 });
 
+
+$(window).on('load', function () {
+  const scrollHeight1 = function () {
+    var height_top_strength = $('.top-strengths').outerHeight() - $('.top-strengths table caption').outerHeight();
+    $(".role-container .top-strengths tbody, .role-container .top-opportunities tbody").css({"height": height_top_strength - 10});
+  }
+
+  $(window).resize(function () {
+    scrollHeight1();
+  });
+
+  scrollHeight1();
+});

@@ -20,6 +20,11 @@ function yorkshire_preprocess_node(&$variables) {
       //Loads custom blocks for homepage
       $block_manager = \Drupal::service('plugin.manager.block');
       $config = [];
+      
+      // Get Current username 
+//      $current_user = \Drupal::currentUser();
+//      $user = User::load($current_user->id());
+//      $variables['username'] = $user->getUsername();
 
       //360 results page
       $plugin_Results360Block = $block_manager->createInstance('Results360Block', $config);

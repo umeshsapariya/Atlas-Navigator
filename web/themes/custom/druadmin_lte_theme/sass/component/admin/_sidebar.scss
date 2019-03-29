@@ -20,7 +20,7 @@
         max-width: 227px;
         width: 100%;
         &.menuparent {
-          background-position-y: 11px;
+          background-position-y: 38%;
           &:hover {
             background-color: transparent;
           }
@@ -75,6 +75,7 @@
   }
   &.sidebar-collapse {
     .main-sidebar {
+      width: 0 !important;
       .sidebar {
         .nice-menu {
           li {

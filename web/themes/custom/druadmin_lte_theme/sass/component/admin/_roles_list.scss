@@ -2,11 +2,13 @@
 @import "sass/mixins/global-mixins";
 
 // Note: !important used to override other css file.
-.path-roles-list {
+.path-roles-list,
+.path-activity-list {
   .wrapper {
     .content-wrapper {
       .content {
-        .view-id-roles_list {
+        .view-id-roles_list,
+        .view-activity-list {
           .view-header {
             float: left;
             .button-action:before {
@@ -104,9 +106,14 @@
         tbody {
           background-color: transparent;
           td {
+            color: #2b4853;
             font-family: $segoeui-regular;
             font-size: 14px;
-
+            a {
+              color: #2b4853;
+              font-family: $segoeui-regular;
+              font-size: 14px;
+            }
             &:first-child {
               text-align: left !important;
             }
@@ -220,3 +227,13 @@
     }
   }
 }
+
+
+// .top-strengths {
+//   .table-responsive {
+//     height: 100%;
+//     .table {
+//       height: calc(100% - 45px);
+//     }
+//   }
+// }

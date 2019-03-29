@@ -57,7 +57,7 @@
 
       fieldset.form-item {
         margin: 0;
-        width: 88%;
+        width: 100%;
 
         @media screen and (max-width: 1024px) {
           width: 100%;
@@ -82,7 +82,12 @@
                   color: #fff;
                   letter-spacing: 1px;
                   text-align: center;
-
+                  &:nth-child(1) {
+                    width: 13%;
+                  }
+                  &:nth-child(3) {
+                    width: 30%;
+                  }
                   @media screen and (max-width: 1024px) {
                     min-height: 20px;
                     vertical-align: middle;
@@ -147,8 +152,14 @@
                     }
                   }
                 }
-                &:nth-child(2) {
-                  width: 45%;
+                /*&:nth-child(2) {
+                  width: 55%;
+                }*/
+                &:nth-child(1) {
+                  width: 13%;
+                }
+                &:nth-child(3) {
+                  width: 30%;
                 }
               }
             }
@@ -175,7 +186,7 @@
   @extend .path-verbatim-comments;
   .respondents-email-form {
     display: inline-block;
-    width: 88%;
+    width: 100%;
 
     @media screen and (max-width: 1024px) {
       width: 100%;
@@ -204,6 +215,29 @@
       float: right;
       margin: 0;
       padding: 4px 30px;
+    }
+  }
+}
+
+.ie {
+  &.ver-comments-header {
+    .page-title {
+      vertical-align: top;
+    }
+  }
+  &.path-respondents {
+    .table {
+      > tbody {
+        > tr {
+          > td {
+            .js-form-type-checkbox {
+              position: relative;
+              top: -3px;
+              vertical-align: top;
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -4,7 +4,6 @@
  * @file
  * Contains .module.
  */
-
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
@@ -14,87 +13,138 @@ use Drupal\user\Entity\User;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Database\Connection;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\field\Entity\FieldStorageConfig;
+
+/**
+ * Implements hook_theme().
+ */
+function atlas_learning_activity_theme($existing, $type, $theme, $path) {
+  return [
+    'learning_activity_form' => [
+      'render element' => 'form',
+    ],
+  ];
+}
 
 /*
  * Implements hook_form_alter().
  */
 function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
-  if ($form_id == 'node_learning_activity_form') {
+
+  if ($form_id == 'node_learning_activity_form' || $form_id == 'node_learning_activity_edit_form') {
+    $form['#theme'] = 'learning_activity_form';
     $form['#title'] = t('Activity Creator');
-    //kint($form['field_activity_url']['widget'][0]['uri']['#description']);
-    //exit();
     unset($form['field_activity_url']['widget'][0]['uri']['#description']);
     $current_user = \Drupal::currentUser();
     $roles = $current_user->getRoles();
+    $form['actions']['submit']['#submit'][] = '_activity_node_form_submit';
 
+    // Save field values for forms.
     if (!in_array("administrator", $roles)) {
       $form['revision_information']['#access'] = false;
     }
-    $form['field_activity_categories']['widget'][0]['subform']['field_activity_role']['widget']['#ajax'] = [
-      'callback' => 'getAjaxCategoriesByRoles',
-      'wrapper' => 'category',
-      'effect' => 'fade',
-      'event' => 'change',
-    ];
+    $form['#prefix'] = "<div id='whole-form'>";
+    $form['#suffix'] = "</div>";
 
-    $form['field_activity_categories']['widget'][0]['subform']['field_activity_category']['widget']['#options'] = getAllCategories();
-    $form['field_activity_categories']['widget'][0]['subform']['field_activity_skill']['widget']['#options'] = getAllSkills();  
-    $form['field_activity_categories']['widget'][0]['subform']['field_activity_category']['widget']['#prefix'] ='<div id="category">';
-    $form['field_activity_categories']['widget'][0]['subform']['field_activity_category']['widget']['#suffix'] = '</div>';
-    $form['field_activity_categories']['widget'][0]['subform']['field_activity_category']['#validated'] = TRUE;
+    foreach ($form['field_activity_categories']['widget'] as $key => $value) {
+      if (is_numeric($key)) {
+        $form['field_activity_categories']['widget'][$key]['top']['links']['remove_button']['#value'] = "X";
+        $form['field_activity_categories']['widget'][$key]['subform']['field_activity_role']['widget']['#ajax'] = [
+          'callback' => 'getAjaxCategoriesByRoles',
+          'wrapper' => 'whole-form',
+          'effect' => 'fade',
+          'event' => 'change',
+        ];
 
-    /*$category_options = ['_none' => '- Select -'];
-    $role_id = $form_state->getValues() ? $form_state->getValues()['role'] : '';
-    if ($role_id != '_none' && $role_id != NULL) {
-      $category_options = getCategoriesByRolesID($role_id);
+        $category_options = ['_none' => '- Select -'];
+        $role_default_value = $form['field_activity_categories']['widget'][$key]['subform']['field_activity_role']['widget']['#default_value'];
+        $user_input = $form_state->getUserInput();
+        if (!empty($role_default_value)) {
+          $category_options = getCategoriesByRolesID($role_default_value[0]);
+        }
+        $form['field_activity_categories']['widget'][$key]['subform']['field_activity_category']['widget']['#options'] = $category_options;
+
+        $skill_options = ['_none' => '- Select -'];
+        $category_default_value = $form['field_activity_categories']['widget'][$key]['subform']['field_activity_category']['widget']['#default_value'];
+        if (!empty($category_default_value)) {
+          $skill_options = getSkillsByCategoryID($category_default_value[0]);
+        }
+        $form['field_activity_categories']['widget'][$key]['subform']['field_activity_skill']['widget']['#options'] = $skill_options;
+
+        $form['field_activity_categories']['widget'][$key]['subform']['field_activity_category']['widget']['#ajax'] = [
+          'callback' => 'getAjaxSkillsByCategory',
+          'wrapper' => 'whole-form',
+          'effect' => 'fade',
+          'event' => 'change',
+        ];
+        $form['field_activity_categories']['widget'][$key]['subform']['field_activity_skill']['widget']['#ajax'] = [
+          'callback' => 'getAjaxLevelsBySkill',
+          'wrapper' => 'whole-form',
+          'effect' => 'fade',
+          'event' => 'change',
+        ];
+
+        $skill_default_value = $form['field_activity_categories']['widget'][$key]['subform']['field_activity_skill']['widget']['#default_value'];
+        $levels = 10;
+        $level_options = [];
+        if (!empty($skill_default_value)) {
+          $skill_para = Paragraph::load($skill_default_value[0]);
+          $levels = $skill_para->field_number_of_levels->value;
+        }
+
+        for ($j = 1; $j <= $levels; $j++) {
+          $level_options[$j] = $j;
+        }
+        $form['field_activity_categories']['widget'][$key]['subform']['field_activity_level']['widget']['#options'] = $level_options;
+        $form['field_activity_categories']['widget'][$key]['subform']['field_activity_category']['#validated'] = TRUE;
+        $form['field_activity_categories']['widget'][$key]['subform']['field_activity_skill']['#validated'] = TRUE;
+      }
     }
-    $form['field_activity_categories']['widget'][0]['subform']['category'] = [
-      '#type' => 'select',
-      '#options' => $category_options,
-      '#default_value' => $category_options,
-      '#title' => 'Category',
-      '#prefix' => '<div id="category">',
-      '#suffix' => '</div>',*/
-      /*'#ajax' => [
-        'callback' => '\Drupal\atlas_clone_paragraphs\Form\CloneSkills::getSkillsByCategory',
-        'wrapper' => 'skill',
-        // 'method' => 'replace',.
-        'effect' => 'fade',
-        'event' => 'change',
-      ],
-*/      //'#required' => TRUE,
-    /*];
-    $form['field_activity_categories']['widget'][0]['subform']['category']['#validated'] = TRUE;
+  }
+}
 
-    $skill_options = ['_none' => '- Select -'];
-    $category_id = $form_state->getValues() ? $form_state->getValues()['category'] : '';
-    if ($category_id != '_none' && $category_id != NULL) {
-      $skill_options = getSkillsByCategoryID($category_id);
+/*
+ * Custom submit handler for activity node.
+ */
+function _activity_node_form_submit($form, FormStateInterface $form_state) {
+  $activity_id = $form_state->getValues()['nid'];
+  if ($activity_id) {
+    foreach ($form_state->getValues()['field_activity_categories'] as $key => $data) {
+      if (isset($data['subform'])) {
+        $role_id = $data['subform']['field_activity_role'][0]['target_id'];
+        $skill_id = $data['subform']['field_activity_skill'][0]['value'];
+        $selected_levels = $data['subform']['field_activity_level'];
+        $skill_para = Paragraph::load($skill_id);
+        if (isset($skill_para)) {
+          $skill_level_informations = $skill_para->field_skill_level_information->getValue();
+          foreach ($selected_levels as $key => $levels) {
+            foreach ($skill_level_informations as $id => $skill_level) {
+              if ($levels['value'] == ($id + 1)) {
+                $level_id = $skill_level['target_id'];
+                $level_para = Paragraph::load($level_id);
+                $field_level_header = $level_para->field_level_header->getValue();
+                if (!empty($field_level_header[0]['value'])) {
+                  $level_activity_ids = [];
+                  $level_activities[] = $level_para->field_assigned_activity->getValue();
+                  foreach ($level_activities as $key1 => $value1) {
+                    if (!empty($value1['0']['target_id'])) {
+                      $level_activity_ids[] = $value1['0']['target_id'];
+                    }
+                  }
+                  if (!in_array($activity_id, $level_activity_ids)) {
+                    $level_activity_ids[] = $activity_id;
+                  }
+                  $level_para->set('field_assigned_activity', $level_activity_ids);
+                  $level_para->save();
+                  $url = Url::fromUri('internal:' . '/activity-list');
+                  $form_state->setRedirectUrl($url);
+                }
+              }
+            }
+          }
+        }
+      }
     }
-    $form['field_activity_categories']['widget'][0]['subform']['skill'] = [
-      '#type' => 'select',
-      '#options' => $skill_options,
-      '#default_value' => $skill_options,
-      '#title' => 'Skill',
-      '#prefix' => '<div id="skill">',
-      '#suffix' => '</div>',
-      //'#required' => TRUE,
-    ];
-    $form['skill']['#validated'] = TRUE;*/
-    /*$form['field_activity_categories']['widget'][0]['subform']['field_activity_role'] = [
-      //'#type' => 'select',
-      //'#options' => $roles,
-      //'#title' => 'Role',
-      '#ajax' => [
-        'callback' => 'getAjaxCategoriesByRoles',
-        'wrapper' => 'category',
-        // 'method' => 'replace',.
-        'effect' => 'fade',
-        'event' => 'change',
-      ],
-      '#required' => TRUE,
-    ];*/
-    //return $form;
   }
 }
 
@@ -102,33 +152,15 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
  * Implements AJAX callback for categories().
  */
 function getAjaxCategoriesByRoles($form, FormStateInterface $form_state) {
+  return $form;
+}
 
-  $form_state->setRebuild(TRUE);
-  $category = ['_none' => '- Select -'];
-  $role_id = $form_state->getValues()['field_activity_categories'][0]['subform']['field_activity_role'][0]['target_id'];
-  \Drupal::logger('Role')->debug('<pre>' . print_r($role_id, TRUE) . '</pre>');
-  if ($role_id != 0 && $role_id != NULL) {
-    $node = Node::load($role_id);
-    $paragraph = $node->field_category->getValue();
-    foreach ($paragraph as $element) {
-      $p = Paragraph::load($element['target_id']);
-      $category_nm = $p->field_new_category->value;
-      $category[$element['target_id']] = $category_nm;
-    }
-    \Drupal::logger('Category')->debug('<pre>' . print_r($category, TRUE) . '</pre>');
-    if ($category) {
-      $form['field_activity_categories']['widget'][0]['subform']['field_activity_category']['widget']['#options'] = $category;
-    }
-    else {
-      $form['field_activity_categories']['widget'][0]['subform']['field_activity_category']['widget']['#options'] = ['NA' => 'NA'];
-    }
+function getAjaxSkillsByCategory($form, FormStateInterface $form_state) {
+  return $form;
+}
 
-    return $form['field_activity_categories']['widget'][0]['subform']['field_activity_category'];
-  }
-  else {
-    $form['field_activity_categories']['widget'][0]['subform']['field_activity_category']['widget']['#options'] = ['NA' => 'NA'];
-    return $form['field_activity_categories']['widget'][0]['subform']['field_activity_category'];
-  }
+function getAjaxLevelsBySkill($form, FormStateInterface $form_state) {
+  return $form;
 }
 
 /*
@@ -139,7 +171,7 @@ function getAllCategories() {
   $query = \Drupal::database()->select('paragraph__field_new_category', 'pfc');
   $query->fields('pfc', ['entity_id', 'field_new_category_value']);
   $query->fields('pfd', ['parent_id']);
-  $query->join('paragraphs_item_field_data', 'pfd', 'pfd.revision_id = pfc.entity_id');
+  $query->join('paragraphs_item_field_data', 'pfd', 'pfd.revision_id = pfc.revision_id');
   $query->condition('pfd.parent_field_name', 'field_category');
   $query->condition('pfc.bundle', 'category');
   $query->distinct('pfc.entity_id');
@@ -147,7 +179,7 @@ function getAllCategories() {
   $data = $query->execute()->fetchAll();
   if (!empty($data)) {
     foreach ($data as $id => $category_data) {
-      $category[$id] = $category_data->field_new_category_value;
+      $category[$category_data->entity_id] = $category_data->field_new_category_value;
     }
   }
   return $category;
@@ -161,7 +193,7 @@ function getAllSkills() {
   $query = \Drupal::database()->select('paragraph__field_skill', 'pfc');
   $query->fields('pfc', ['entity_id', 'field_skill_value']);
   $query->fields('pfd', ['parent_id']);
-  $query->join('paragraphs_item_field_data', 'pfd', 'pfd.revision_id = pfc.entity_id');
+  $query->join('paragraphs_item_field_data', 'pfd', 'pfd.revision_id = pfc.revision_id');
   $query->condition('pfd.parent_field_name', 'field_skills');
   $query->condition('pfc.bundle', 'skill');
   $query->distinct('pfc.entity_id');
@@ -169,7 +201,7 @@ function getAllSkills() {
   $data = $query->execute()->fetchAll();
   if (!empty($data)) {
     foreach ($data as $id => $skill_data) {
-      $skill[$id] = $skill_data->field_skill_value;
+      $skill[$skill_data->entity_id] = $skill_data->field_skill_value;
     }
   }
   return $skill;

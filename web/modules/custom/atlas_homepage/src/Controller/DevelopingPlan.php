@@ -23,7 +23,8 @@ class DevelopingPlan extends ControllerBase {
       $node->set("field_completed", "1");
       $node->set("field_completed_date", date('Y-m-d'));
       $node->save();
-      $updated = "yes";
+      $updated = date('M d');
+      drupal_set_message("Development completed successfully", 'status');
     }
 
     return new JsonResponse($updated);

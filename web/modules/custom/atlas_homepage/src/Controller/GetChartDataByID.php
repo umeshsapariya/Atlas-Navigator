@@ -62,7 +62,7 @@ class GetChartDataByID extends ControllerBase {
       $cat_data[$count][] = floatval($category['avg_others']);
       $cat_data[$count][] = floatval($category['avg_self']);
       $cat_data[$count][] = floatval($category['avg_self']);
-      $cat_data[$count][] = 'category_details/' . $key;
+      $cat_data[$count][] = 'category_details/' .$input.'/'. $key;
       $count++;
     }
     return new JsonResponse($cat_data);

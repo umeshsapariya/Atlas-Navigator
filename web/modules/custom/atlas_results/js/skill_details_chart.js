@@ -31,8 +31,10 @@
         else {}
       });
       var data = google.visualization.arrayToDataTable(temp);
-     
-    var options = {
+      var formatNumer = new google.visualization.NumberFormat({pattern: '0.0'});
+      formatNumer.format(data, 3);
+
+      var options = {
             title: 'Category',
             width: '70%',
             height: cat_count*65 + 20,

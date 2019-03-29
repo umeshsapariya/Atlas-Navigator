@@ -1,22 +1,27 @@
 <div class="box_title blue_title"  rel="box1"><a href="/development-plan-details">Development plan</a></div>
 <div class="developing-homepage-block box_content box1">
   <div class="home_dev_block">
-    <div class="dev_plan_cont scroll_div_content">
-      {% if development_plan %}
+
+    {% if development_plan %}
+      <div class="dev_plan_cont scroll_div_content">
         {% for development in development_plan %}
           <div class="row_plan_block {{ development.class }}">
-            <div class="act_check">
-              <img src="{{base_path}}themes/custom/druadmin_lte_theme/images/checkbox.png">
-              <span class="hidded-nid">{{ development.nid }}</span>
-            </div>
 
+            {% if development.class != 'plan_completed' %}
+              <div class="act_check">
+                <span class ="checkbox-dev"></span>
+                <span class="hidded-nid">{{ development.nid }}</span>
+              </div>
+            {% endif %}
+            {% if development.icon %}
+              <div class="title-logo">
+                {{ development.icon }}
+              </div>
+            {% endif %}
             <div class="act_title_details">
 
               <div class="act_title">
                 {{ development.activity_title }}
-              </div>
-              <div class="act_detail">
-                {{ development.activity_detail }}
               </div>
             </div>
             <div class="act_due">
@@ -27,15 +32,16 @@
             </div>-->
           </div>
         {% endfor %}
-      {% endif %}
-    </div>
-
-    <div class="status-btn">
-      <div class="inprogress-btn">{{ progress_button }}
       </div>
-      <div class="completed-btn"> {{ complete_button }}
+      <div class="status-btn">
+        <div class="inprogress-btn">{{ progress_button }}
+        </div>
+        <div class="completed-btn"> {{ complete_button }}
+        </div>
       </div>
-    </div>
 
+    {% else %}
+      <div class="no-developement">No Development Plan found</div>
+    {% endif %}
   </div>
 </div>

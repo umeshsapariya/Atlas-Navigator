@@ -196,3 +196,20 @@ function get_others_score($key, $skills_data) {
   $score_360[$key]['avg'] = $skill_count / count($skills_data);
   return $score_360[$key];
 }
+
+/**
+ * Returns invites status for home page block.
+ */
+function get_invite_status($invite_id, $completed) {
+  $connection = Database::getConnection();
+  if ($invite_id) {
+    $query = $connection->select('assessment_invite', 'ai');
+    $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
+    $query->fields('ai');
+    $query->condition('ai.invite_id', $invite_id);
+    $query->condition('aid.completed', $completed);
+    $raters_skill_data = $query->execute()->fetchAll();
+    $completed_invites = count($raters_skill_data);
+  }
+  return $completed_invites;
+}

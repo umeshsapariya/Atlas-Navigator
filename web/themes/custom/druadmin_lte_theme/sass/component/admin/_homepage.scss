@@ -335,9 +335,9 @@ body.admin_custom_theme {
             }
 
             .chart_container {
-              margin: 30px 0;
+              margin: 20px 0;
               @media screen and (max-width: 767px) {
-                margin: 30px 0 0;
+                margin: 20px 0 0;
               }
             }
             .chart_wrap {
@@ -468,27 +468,64 @@ body.admin_custom_theme {
       .row_plan_block {
         border-bottom: 1px solid #d7d7d7;
         display: table;
+        height: 70px;
         width: 100%;
         .act_check {
           display: table-cell;
-          display: inline-block;
           vertical-align: middle;
           width: 10%;
           img {
             height: 20px;
             width: 20px;
           }
+          .checkbox-dev {
+            background: #fff;
+            border: 1px solid #dfdfdf;
+            content: "";
+            cursor: pointer;
+            display: inline-block;
+            height: 23px;
+            line-height: 30px;
+            padding: 0 5px;
+            width: 23px;
+            &:active {
+              border: solid #008ec3;
+              border-width: 0 3px 3px 0;
+              content: "";
+              height: 23px;
+              left: 100%;
+              margin-left: 7px;
+              top: 2px;
+              transform: rotate(45deg);
+              width: 8px;
+              z-index: 1;
+            }
+          }
+        }
+        .title-logo {
+          display: table-cell;
+          vertical-align: middle;
+          width: 10%;
+          img {
+            display: inline-block;
+            height: 35px;
+            width: auto;
+          }
         }
         .act_title_details {
           display: table-cell;
-          display: inline-block;
-          padding: 10px;
+          padding: 5px;
           vertical-align: middle;
-          width: 65%;
+          width: 55%;
           .act_title {
             color: #416e7f;
             font-family: $segoeui-regular;
             text-transform: capitalize;
+            a {
+              color: #416e7f;
+              font-family: $segoeui-regular;
+              text-transform: capitalize;
+            }
           }
           .act_detail {
             color: #5e5e5e;
@@ -499,11 +536,10 @@ body.admin_custom_theme {
         }
         .act_due {
           display: table-cell;
-          display: inline-block;
           min-width: 80px;
-          padding: 10px;
+          padding: 5px;
           vertical-align: middle;
-          width: 20%;
+          width: 15%;
           .due-btn {
             background-color: #d0cdc5;
             border-radius: 25px;
@@ -519,6 +555,9 @@ body.admin_custom_theme {
               /*color: #fff;*/
             }
           }
+        }
+        &.plan_completed {
+          display: none;
         }
       }
     }
@@ -543,6 +582,19 @@ body.admin_custom_theme {
             margin: 10px 5px;
           }
         }
+      }
+    }
+    #invite-status {
+      clear: both;
+      color: #416e7f;
+      font-family: $segoeui-regular;
+      text-align: center;
+    }
+  }
+  &.sidebar-mini {
+    &.sidebar-collapse {
+      .content-wrapper {
+        background: #dbe8f0 !important;
       }
     }
   }

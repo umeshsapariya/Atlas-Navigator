@@ -48,7 +48,9 @@
         else {}
       });
       var data = google.visualization.arrayToDataTable(temp);
-     
+      var formatNumer = new google.visualization.NumberFormat({pattern: '0.0'});
+      formatNumer.format(data, 2);
+      formatNumer.format(data, 4);
         var options = {
         title: 'Category',
         width: '70%',
@@ -92,7 +94,7 @@
           style: 'point',
         },
         axisTitlesPosition: 'out',
-        series: {1: {annotations: {stem: {length: -10}}, type: 'line', pointSize: 30, lineWidth: 0, pointShape: 'square', }},
+        series: {1: {annotations: {stem: {length: -10}}, type: 'line', pointSize: 40, lineWidth: 0, pointShape: 'square', }},
       };
       var chartDiv = document.getElementById('category_details_chart');
       var chart = new google.visualization.ComboChart(document.getElementById('category_details_chart'));

@@ -91,33 +91,71 @@ body {
   width: 30px;
 }
 
-.node-learning-activity-form {
+.node-learning-activity-form,
+.node-learning-activity-edit-form {
   .form-item {
     > .label {
       font-family: $segoeui-semi-bold;
+      width: 220px;
     }
+  }
+  [id^="category-"],
+  [id^="skill-"],
+  [id^="skill-level-"] {
+    margin-right: 10px;
   }
   .form-wrapper {
     > .form-item {
       display: flex;
       margin-bottom: 45px;
       margin-top: 0;
+      @media screen and (max-width: 575px) {
+        flex-wrap: wrap;
+      }
       .description {
         display: none;
         font-family: $segoeui-regular;
         margin-left: 220px;
       }
       .label {
+        margin-left: 5px;
         width: 220px;
+
+        @media screen and (max-width: 991px) {
+          width: 150px;
+        }
+        @media screen and (max-width: 575px) {
+          width: 100%;
+        }
+      }
+      .form-textarea-wrapper {
+        @media screen and (max-width: 991px) {
+          flex: 1 1 0;
+        }
+        @media screen and (max-width: 575px) {
+          flex: auto;
+        }
       }
       > .form-control {
-        max-width: 970px;
+        max-width: 425px;
+        @media screen and (max-width: 991px) {
+          flex: 1 1 0;
+        }
       }
       > .form-group {
         display: flex;
         margin-top: 0;
+        @media screen and (max-width: 575px) {
+          flex-wrap: wrap;
+        }
         > .label {
           width: 220px;
+          @media screen and (max-width: 991px) {
+            width: 150px;
+          }
+          @media screen and (max-width: 575px) {
+            width: 100%;
+          }
         }
       }
       .filter-wrapper {
@@ -137,6 +175,7 @@ body {
     .table {
       display: flex;
       flex-wrap: wrap;
+
       &.table-striped {
         tbody {
           tr {
@@ -148,7 +187,8 @@ body {
       }
       tbody {
         background-color: transparent;
-        max-width: 970px;
+        /*max-width: 970px;*/
+        max-width: 100%;
       }
       th {
         padding: 0;
@@ -175,6 +215,7 @@ body {
   }
   .field {
     &--name-field-activity-categories {
+      padding-right: 30px;
       .paragraphs-subform {
         display: flex;
         > .form-wrapper {
@@ -188,6 +229,12 @@ body {
         }
       }
       .form-wrapper {
+        > .form-item {
+          > .form-control {
+            flex: auto;
+            width: 235px;
+          }
+        }
         .fieldgroup {
           display: flex;
           flex-direction: column-reverse;
@@ -195,6 +242,7 @@ body {
       }
       legend {
         border-bottom: none;
+        display: none;
       }
       .table {
         .form-item {
@@ -205,8 +253,10 @@ body {
       }
       .form-checkboxes {
         display: flex;
+        flex-wrap: wrap;
+        width: 225px;
         .form-type-checkbox {
-          margin-right: 15px;
+          margin-right: 10px;
           .label {
             align-items: center;
             border-radius: 100%;

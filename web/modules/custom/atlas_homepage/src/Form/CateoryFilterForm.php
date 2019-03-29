@@ -11,6 +11,7 @@ use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\SettingsCommand;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\user\Entity\User;
 
 /**
  *
@@ -32,10 +33,15 @@ class CateoryFilterForm extends FormBase {
     $default_invite_id = get_latest_invite_id();
     if ($default_invite_id) {
       $query = $connection->select('assessment_invite', 'ai');
-      $query->fields('ai', ['assessment_id']);
+      $query->fields('ai', ['assessment_id','uid']);
       $query->condition('ai.invite_id', $default_invite_id);
-      $default_assessment_value = $query->execute()->fetchField();
+      $default_values = $query->execute()->fetchAll();
     }
+
+    $user_id = $default_values[0]->uid;
+    $user = User::load($user_id);
+    $default_username = $user->getUsername();
+    
     $new_assessment_link = Link::fromTextAndUrl(t('New assessment'), Url::fromRoute('atlas_peer_invite.assessment'))->toString();
     $export_link = Link::fromTextAndUrl(t('Export'), Url::fromRoute('system.admin_config_system'))->toString();
     $filter_link = Link::fromTextAndUrl(t('Filter'), Url::fromRoute('system.admin_config_system'))->toString();
@@ -46,7 +52,7 @@ class CateoryFilterForm extends FormBase {
       '#placeholder' => t('Choose Assessment ID'),
       '#autocomplete_route_name' => 'atlas_homepage_category.autocomplete',
       '#required' => TRUE,
-      '#prefix' => '<div class="btn_wrapper_top"><div class="export_link btn">' . $export_link . '</div><div class="search-filter">',
+      '#prefix' => '<div class="btn_wrapper_top"><div class="search-filter">',
       '#suffix' => '</div></div>',
       '#ajax' => [
         'callback' => '::autcomplete_update_invite_id',
@@ -55,7 +61,7 @@ class CateoryFilterForm extends FormBase {
         ],
         'event' => 'autocompleteclose',
       ],
-      '#default_value' => $default_assessment_value,
+      '#default_value' => $default_values[0]->assessment_id,
     ];
     $form['invite_id'] = [
       '#type' => 'hidden',
@@ -63,6 +69,22 @@ class CateoryFilterForm extends FormBase {
       "#prefix" => '<div id="invite-id">',
       "#suffix" => "</div>",
     ];
+    $form['user_name'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="user-name">'.ucfirst($default_username).'</div>',
+      "#prefix" => '<div id="user-name">',
+      "#suffix" => "</div>",
+    ];
+    $completed_invites = get_invite_status($default_invite_id, 1);
+    $pending_invites = get_invite_status($default_invite_id, 0);
+    $total_invites = $completed_invites + $pending_invites;
+    $form['invites_status'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="invites_status">'.$completed_invites.'/'.$total_invites.' Completed</div>',
+      "#prefix" => '<div id="invite-status">',
+      "#suffix" => "</div>",
+    ];
+  
     $form['markup'] = [
       '#type' => 'markup',
       '#markup' => '<div class="chart_container scroll_div_content"><div class="chart_wrap"><div id="chart_div"></div><div class="noresult"> No Result Found</div></div></div>' . $links,
@@ -89,20 +111,38 @@ class CateoryFilterForm extends FormBase {
     $element = $form_state->getTriggeringElement();
     $assessment_id = $element['#value'];
     $connection = Database::getConnection();
-    $current_user_id = \Drupal::currentUser()->id();
+    //$current_user_id = \Drupal::currentUser()->id();
     $invite_id_query = db_select('assessment_invite', 'ai')->fields('ai', [
-        'invite_id',
+        'invite_id', 'uid'
       ])
       ->condition('assessment_id', $assessment_id)
-      ->condition('uid', $current_user_id)
+      //->condition('uid', $current_user_id)
       ->execute();
-    $invite_id = $invite_id_query->fetchField();
+    $values = $invite_id_query->fetchAll();
+    $invite_id = $values[0]->invite_id;
     $form['invite_id']['#value'] = $invite_id;
-
+    // Get Username 
+    $user_id = $values[0]->uid;
+    $user = User::load($user_id);
+    $default_username = $user->getUsername();
+    
+    // Get Invite status
+    $completed_invites = get_invite_status($invite_id, 1);
+    $pending_invites = get_invite_status($invite_id, 0);
+    $total_invites = $completed_invites + $pending_invites;
+    $form['invites_status']['#markup'] = '<div class="invites_status">'.$completed_invites.'/'.$total_invites.' completed</div>';
+    $form['user_name']['#markup'] = '<div class="user-name">'.ucfirst($default_username).'</div>';
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand(
       '#invite-id', $form['invite_id'])
     );
+    $response->addCommand(new ReplaceCommand(
+      '#invite-status', $form['invites_status'])
+    );
+    $response->addCommand(new ReplaceCommand(
+      '#user-name', $form['user_name'])
+    );
+    
     $overall_return = ['data' => 'not-found'];
     if (isset($invite_id) && is_numeric($invite_id)) {
       $overall_proficiency_results = GetAssessmentInvitesSkillData($invite_id);

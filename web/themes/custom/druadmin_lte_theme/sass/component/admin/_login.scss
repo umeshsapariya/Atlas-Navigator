@@ -173,14 +173,38 @@
                 line-height: 21px;
               }
               .form-item-persistent-login {
+                &.form-type-checkbox [type="checkbox"]:checked + label:after,
+                &.form-type-checkbox [type="checkbox"]:not(:checked) + label:after {
+                  float: left;
+                  height: 20px;
+                  left: 0;
+                  margin-right: 5px;
+                  position: relative;
+                  width: 20px;
+                }
+                &.form-type-checkbox [type="checkbox"]:checked + label:before {
+                  float: left;
+                  height: 14px;
+                  left: 0;
+                  width: 6px;
+                }
+                label {
+                  font-family: "Conv_seguisb",Sans-Serif;
+                }
                 #edit-persistent-login--description {
                   float: right;
-                  line-height: 25px;
-                  margin-left: 3px;
                   text-align: left;
-
+                  @media (max-width: 420px) {
+                    margin: 0;
+                    text-align: right;
+                    width: 95px;
+                  }
                   a {
-                    font-size: 13px;
+                    color: #455a64;
+                    font-size: 14px;
+                    @media (max-width: 420px) {
+                      font-size: 12px;
+                    }
                   }
                 }
               }

@@ -91,9 +91,11 @@ function GetAssessmentInvitesSkillData($assessment_id) {
         $skill_wise_ratings[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
       }
     }
-
-    $overall_proficiency_results = get360Score($skill_wise_ratings);
-    return $overall_proficiency_results;
+    if (isset($skill_wise_ratings)) {
+      $overall_proficiency_results = get360Score($skill_wise_ratings);
+      return $overall_proficiency_results;
+    }
+    return FALSE;
   }
   else {
     return FALSE;
@@ -136,10 +138,10 @@ function get_top_strengths_opportunities($role_id, $type, $number) {
   $connection = Database::getConnection();
   $query = $connection->select('assessment_invite', 'ai');
   $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
-  $query->fields('ai');
-  $query->fields('aid');
+  $query->fields('ai', ['invite_id']);
   $query->condition('aid.completed', 1);
   $query->condition('ai.role_id', $role_id);
+  $query->distinct();
   $role_invites = $query->execute()->fetchAll();
   $all_strenghts = [];
   $all_opportunities = [];
@@ -148,8 +150,10 @@ function get_top_strengths_opportunities($role_id, $type, $number) {
     foreach ($role_invites as $invite) {
       $invites_results[] = GetAssessmentInvitesSkillData($invite->invite_id);
     }
+
     if ($invites_results) {
       foreach ($invites_results as $each_result) {
+
         if ($each_result) {
           foreach ($each_result as $skill_id => $score) {
             $category_skill_paragraph_ref = Paragraph::load($skill_id);
@@ -159,18 +163,38 @@ function get_top_strengths_opportunities($role_id, $type, $number) {
             $normalised_target_proficiency_level = normalised_score_to_5($target_proficiency_level[0]['value'], $skill_id);
             $floor_target_level = floor($normalised_target_proficiency_level * 2) / 2;
             $gap = $score - $floor_target_level;
-            if ($gap >= 0) {
-              $all_strenghts[$skill_id] = ["name" => $skill_name[0]['value'], "360_score" => $score, "gap" => $gap];
-            }
-            else {
-              $all_opportunities[$skill_id] = ["name" => $skill_name[0]['value'], "360_score" => $score, "gap" => $gap];
-            }
+            $all_skill_score[$skill_id][] = ["name" => $skill_name[0]['value'], "floor_target_level" => $floor_target_level, "360_score" => $score];
           }
         }
       }
     }
   }
 
+  foreach ($all_skill_score as $skill_id => $raters_data) {
+    $total_score = 0;
+
+
+    foreach ($raters_data as $rater_score) {
+      $total_score = $total_score + $rater_score['360_score'];
+    }
+    $avg_score = $total_score / count($raters_data);
+    $avg_score = floor($avg_score * 2) / 2;
+    $gap = $avg_score - $rater_score['floor_target_level'];
+    if ($gap >= 0) {
+      $all_strenghts[] = [
+        '360_score' => $avg_score,
+        'name' => $rater_score['name'],
+        'gap' => $gap,
+      ];
+    }
+    else {
+      $all_opportunities[] = [
+        '360_score' => $avg_score,
+        'name' => $rater_score['name'],
+        'gap' => $gap,
+      ];
+    }
+  }
   if ($all_strenghts && $type == 'strengths') {
     array_sort_by_column($all_strenghts, "gap", SORT_DESC);
     $top_strenghts = array_slice($all_strenghts, 0, $number, true);
@@ -210,4 +234,69 @@ function atlas_common_system_breadcrumb_alter(\Drupal\Core\Breadcrumb\Breadcrumb
     return $breadcrumb_links;
   }
   return $breadcrumb;
+}
+
+/**
+ * @return Normalised level
+ * Respective level as per total level
+ */
+function get_normailised_level($level, $total_level) {
+  switch ($total_level) {
+    case 10:
+      $attached_level = [1 => [1], 2 => [1], 3 => [2], 4 => [2], 5 => [3], 6 => [3], 7 => [4], 8 => [4], 9 => [5], 10 => [5]];
+      break;
+    case 9:
+      $attached_level = [1 => [1], 2 => [1], 3 => [2], 4 => [2], 5 => [3], 6 => [3], 7 => [4], 8 => [4], 9 => [5]];
+      break;
+    case 8:
+      $attached_level = [1 => [1], 2 => [1], 3 => [2], 4 => [2], 5 => [3], 6 => [4], 7 => [4], 8 => [5]];
+      break;
+    case 7:
+      $attached_level = [1 => [1], 2 => [1], 3 => [2], 4 => [3], 5 => [4], 6 => [4], 7 => [5]];
+      break;
+    case 6:
+      $attached_level = [1 => [1], 2 => [2], 3 => [2], 4 => [3], 5 => [4], 6 => [5]];
+      break;
+    case 5:
+      $attached_level = [1 => [1], 2 => [2], 3 => [3], 4 => [4], 5 => [5]];
+      break;
+    case 4:
+      $attached_level = [1 => [1], 2 => [2], 3 => [3, 4], 4 => [5]];
+      break;
+    case 3:
+      $attached_level = [1 => [1, 2], 2 => [3, 4], 3 => [5]];
+      break;
+    case 2:
+      $attached_level = [1 => [1, 2, 3], 2 => [4, 5]];
+      break;
+    case 1:
+      $attached_level = [1 => [1, 2, 3, 4, 5]];
+      break;
+
+    default:
+      break;
+  }
+  return $attached_level[$level];
+}
+
+/**
+ * @return defalut level
+ */
+function get_respective_level($score) {
+
+  if ($score >= 4.7) {
+    return '5';
+  }
+  else if ($score >= 3.7 && $score <= 4.6) {
+    return '4';
+  }
+  else if ($score >= 2.7 && $score <= 3.6) {
+    return '3';
+  }
+  else if ($score >= 1.7 && $score <= 2.6) {
+    return '2';
+  }
+  else {
+    return '1';
+  }
 }

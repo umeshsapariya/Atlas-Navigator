@@ -7,6 +7,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\node\Entity\Node;
 use Drupal\user\Entity\User;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\file\Entity\File;
 
 /**
  * Class SkillDevelopingPlan for Learning managment plan.
@@ -42,6 +44,7 @@ class SkillDevelopingPlan extends FormBase {
     $skill_paragraph = Paragraph::load($skill_paragraph_id);
     $level_description_paragraph_ids = $skill_paragraph->field_skill_level_information->getValue();
     $number_of_level_field = $skill_paragraph->field_number_of_levels->getValue();
+
     $skill_related_activity = [];
     if (isset($number_of_level_field[0]['value'])) {
       $number_of_level = $number_of_level_field[0]['value'];
@@ -54,7 +57,7 @@ class SkillDevelopingPlan extends FormBase {
           $activity_nids = $paragraph_skill_level->field_assigned_activity->getValue();
           foreach ($activity_nids as $value) {
             if (!in_array($value['target_id'], $assigned_activities)) {
-              $skill_related_activity[] = ['nid' => $value['target_id'], 'level' => $delta, 'Total level' => $number_of_level];
+              $skill_related_activity[] = ['nid' => $value['target_id'], 'level' => $delta, 'total_level' => $number_of_level];
               $activity++;
             }
           }
@@ -75,12 +78,44 @@ class SkillDevelopingPlan extends FormBase {
     // Development select list.
 
     if ($skill_related_activity) {
+      foreach ($skill_related_activity as $each_activity) {
+        $get_normailised_level = get_normailised_level($each_activity['level'], $each_activity['total_level']);
+        foreach ($get_normailised_level as $level) {
+          $normailised_activities[] = ['level' => $level, 'total_level' => 5, 'nid' => $each_activity['nid']];
+        }
+      }
       $form['head']['title'] = [
         '#markup' => '<div class="box_title blue_title" rel="box1">Development plan</div>',
       ];
+      // Get parameters
+      $parameters = \Drupal::routeMatch()->getParameters();
+      $category_id = $parameters->get('category_id');
+      $skill_id = $parameters->get('skill_id');
+
+      // Get User skill 360 score
+      $current_user_id = \Drupal::currentUser()->id();
+      $raters_skill_data = get_raters_skill_data($current_user_id);
+      $relationship_tid = get_self_relationship_tid();
+
+      if (!empty($raters_skill_data)) {
+        foreach ($raters_skill_data as $rater_skill) {
+          if ($rater_skill->category_id == $category_id) {
+            $category_wise_ratings[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
+            if ($rater_skill->relationship_tid != $relationship_tid) {
+              $category_wise_ratings_others[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
+            }
+          }
+        }
+        $rel_arr = get_relationship_skill_rating($category_wise_ratings[$skill_id]);
+        // Get total score.
+        $total_score = get_total_score($category_id, $category_wise_ratings);
+      }
+      $default_level = get_respective_level($total_score[$skill_id]);
+
       $form['head']['level_select'] = [
         '#type' => 'select',
-        '#options' => [1, 2, 3, 4, 5],
+        '#default_value' => $default_level,
+        '#options' => [1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5],
       ];
 
       // Add to plan button.
@@ -98,7 +133,8 @@ class SkillDevelopingPlan extends FormBase {
         '#type' => 'container',
         '#attributes' => ['class' => ['dev-plan-cont scroll_div_content']],
       ];
-      foreach ($skill_related_activity as $delta => $activity) {
+
+      foreach ($normailised_activities as $delta => $activity) {
         // Each activity container.
         $class_count = $delta + 1;
         $row_class = 'level_' . (string) $class_count;
@@ -106,19 +142,45 @@ class SkillDevelopingPlan extends FormBase {
           '#type' => 'container',
           '#attributes' => ['class' => ['dev_row_cont change_ques ' . $row_class]],
         ];
-        // Activity logo.
-        $form['activites']['activity-' . $delta]['logo-' . $delta] = [
-          '#markup' => '<div class="title-logo"></div>',
-        ];
+
 
         $form['activites']['activity-' . $delta]['nid-' . $delta] = [
           '#type' => 'hidden',
           '#value' => $activity['nid'],
         ];
         // Activity name.
+        $icon_src = '';
         $activity_node = Node::load($activity['nid']);
+        $activity_type_tid_array = $activity_node->field_activity_type->getValue();
+        if (isset($activity_type_tid_array[0]['target_id'])) {
+          $activity_type_tid = $activity_type_tid_array[0]['target_id'];
+          if ($activity_type_tid) {
+            $activity_type_term = Term::load($activity_type_tid);
+            $activity_type_term_array = $activity_type_term->field_icon->getValue();
+            if (isset($activity_type_term_array[0]['target_id']) && $activity_type_term_array[0]['target_id']) {
+              $icon_fid = $activity_type_term_array[0]['target_id'];
+              $icon = File::load($icon_fid);
+              $icon_url = $icon->url();
+              $icon_src = '<img src="' . $icon_url . '">';
+            }
+          }
+        }
+       
+        // Activity logo.
+        $form['activites']['activity-' . $delta]['logo-' . $delta] = [
+          '#markup' => '<div class="title-logo">' . $icon_src . '</div>',
+        ];
+        // Activity Popup
+        $activity_id = $activity['nid'];
+        $actiivityblock = \Drupal::service('plugin.manager.block')->createInstance('activity_popup', []);
+
+        if (isset($actiivityblock) && !empty($actiivityblock)) {
+          $activity_popup = $actiivityblock->build($activity_id);
+        }
+        
         $form['activites']['activity-' . $delta]['name-' . $delta] = [
-          '#markup' => $activity_node->getTitle(),
+          '#markup' => \Drupal::service('renderer')->render($activity_popup),
+          //'#markup' => $activity_node->getTitle(),
           '#prefix' => '<div class="title-plan">',
           '#suffix' => '</div>',
         ];
@@ -134,8 +196,9 @@ class SkillDevelopingPlan extends FormBase {
         ];
         // Activity date field.
         $pre_date = '';
-        if ($form_state->getValue('date-' . $delta)) {
-          $pre_date = $form_state->getValue('date-' . $delta);
+        $user_input = $form_state->getUserInput();
+        if (isset($user_input['date-' . $delta]) && $user_input['date-' . $delta]) {
+          $pre_date = $user_input['date-' . $delta];
         }
         $form['activites']['activity-' . $delta]['date-' . $delta] = [
           '#type' => 'date',

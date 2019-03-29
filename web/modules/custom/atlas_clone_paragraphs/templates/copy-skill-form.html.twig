@@ -1,8 +1,7 @@
 <div class="overlay"></div>
 <div class="copy_skill_wrapper">
-	<div class="heading">Copy Skill</div>
-	<div class="content">
-		<div class="content_row">
+    <div class="content">
+        <div class="content_row">
 			<!-- <div class="label"></div>
 			<div class="select_area"></div> -->
 			{{ form.status_messages }}
@@ -11,9 +10,9 @@
 			{{ form.role }}
 			{{ form.category }}
 			{{ form.skill }}
-		</div>
-		<div class="btn_wrapper">{{ form.actions }}</div>
 	</div>
+	<div class="btn_wrapper">{{ form.actions }}</div>
+    </div>
 </div>
 {{ form.form_build_id }} {# required #}
 {{ form.form_token }}{# required #}

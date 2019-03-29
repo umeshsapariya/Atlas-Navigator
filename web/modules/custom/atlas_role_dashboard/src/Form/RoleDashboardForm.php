@@ -36,7 +36,7 @@ class RoleDashboardForm extends FormBase {
     $role_name = $role->get('title')->value;
     $form['lef_section'] = [
       '#type' => 'container',
-      '#prefix' => '<div id="left-outer-section"  class="outer-section"><div class="insert_position_label">'.$role_name.'</div>',
+      '#prefix' => '<div id="left-outer-section"  class="outer-section"><div class="insert_position_label">' . $role_name . '</div>',
       '#suffix' => '</div>',
       '#attached' =>
       [
@@ -183,7 +183,9 @@ class RoleDashboardForm extends FormBase {
     ];
     $strengths_rows = [];
     $number = 5;
+
     $top_strenghts = get_top_strengths_opportunities($role_id, "strengths", $number);
+
     if ($top_strenghts) {
       foreach ($top_strenghts as $strength) {
         $element = [];
@@ -208,6 +210,7 @@ class RoleDashboardForm extends FormBase {
     $opportunities_rows = [];
     $number = 5;
     $top_opportunities = get_top_strengths_opportunities($role_id, "opportunities", $number);
+
     if ($top_opportunities) {
       foreach ($top_opportunities as $opportunities) {
         $element = [];
@@ -383,13 +386,13 @@ class RoleDashboardForm extends FormBase {
       $invite_total = 0;
       $user_info = $this->get_user_info($uid);
       foreach ($invites as $invite) {
-        
+
         foreach ($raters_skill_data as $rater_skill) {
 
           if ($rater_skill->invite_id == $invite) {
-              if ($relationship_tid == $rater_skill->relationship_tid) {
-                $category_wise_ratings[$rater_skill->invite_id][$rater_skill->category_id][$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
-              }
+            if ($relationship_tid == $rater_skill->relationship_tid) {
+              $category_wise_ratings[$rater_skill->invite_id][$rater_skill->category_id][$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
+            }
             if (isset($category_wise_ratings[$rater_skill->invite_id][$rater_skill->category_id][$rater_skill->skill_id])) {
               $skill_wise_ratings[$rater_skill->skill_id] = $category_wise_ratings[$rater_skill->invite_id][$rater_skill->category_id][$rater_skill->skill_id];
             }
@@ -415,7 +418,7 @@ class RoleDashboardForm extends FormBase {
           }
           $total_rating = $total_rating / count($skill_wise_ratings);
         }
-        
+
         $total_rating = number_format($total_rating, 1);
         $invite_total = $invite_total + $total_rating;
       }

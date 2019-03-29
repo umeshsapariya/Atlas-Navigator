@@ -212,6 +212,29 @@
       display: inline-block;
       float: right;
       width: 35%;
+      @media screen and (max-width: 767px) {
+        width: 100% !important;
+      }
+      thead {
+        th {
+          padding-top: 0;
+        }
+      }
+      tbody {
+        td {
+          padding: 0;
+          .js-form-type-entity-autocomplete {
+            margin-bottom: 0;
+          }
+        }
+      }
+      .table-responsive {
+        height: 240px;
+        margin-bottom: 0;
+        @media screen and (max-width: 767px) {
+          height: auto;
+        }
+      }
       @media (max-width: 1024px) {
         float: none;
         width: 80%;
@@ -415,5 +438,22 @@
   }
   #edit-actions {
     text-align: right;
+  }
+}
+
+.assessment-multi-step-form {
+  .outer_wrapper {
+    //overflow-y: auto;
+  }
+}
+
+.ie {
+  &.admin_custom_theme,
+  &.user-reset-page,
+  &.path-thank-you {
+    .copy-skill-div {
+      position: static;
+      vertical-align: top;
+    }
   }
 }

@@ -5,6 +5,8 @@ namespace Drupal\atlas_overall_proficiency\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
 
 /**
  * Class DisplayTableController.
@@ -60,10 +62,11 @@ class OverallProficiencyDetails extends ControllerBase {
       $my_opportunities = 0;
       foreach ($overall_proficiency_results as $skill_id => $score360) {
         $element = [];
+        $skill_link = [];
         // Load skill name from skill id.
         $category_skill_paragraph_ref = Paragraph::load($skill_id);
         $skill_name = $category_skill_paragraph_ref->field_skill->getValue();
-
+        $category_id = $category_skill_paragraph_ref->parent_id->getValue()[0]['value'];
         // Load target proficiency of skill.
         $target_proficiency_level = $category_skill_paragraph_ref->field_target_proficiency->getValue();
         $normalised_target_proficiency_level = normalised_score_to_5($target_proficiency_level[0]['value'], $skill_id);
@@ -87,10 +90,16 @@ class OverallProficiencyDetails extends ControllerBase {
           $row_class = "Opportunities";
           $my_opportunities++;
         }
+
         // Table row.
+        $skill_link['#markup'] = '<a href="/category_details/' . $category_id . '/' . $skill_id . '">' . $skill_name[0]['value'] . '</a>';
+        $skill_link_render = \Drupal::service('renderer')->render($skill_link);
+        $url = Url::fromRoute('atlas_results.result_360_skill_relationship', array('category' => 2, 'skill' => 3));
+        $link = Link::fromTextAndUrl('naresh', $url);
+        // If you need some attributes.
         $rows[] = [
           'data' => [
-            $skill_name[0]['value'],
+            $skill_link_render,
             $rating_render,
             $score360,
             $gap,
@@ -132,7 +141,7 @@ class OverallProficiencyDetails extends ControllerBase {
       $form['lef_sidebar']['markup'] = [
         '#markup' => '<div class="proficiency-title">Assessment Results - ' . $node->getTitle() . '</div><div class="donutCell"><div id="donut_single"></div><div class="centerLabel">' . round($my_overall_percentage) . '%</div></div><div class="donut_single_labels">
              <div class="proficient_skill">' . $my_strengths . ' Proficient Skills</div>
-             <div class="skill_gap">' . $my_opportunities . ' Skill gaps</div>
+             <div class="skill_gap">' . $my_opportunities . ' Skill Gaps</div>
          </div>',
         '#attached' =>
         [

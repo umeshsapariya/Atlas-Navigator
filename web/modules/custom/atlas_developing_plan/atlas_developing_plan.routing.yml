@@ -4,7 +4,7 @@ development-plan-details-form:
     _form: '\Drupal\atlas_developing_plan\Form\DevelopmentPlanDetails'
     _title: 'Development Plan'
   requirements:
-    _permission: 'access content'
+   _role: 'authenticated'
 
 change-activity-due-date-form:
   path: 'change-activity-due-date/{id}'
@@ -12,7 +12,7 @@ change-activity-due-date-form:
     _form: '\Drupal\atlas_developing_plan\Form\ChangeActivityDueDate'
     _title: 'Activity Due Date'
   requirements:
-    _permission: 'access content'
+    _role: 'authenticated'
     
 confirm-remove-activity-form:
   path: 'confirm-remove-activity/{id}'
@@ -20,7 +20,7 @@ confirm-remove-activity-form:
     _form: '\Drupal\atlas_developing_plan\Form\ConfirmRemoveActivity'
     _title: 'Confirm Activity Remove'
   requirements:
-    _permission: 'access content'
+    _role: 'authenticated'
 
 development-plan.activity_popup:
   path: 'development-plan/activity/{activity_id}'
@@ -29,5 +29,12 @@ development-plan.activity_popup:
     _controller: '\Drupal\atlas_developing_plan\Controller\ActivityPopupController::display'
   requirements:
     _role: 'authenticated'
-    
+
+add-development-plan-form:
+  path: 'add-development-plan'
+  defaults:
+    _form: '\Drupal\atlas_developing_plan\Form\AddDevelopmetPlan'
+    _title: 'Add Activity'
+  requirements:
+    _role: 'authenticated'
     

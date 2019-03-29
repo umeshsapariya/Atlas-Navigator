@@ -83,6 +83,9 @@
                 function drawVisualization(cat_data) {
                     //var data = google.visualization.arrayToDataTable(temp);
                     var data = new google.visualization.arrayToDataTable(cat_data);
+                    var formatNumer = new google.visualization.NumberFormat({pattern: '0.0'});
+                    formatNumer.format(data, 2);
+                    formatNumer.format(data, 4);
                     var cat_count = cat_data.length - 1;
                     var extra = 0;
                     if (cat_count < 5) {
@@ -157,7 +160,7 @@
                                     }
                                 },
                                 type: 'line',
-                                pointSize: 30,
+                                pointSize: 40,
                                 lineWidth: 0,
                                 pointShape: 'square',
                             }

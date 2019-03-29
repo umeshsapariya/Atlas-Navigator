@@ -5,6 +5,10 @@ namespace Drupal\atlas_homepage\Plugin\Block;
 use Drupal\Core\Block\BlockBase;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\file\Entity\File;
 
 /**
  * Provides a 'Developing Plan Homepage' Block.
@@ -26,11 +30,6 @@ class DevelopingPlanBlock extends BlockBase {
       '#value' => 'In progress',
     ];
 
-    $form['select-check'] = [
-      '#type' => 'checkbox',
-      '#title' => ' ',
-      '#attributes' => ['class' => ['dev-checkbox']],
-    ];
     $form['completed'] = [
       '#type' => 'button',
       '#value' => 'completed',
@@ -46,12 +45,23 @@ class DevelopingPlanBlock extends BlockBase {
         // Development node id
         $development_node = Node::load($nid);
 
-        // Development due date
-        $development_due_date_field = $development_node->field_due_date->getValue();
-        $development_due_date = $development_due_date_field[0]['value'];
-        $date_obj = new DrupalDateTime($development_due_date, 'UTC');
-        $due_date = $date_obj->format('M d');
-
+        // Development completed or not
+        $completed_or_not = $development_node->field_completed->getValue();
+        if ($completed_or_not[0]['value']) {
+          $developent_status = "plan_completed";
+          $development_due_date_field = $development_node->field_completed_date->getValue();
+          $development_due_date = $development_due_date_field[0]['value'];
+          $date_obj = new DrupalDateTime($development_due_date, 'UTC');
+          $due_date = $date_obj->format('M d');
+        }
+        else {
+          // Development due date
+          $development_due_date_field = $development_node->field_due_date->getValue();
+          $development_due_date = $development_due_date_field[0]['value'];
+          $date_obj = new DrupalDateTime($development_due_date, 'UTC');
+          $due_date = $date_obj->format('M d');
+          $developent_status = "plan_in_pregress";
+        }
         // Check development status
         $due_date_time = strtotime($development_due_date_field[0]['value']);
         if ($due_date_time > time()) {
@@ -60,33 +70,47 @@ class DevelopingPlanBlock extends BlockBase {
         else {
           $current_status = "expired";
         }
-
-        // Development completed or not
-        $completed_or_not = $development_node->field_completed->getValue();
-        if ($completed_or_not[0]['value']) {
-          $developent_status = "plan_completed";
-        }
-        else {
-          $developent_status = "plan_in_pregress";
-        }
-
         // Get activity title
         $assigned_activity_field = $development_node->field_learning_activity->getValue();
         $assigned_activity = $assigned_activity_field[0]['target_id'];
         $activity_node = Node::load($assigned_activity);
         $activity_title = $activity_node->getTitle();
-
-        // Get activity description
-        $activity_body = $activity_node->body->getValue();
-        $activity_description = '';
-        if (isset($activity_body[0]['value'])) {
-          $activity_description = substr(strip_tags($activity_body[0]['value']), 0, 10);
+        $activity_url_arr = $activity_node->field_activity_url->getValue();
+        if (isset($activity_url_arr[0]['uri'])) {
+          $options = [
+            'attributes' => [
+              'target' => [
+                '_blank',
+              ],
+            ],
+          ];
+          $activity_url_obj = Url::fromUri($activity_url_arr[0]['uri'], $options);
+          $activity_title = Link::fromTextAndUrl($activity_title, $activity_url_obj)->toString();
         }
+
+        // Activity icon
+        $icon_src = '';
+        $activity_type_tid_array = $activity_node->field_activity_type->getValue();
+        if (isset($activity_type_tid_array[0]['target_id'])) {
+          $activity_type_tid = $activity_type_tid_array[0]['target_id'];
+          if ($activity_type_tid) {
+            $activity_type_term = Term::load($activity_type_tid);
+            $activity_type_term_array = $activity_type_term->field_icon->getValue();
+            if (isset($activity_type_term_array[0]['target_id']) && $activity_type_term_array[0]['target_id']) {
+              $icon_fid = $activity_type_term_array[0]['target_id'];
+              $icon = File::load($icon_fid);
+              $icon_url = $icon->url();
+              $icon_src = '<img src="' . $icon_url . '">';
+            }
+          }
+        }
+        $form['logo'] = [
+          '#markup' => $icon_src,
+        ];
         $development_plan[] = [
-          'checkbox' => $form['select-check'],
           'nid' => $nid,
+          'icon' => $form['logo'],
           'activity_title' => $activity_title,
-          'activity_detail' => $activity_description,
           'due_date' => $due_date,
           'expired' => $current_status,
           'class' => $developent_status,

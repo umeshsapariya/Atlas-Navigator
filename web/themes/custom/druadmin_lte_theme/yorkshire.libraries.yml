@@ -8,6 +8,7 @@ base:
     lib/custom-event-polyfill.js: {}
     lib/fastclick/fastclick.min.js: {}
     lib/adminlte/js/app.min.js: {}
+    js/browser-class.js: {}
     js/custom.js: {}
     https://www.gstatic.com/charts/loader.js: { type: external, minified: true }
   dependencies:

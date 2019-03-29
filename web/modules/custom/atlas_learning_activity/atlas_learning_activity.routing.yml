@@ -1,7 +1,9 @@
-# atlas_learning_activity.respondents:
-#   path: '/respondents'
+# atlas_learning_activity.activity_form:
+#   path: 'node/add/activity'
 #   defaults:
-#     _form: '\Drupal\atlas_respondents\Form\RespondentList'
-#     _title: 'Respondents'
+#     _form: '\Drupal\atlas_learning_activity\Form\ActivityCreator'
+#     _title: ''
 #   requirements:
-#     _permission: 'access content'
+#     _access: 'TRUE'
+#   options:
+#     no_cache: 'TRUE'

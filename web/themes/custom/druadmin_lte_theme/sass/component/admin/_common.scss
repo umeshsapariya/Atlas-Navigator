@@ -95,8 +95,14 @@ body {
     z-index: 99;
   }
   &.sidebar-mini.sidebar-collapse {
+    .content-wrapper {
+      background: #f0f4f7;
+      margin-left: 0 !important;
+      padding-left: 50px !important;
+    }
     .main-sidebar {
       @media (min-width: 768px) {
+        width: 0 !important;
         z-index: 99;
       }
     }
@@ -677,7 +683,7 @@ body.admin_custom_theme {
     pointer-events: none;
     position: relative;
     right: 23px;
-    top: 4px;
+    top: 7px;
   }
   select {
     -webkit-appearance: none;
@@ -762,4 +768,75 @@ input[type="date"]::-webkit-inner-spin-button {
 }
 input[type="date"]::-webkit-clear-button {
   display: none;
+}
+.hidded-nid {
+  display: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.ui-dialog-titlebar {
+  border: 0;
+  margin: 0;
+  padding: 0 !important;
+
+  .ui-dialog-title {
+    background: #008ec3;
+    border: 0;
+    color: #fff;
+    display: inline-block;
+    font-family: "Conv_segoeuib",Sans-Serif;
+    margin: 0;
+    padding: 10px 20px;
+    text-transform: capitalize;
+    width: 100%;
+  }
+}
+.ui-dialog-buttonpane {
+  background: #fff !important;
+  border: none;
+}
+
+.row-popup {
+  > span {
+    display: inline-block;
+    vertical-align: top;
+    &.row-popup-title {
+      max-width: 50%;
+      width: 145px;
+      @media screen and (max-width: 767px) {
+        width: 45%;
+      }
+    }
+    &.regular-font {
+      font-family: $segoeui-regular;
+      margin-left: 10px;
+      width: 45%;
+      @media screen and (max-width: 767px) {
+        margin-left: 0;
+        overflow-wrap: break-word;
+        width: 45%;
+      }
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
 }

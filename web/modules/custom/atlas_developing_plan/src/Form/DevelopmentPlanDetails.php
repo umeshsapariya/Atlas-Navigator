@@ -11,6 +11,8 @@ use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\RedirectCommand;
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Link;
 
 /**
  * Class DevelopmentPlanDetails for Learning managment plan.
@@ -46,10 +48,19 @@ class DevelopmentPlanDetails extends FormBase {
       '#prefix' => '<div class="dev-page-head-cta">',
       '#suffix' => '</div>',
     ];
+    // To add Add development plan form in popup.
+    $actiivityblock = \Drupal::service('plugin.manager.block')->createInstance('development_plan_popup', []);
 
-//    $form['page-head']['container']['add-plan'] = [
-//      '#markup' => '<a href="/node/add/learning_activity" target="_blank" class="btn btn-primary">Add</a>',
-//    ];
+    if (isset($actiivityblock) && !empty($actiivityblock)) {
+      $activity_popup = $actiivityblock->build();
+    }
+
+    $form['page-head']['container']['add-plan'] = [
+
+      '#markup' => '<div class="activity-info-btn">
+        ' . \Drupal::service('renderer')->render($activity_popup) . '
+     </div>',
+    ];
     $form['page-head']['container']['actions']['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Mark as complete'),
@@ -132,7 +143,8 @@ class DevelopmentPlanDetails extends FormBase {
             'class' => ['use-ajax'],
             'data-dialog-type' => 'modal',
             'data-dialog-options' => json_encode([
-              'width' => 700,
+              'width' => 300,
+              'dialogClass' => 'activity-due-date',
             ]),
           ],
         ];
@@ -177,8 +189,8 @@ class DevelopmentPlanDetails extends FormBase {
       ->condition('status', NODE_PUBLISHED)
       ->condition('type', 'developing_plan')
       ->condition('field_assigned_user', $uid)
-      ->condition('field_completed', $status, '!=');
-
+      ->condition('field_completed', $status, '!=')
+      ->sort('created' , 'DESC'); 
     $development_nids = $query->execute();
 
     foreach ($development_nids as $development_nid) {
@@ -209,16 +221,19 @@ class DevelopmentPlanDetails extends FormBase {
     if (isset($actiivityblock) && !empty($actiivityblock)) {
       $activity_popup = $actiivityblock->build($activity_id);
     }
+    $icon_url = '';
     $activity_node = Node::load($activity_id);
     if (!empty($activity_node->get('field_activity_type')->getValue()[0]['target_id'])) {
       $activity_type = $activity_node->get('field_activity_type')->getValue()[0]['target_id'];
+    
+      $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($activity_type);
+    
+      if (!empty($term->field_icon->entity)) {
+        $icon_uri = $term->field_icon->entity->getFileUri();
+        $icon_url = file_create_url($icon_uri);
+      }
     }
-    $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($activity_type);
-    $icon_url = '';
-    if (!empty($term->field_icon->entity)) {
-      $icon_uri = $term->field_icon->entity->getFileUri();
-      $icon_url = file_create_url($icon_uri);
-    }
+    
     $element['#markup'] = '<div class="activity-info">
         <div class="activity-image">
         <img src="' . $icon_url . '"/></div>
@@ -254,7 +269,7 @@ class DevelopmentPlanDetails extends FormBase {
     $development_plan_date->setTimezone(timezone_open(drupal_get_user_timezone()));
 
     // This will return the required date format.
-    $date = $development_plan_date->format('M y');
+    $date = $development_plan_date->format('d M y');
     return $date;
   }
 

@@ -11,14 +11,14 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 use Drupal\Core\Database\Database;
-
-//use Drupal\Core\Database\Connection;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /*
  * Implements hook_form_alter().
  */
 function atlas_assessment_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'node_assessment_form_form') {
+    $form['actions']['submit']['#submit'][] = 'assessment_form_submit';
     $form['#attached']['library'][] = 'atlas_assessment/altas_assessment_page';
     $form['field_category']['widget']['#title'] = '';
     $form['field_category']['widget']['#title_display'] = 'invisible';
@@ -27,10 +27,26 @@ function atlas_assessment_form_alter(&$form, $form_state, $form_id) {
   }
 }
 
+/*
+ * Submit handler for assessment node form.
+ */
+function assessment_form_submit(&$form, $form_state) {
+  $fieldStorage = FieldStorageConfig::loadByName('paragraph', 'field_activity_category');
+  $fieldStorage->setSetting('allowed_values_function', 'getAllCategories');
+  //save configuration
+  $fieldStorage->save();
+
+  $fieldStorage = FieldStorageConfig::loadByName('paragraph', 'field_activity_skill');
+  $fieldStorage->setSetting('allowed_values_function', 'getAllSkills');
+  //save configuration
+  $fieldStorage->save();
+}
+
 /**
  * Implements hook_form_FORM_ID_edit_form_alter().
  */
 function atlas_assessment_form_node_assessment_form_edit_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  $form['actions']['submit']['#submit'][] = 'assessment_form_submit';
   $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
   if (!in_array('administrator', $user->getRoles())) {
     $form['revision_information']['#access'] = FALSE;
@@ -47,12 +63,17 @@ function atlas_assessment_field_widget_entity_reference_paragraphs_form_alter(&$
   $field_definition = $context['items']->getFieldDefinition();
   $paragraph_entity_reference_field_name = $field_definition->getName();
   // hide labels of skill level information paragraphs
+  if ($paragraph_entity_reference_field_name == "field_skills") {
+    $element['top']['links']['remove_button']['#value'] = "X";
+  }
   if ($paragraph_entity_reference_field_name == 'field_skill_level_information') {
+    $element['top']['links']['remove_button']['#value'] = "X";
     $element['subform']['field_level_description']['widget'][0]['#title_display'] = 'invisible';
     $element['subform']['field_level_header']['widget'][0]['value']['#title_display'] = 'invisible';
     $element['subform']['field_level_description']['widget']['#after_build'][] = '_allowed_formats_remove_textarea_help';
   }
   else if ($paragraph_entity_reference_field_name == 'field_category') {
+    $element['top']['links']['remove_button']['#value'] = "X";
     $element['subform']['field_skills']['widget']['#title'] = '';
     $element['subform']['field_skills']['widget']['#title_display'] = 'invisible';
   }
