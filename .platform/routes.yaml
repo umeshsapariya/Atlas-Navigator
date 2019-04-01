@@ -11,6 +11,3 @@
     type: upstream
     upstream: "app:http"
 
-"https://atlastenant.{default}/":
-    type: upstream
-    upstream: "app:http"
