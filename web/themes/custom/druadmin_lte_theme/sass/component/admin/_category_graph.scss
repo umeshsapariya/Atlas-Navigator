@@ -45,10 +45,10 @@
           width: 100%;
         }
         &.skill_right {
-          background-color: #dbe8f0;
           background-color: transparent !important;
-          border: 0;
+          background-color: #dbe8f0;
           border: 0 !important;
+          border: 0;
           border-radius: 10px;
           border-radius: 10px;
           padding: 0 !important;
@@ -181,7 +181,7 @@
                     }
                     &:before {
                       display: none;
-                      // color: #008ec3;
+                      // color: $theme_color;
                       // display: inline-block;
                       // font-family: "icomoon";
                       // font-size: 35px;
@@ -248,7 +248,7 @@
                   position: relative;
                   width: 20%;
                   &:after {
-                    color: #008ec3;
+                    color: $theme_color;
                     content: "\e915";
                     cursor: pointer;
                     display: inline-block;
@@ -311,8 +311,8 @@
 
       .inner_wrapper {
         align-items: stretch;
-        display: flex;
         display: -ms-flexbox;
+        display: flex;
         -ms-flex-align: stretch;
         -ms-flex-direction: row;
         flex-direction: row;
@@ -360,8 +360,8 @@
           }
         }
         .common_rating {
-          display: flex;
           display: -ms-flexbox;
+          display: flex;
           -ms-flex-direction: column;
           flex-direction: column;
 
@@ -406,7 +406,7 @@
       width: 100%;
 
       .rating_heading {
-        background: #008ec3;
+        background: $theme_color;
         color: #fff;
         display: inline-block;
         font-family: $segoeui-semibold;
@@ -527,7 +527,7 @@
       &.Strengths {
         td {
           &:last-child {
-            background-color: #0598d8;
+            background-color: $theme_color;
           }
         }
       }

@@ -1,9 +1,0 @@
-uuid: da565cb1-f1d8-4146-bb48-065c2d1f48c1
-langcode: en
-status: true
-dependencies: {  }
-id: skill_level_information
-label: 'Skill Level Information'
-icon_uuid: null
-description: ''
-behavior_plugins: {  }

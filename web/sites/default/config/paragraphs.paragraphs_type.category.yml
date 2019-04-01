@@ -1,9 +1,0 @@
-uuid: fd46288d-9d29-4839-823d-29773780e606
-langcode: en
-status: true
-dependencies: {  }
-id: category
-label: Category
-icon_uuid: null
-description: ''
-behavior_plugins: {  }

@@ -191,7 +191,7 @@ function yorkshire_preprocess_breadcrumb(&$variables) {
     $path = \Drupal::request()->getpathInfo();
     $arg = explode('/', $path);
 
-    if (isset($arg[1]) && $arg[1] == "category_details" && count($arg) == 4) {
+    if (isset($arg[1]) && $arg[1] == "category_details" && count($arg) == 5) {
       $variables['breadcrumb'][1]['text'] = 'Category';
     }
 

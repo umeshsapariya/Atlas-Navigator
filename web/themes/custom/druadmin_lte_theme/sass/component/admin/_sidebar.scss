@@ -37,12 +37,12 @@
           max-width: 230px;
           padding: 5px 25px 10px 0;
           &.is-active {
-            color: $light-blue;
+            color: $theme_color;
             font-family: $segoeui-semibold;
           }
           &:hover {
             background-color: transparent;
-            color: $light-blue;
+            color: $theme_color;
           }
         }
         ul {

@@ -15,6 +15,7 @@ function atlas_results_theme($existing, $type, $theme, $path) {
       'variables' => [
         'category_details' => NULL,
         'category_name' => NULL,
+        'user_name' => NULL,
       ],
     ],
     'skill_details' => [
@@ -22,6 +23,7 @@ function atlas_results_theme($existing, $type, $theme, $path) {
         'skill_details' => NULL,
         'skill_name' => NULL,
         'skill_popup' => NULL,
+        'user_name' => NULL,
       ],
     ],
   ];
@@ -207,6 +209,7 @@ function get_invite_status($invite_id, $completed) {
     $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
     $query->fields('ai');
     $query->condition('ai.invite_id', $invite_id);
+    //$query->condition('ai.assessment_id', $assessment_value);
     $query->condition('aid.completed', $completed);
     $raters_skill_data = $query->execute()->fetchAll();
     $completed_invites = count($raters_skill_data);

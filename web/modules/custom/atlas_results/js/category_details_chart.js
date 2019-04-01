@@ -59,7 +59,7 @@
         'isStacked': true,
         pieSliceText: 'percentage',
         orientation: 'vertical',
-        colors: ['#0598d8', '#D5D5D5'],
+        colors: ['#008ec3', '#D5D5D5'],
         chartArea: {
           height: "90%",
           width: "70%",

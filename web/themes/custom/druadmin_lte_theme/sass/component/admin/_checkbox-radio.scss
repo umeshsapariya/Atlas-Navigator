@@ -8,7 +8,7 @@
         z-index: 1;
         &:checked {
           + label {
-            background-color: $level_checked;
+            background-color: $theme_color;
             color: $white-color;
             &:after,
             &:before {

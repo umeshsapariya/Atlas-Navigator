@@ -37,7 +37,7 @@ $(document).once().ajaxComplete(function (event, xhr, settings) {
         pieSliceTextStyle: {
           color: 'black',
         },
-        colors: ['#018EC4', '#FF2F2F'],
+        colors: ['#008ec3', '#FF2F2F'],
         pieSliceText: 'none',
         legend: {position: 'none', pointSize: 1},
         chartArea: {width: '90%', height: '90%'},

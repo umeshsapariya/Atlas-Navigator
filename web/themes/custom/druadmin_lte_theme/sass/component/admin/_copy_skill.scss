@@ -30,7 +30,7 @@
       line-height: 20px;
       padding: 0 15px;
       &:before {
-        color: #008ec3;
+        color: $theme_color;
         content: "\e907";
         cursor: pointer;
         display: inline-block;

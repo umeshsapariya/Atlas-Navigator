@@ -37,7 +37,7 @@
               }
             }
             &:after {
-              color: #008ec3;
+              color: $theme_color;
               content: "\e908";
               cursor: pointer;
               display: inline-block;
@@ -120,7 +120,7 @@
 
             &.views-field.views-field-edit-node {
               a {
-                background: #008ec3;
+                background: $theme_color;
                 border-radius: 25px;
                 color: #fff;
                 cursor: pointer;
@@ -165,7 +165,7 @@
               .dropbutton {
                 border-right: none;
                 li {
-                  background: #008ec3;
+                  background: $theme_color;
                   -webkit-border-radius: 25px;
                   -moz-border-radius: 25px;
                   border-radius: 25px;
@@ -212,7 +212,7 @@
             }
           }
           a {
-            background: #008ec3;
+            background: $theme_color;
             border-radius: 25px;
             color: #fff;
             font-family: $segoeui-regular;

@@ -99,7 +99,7 @@
       background-color: #fff;
       border: 1px solid #ddd;
       &:before {
-        background-color: #008ec3;
+        background-color: $theme_color;
         border-radius: 50px;
         content: "";
         height: 6px;

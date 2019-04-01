@@ -5,6 +5,7 @@ namespace Drupal\atlas_results\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Database\Database;
 use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\user\Entity\User;
 
 /**
  * Class DisplayTableController.
@@ -19,34 +20,33 @@ class CategoryDetails extends ControllerBase {
    * @return array
    *   Return Table element.
    */
-  public function display($invite_id = NULL, $category_id = NULL) {
+  public function display($assessment_id = NULL, $category_id = NULL) {
     $connection = Database::getConnection();
     $current_user_id = \Drupal::currentUser()->id();
     $connection = Database::getConnection();
-    // Get Assessment ID
-    $query = $connection->select('assessment_invite_details', 'aid');
-    $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
-    $query->fields('ad', ['assessment_id']);
-    $query->condition('aid.invite_id', $invite_id);
-    $query->condition('aid.raters_uid', $current_user_id);
-    $assessment_id = $query->execute()->fetchField();
-    
+
+    //$assessment_id = 65;
     $query = $connection->select('assessment_invite', 'ai');
     $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
     $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
     $query->Join('assessment_skill_data', 'asd', 'asd.assessment_id = ad.assessment_id');
     $query->fields('ai');
     $query->fields('aid', ['relationship_tid', 'id']);
-    $query->fields('ad', ['assessment_id']);
+    $query->fields('ad', ['assessment_id', 'assess_uid']);
     $query->fields('asd');
-    $query->condition('asd.assessment_id', $assessment_id, '=');
-    $query->condition('aid.invite_id', $invite_id);
+    //$query->condition('asd.assessment_id', $assessment_id, '=');
+    $query->condition('aid.invite_id', $assessment_id);
     $query->condition('asd.category_id', $category_id);
     $query->condition('asd.score', 0, '>');
-    $query->condition('ai.uid', $current_user_id);
+    //$query->condition('ai.uid', $current_user_id);
     $query->condition('aid.completed', 1);
     $raters_skill_data = $query->execute()->fetchAll();
-  
+    //ksm($raters_skill_data);
+    $uid = $raters_skill_data[0]-> uid;
+    //$user_id = $default_values[0]->uid;
+    $user = User::load($uid);
+    $default_username = $user->getUsername();
+    
     $relationship_tid = get_self_relationship_tid();
     $category_details = [];
     $category_wise_ratings = [];
@@ -118,7 +118,7 @@ class CategoryDetails extends ControllerBase {
         $cat_data[$count][] = floatval($category_detail['other']);
         $cat_data[$count][] = floatval($category_detail['self']);
         $cat_data[$count][] = floatval($category_detail['self']);
-        $cat_data[$count][] = '/category_details/' .$invite_id.'/'. $category_id . '/' . $key;
+        $cat_data[$count][] = '/category_details/' .$assessment_id.'/'. $category_id . '/' . $key;
         $count++;
       }
       // Get category name.
@@ -130,6 +130,7 @@ class CategoryDetails extends ControllerBase {
       '#theme' => 'category_details',
       '#category_details' => $category_details,
       '#category_name' => $category_name,
+      '#user_name' => ucfirst($default_username),
       '#attached' => [
         'library' => [
           'atlas_results/category_details_chart',

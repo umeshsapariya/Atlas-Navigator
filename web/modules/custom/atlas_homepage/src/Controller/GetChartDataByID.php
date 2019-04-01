@@ -17,7 +17,16 @@ class GetChartDataByID extends ControllerBase {
    * Handler for autocomplete request.
    */
   public function getdata(Request $request) {
-    $input = $request->query->get('invite_id');
+    $assessment_id = $request->query->get('invite_id');
+    $connection = Database::getConnection();
+       // Get Assessment ID
+    $query = $connection->select('assessment_invite_details', 'aid');
+    $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
+    $query->fields('aid', ['invite_id']);
+    $query->condition('ad.assessment_id', $assessment_id);
+    //$query->condition('aid.raters_uid', $current_user_id);
+    $input = $query->execute()->fetchField();
+    $input = $assessment_id;
     $connection = Database::getConnection();
     $current_user_id = \Drupal::currentUser()->id();
     $raters_skill_data = get_raters_skill_data($current_user_id);
@@ -56,13 +65,16 @@ class GetChartDataByID extends ControllerBase {
       $category_360[$cat]['avg_others'] = number_format($others_score[$cat]['avg'], 1);
     }
     $count = 0;
+        
+  
+    
     foreach ($category_360 as $key => $category) {
       $cat_data[$count][] = $category['category_name'];
       $cat_data[$count][] = floatval($category['avg_others']);
       $cat_data[$count][] = floatval($category['avg_others']);
       $cat_data[$count][] = floatval($category['avg_self']);
       $cat_data[$count][] = floatval($category['avg_self']);
-      $cat_data[$count][] = 'category_details/' .$input.'/'. $key;
+      $cat_data[$count][] = 'category_details/' .$assessment_id.'/'. $key;
       $count++;
     }
     return new JsonResponse($cat_data);

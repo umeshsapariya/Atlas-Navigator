@@ -40,8 +40,8 @@
       top: 5px;
       width: 20px;
       input {
-        background-color: #008ec3;
-        border: 1px solid #008ec3;
+        background-color: $theme_color;
+        border: 1px solid $theme_color;
         padding: 0 6px;
         &:hover {
           background-color: #3ca8d0;
@@ -141,7 +141,7 @@
       }
       [type="checkbox"]:checked + label {
         &:before {
-          border: solid #008ec3;
+          border: solid $theme_color;
           border-width: 0 3px 3px 0;
           content: "";
           height: 17px;
@@ -272,7 +272,7 @@
             }
           }
           [type="radio"]:checked + label {
-            background-color: $level_checked;
+            background-color: $theme_color;
           }
         }
       }
@@ -348,8 +348,8 @@
       width: 100% ;
 
       .label {
-        color: $level_color;
         color: $base-color;
+        color: $level_color;
         display: inline-block;
         float: left;
         font-family: $segoeui-semibold;

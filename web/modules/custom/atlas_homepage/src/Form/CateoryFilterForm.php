@@ -37,10 +37,18 @@ class CateoryFilterForm extends FormBase {
       $query->condition('ai.invite_id', $default_invite_id);
       $default_values = $query->execute()->fetchAll();
     }
-
     $user_id = $default_values[0]->uid;
     $user = User::load($user_id);
     $default_username = $user->getUsername();
+    $current_user_id = \Drupal::currentUser()->id();
+    // Default assessment id 
+     $query = $connection->select('assessment_invite_details', 'aid');
+    $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
+    $query->fields('ad', ['assessment_id']);
+    $query->condition('aid.invite_id', $default_invite_id);
+    $query->condition('aid.raters_uid', $current_user_id);
+    //$query->condition('aid.raters_uid', $current_user_id);
+    $assessment_id = $query->execute()->fetchField();
     
     $new_assessment_link = Link::fromTextAndUrl(t('New assessment'), Url::fromRoute('atlas_peer_invite.assessment'))->toString();
     $export_link = Link::fromTextAndUrl(t('Export'), Url::fromRoute('system.admin_config_system'))->toString();
@@ -109,20 +117,30 @@ class CateoryFilterForm extends FormBase {
    */
   public function autcomplete_update_invite_id(array &$form, FormStateInterface $form_state) {
     $element = $form_state->getTriggeringElement();
-    $assessment_id = $element['#value'];
+    $assessment_value = $element['#value'];
     $connection = Database::getConnection();
     //$current_user_id = \Drupal::currentUser()->id();
     $invite_id_query = db_select('assessment_invite', 'ai')->fields('ai', [
         'invite_id', 'uid'
       ])
-      ->condition('assessment_id', $assessment_id)
+      ->condition('assessment_id', $assessment_value)
       //->condition('uid', $current_user_id)
       ->execute();
     $values = $invite_id_query->fetchAll();
+    //ksm($values);
     $invite_id = $values[0]->invite_id;
+    $user_id = $values[0]->uid;
+    
+       $query = $connection->select('assessment_invite_details', 'aid');
+    $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
+    $query->fields('ad', ['assessment_id']);
+    $query->condition('aid.invite_id', $invite_id);
+    $query->condition('aid.raters_uid', $user_id);
+    //$query->condition('aid.raters_uid', $current_user_id);
+    $assessment_id = $query->execute()->fetchField();
     $form['invite_id']['#value'] = $invite_id;
     // Get Username 
-    $user_id = $values[0]->uid;
+    
     $user = User::load($user_id);
     $default_username = $user->getUsername();
     
