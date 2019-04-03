@@ -3,7 +3,7 @@
 # Each route describes how an incoming URL is going
 # to be processed by Platform.sh.
 
-"https://atlas.{default}/":
+"https://login.{default}/":
     type: upstream
     upstream: "app:http"
 
@@ -11,6 +11,3 @@
     type: upstream
     upstream: "app:http"
 
-"https://atlastenant.{default}/":
-    type: upstream
-    upstream: "app:http"

@@ -19,9 +19,8 @@ build:
 # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
 # side is in the form `<service name>:<endpoint name>`.
 relationships:
-    atlas: 'mysqldb:atlas'
+    login: 'mysqldb:login'
     luckcompanies: 'mysqldb:luckcompanies'
-    atlastenant: 'mysqldb:atlastenant'
 #    solr: 'solrsearch:solr'
 #    redis: 'rediscache:redis'
 
@@ -84,7 +83,7 @@ disk: 2048
 # directory paths, relative to the application root. The values are strings such as
 # 'shared:files/NAME', where NAME is just a unique name for the mount.
 mounts:
-    '/web/sites/default/files': 'shared:files/files-atlas'
+    '/web/sites/default/files': 'shared:files/files-login'
     '/web/sites/luckcompanies/files': 'shared:files/files-luckcompanies'
     '/tmp': 'shared:files/tmp'
     '/private': 'shared:files/private'
