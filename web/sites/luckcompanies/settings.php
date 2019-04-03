@@ -30,7 +30,9 @@ $settings['file_scan_ignore_directories'] = [
 // Set up a config sync directory.
 //
 // This is defined inside the read-only "config" directory, deployed via Git.
-$config_directories[CONFIG_SYNC_DIRECTORY] = '../config/sync';
+
+//Enable Config Split for Luck Companies Site
+$config['config_split.config_split.luckcompanies']['status']= TRUE;
 
 // Automatic Platform.sh settings.
 if (file_exists($app_root . '/' . $site_path . '/../settings.platformsh.php')) {

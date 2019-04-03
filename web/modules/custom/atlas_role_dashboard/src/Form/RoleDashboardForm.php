@@ -160,7 +160,7 @@ class RoleDashboardForm extends FormBase {
       '#prefix' => '<div id="right-outer-section" class="outer-section">',
       '#suffix' => '</div>',
     ];
-    // Getroleassociates
+    // Getroleassociates.
     $connection = Database::getConnection();
     $associates_query = $connection->select('assessment_invite', 'ai');
     $associates_query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
@@ -263,6 +263,10 @@ class RoleDashboardForm extends FormBase {
     $relationship = $form_state->getValue('filter_by_relationship');
     $filter_by_date = $form_state->getValue('filter_by_date');
     $required_date = strtotime($filter_by_date);
+    $current_user_id = \Drupal::currentUser()->id();
+    // To get User ids
+    // $search_user_ids = [$current_user_id, 1, 5, 93];.
+    $members_uids = get_team_members_uid($current_user_id);
     // To get associate user to role.
     $query = \Drupal::database()->select('assessment_invite_details', 'aid');
     $query->join('assessment_invite', 'ai', 'ai.invite_id = aid.invite_id');
@@ -291,6 +295,8 @@ class RoleDashboardForm extends FormBase {
     if ($required_date) {
       $query->condition('ai.invited_date', $required_date, '>=');
     }
+    // $query->condition('ai.uid', 16);.
+    $query->condition('ai.uid', $members_uids, 'IN');
     $query->condition('aid.completed', 1);
     $query->condition('aid.relationship_tid', $relationship_tid);
     $query->orderBy('aid.invite_id', 'DESC');
@@ -361,6 +367,10 @@ class RoleDashboardForm extends FormBase {
     $user_ids = [];
     $relationship_tid = get_self_relationship_tid();
     $skill_wise_ratings = [];
+    $current_user_id = \Drupal::currentUser()->id();
+    // To get User ids.
+    $members_uids = get_team_members_uid($current_user_id);
+    // $search_user_ids = [$current_user_id, 1, 5, 93];
     // To get associate user to role.
     $query = \Drupal::database()->select('assessment_invite_details', 'aid');
     $query->join('assessment_invite', 'ai', 'ai.invite_id = aid.invite_id');
@@ -370,6 +380,8 @@ class RoleDashboardForm extends FormBase {
     $query->fields('ai', ['uid']);
     $query->fields('aid', ['invite_id']);
     $query->condition('ai.role_id', $role_id);
+    // $query->condition('ai.uid', 16);.
+    $query->condition('ai.uid', $members_uids, 'IN');
     $query->condition('aid.completed', 1);
     $query->condition('aid.relationship_tid', $relationship_tid);
     $query->condition('u.status', 1);
@@ -450,9 +462,9 @@ class RoleDashboardForm extends FormBase {
     $user_profile = \Drupal::entityTypeManager()
       ->getStorage('profile')
       ->loadByProperties([
-      'uid' => \Drupal::currentUser()->id(),
-      'type' => 'general_profile',
-    ]);
+        'uid' => \Drupal::currentUser()->id(),
+        'type' => 'general_profile',
+      ]);
     if ($user_profile) {
       $user_profile = reset($user_profile);
       $designation_id = $user_profile->get('field_job_title')->target_id;

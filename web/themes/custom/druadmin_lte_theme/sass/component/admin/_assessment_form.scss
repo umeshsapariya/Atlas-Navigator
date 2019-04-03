@@ -192,7 +192,7 @@
     .field--name-field-level-description {
       display: inline-block;
       margin-left: 2.5%;
-      width: 45%;
+      width: 55%;
       @media (max-width: 1024px) {
         width: 80%;
       }
@@ -209,35 +209,37 @@
       }
     }
     .field--name-field-assigned-activity {
+      display: none;
+    }
+    #assigned-activity-wrapper {
       display: inline-block;
       float: right;
-      width: 35%;
+      max-height: 270px;
+      width: 25%;
       @media screen and (max-width: 767px) {
         width: 100% !important;
       }
-      thead {
-        th {
-          padding-top: 0;
-        }
+      legend {
+        background-color: #fff;
+        float: left;
+        font-family: $segoeui-regular;
+        margin-bottom: 0;
+        margin-bottom: 5px;
+        padding: 8px;
+        text-align: center;
+        width: 80%;
       }
-      tbody {
-        td {
-          padding: 0;
-          .js-form-type-entity-autocomplete {
-            margin-bottom: 0;
+      .fieldset-wrapper {
+        .assigned-activity {
+          background-color: #fff;
+          margin-bottom: 2px;
+          padding: 8px;
+          text-align: center;
+          width: 80%;
+          a {
+            font-family: $segoeui-regular;
           }
         }
-      }
-      .table-responsive {
-        height: 240px;
-        margin-bottom: 0;
-        @media screen and (max-width: 767px) {
-          height: auto;
-        }
-      }
-      @media (max-width: 1024px) {
-        float: none;
-        width: 80%;
       }
     }
 
@@ -348,8 +350,8 @@
       width: 100% ;
 
       .label {
-        color: $base-color;
         color: $level_color;
+        color: $base-color;
         display: inline-block;
         float: left;
         font-family: $segoeui-semibold;
@@ -455,5 +457,11 @@
       position: static;
       vertical-align: top;
     }
+  }
+}
+
+.assessment-form-edit {
+  .page-title {
+    font-size: 14px;
   }
 }

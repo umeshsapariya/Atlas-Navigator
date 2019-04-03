@@ -45,10 +45,10 @@
           width: 100%;
         }
         &.skill_right {
-          background-color: transparent !important;
           background-color: #dbe8f0;
-          border: 0 !important;
+          background-color: transparent !important;
           border: 0;
+          border: 0 !important;
           border-radius: 10px;
           border-radius: 10px;
           padding: 0 !important;
@@ -311,8 +311,8 @@
 
       .inner_wrapper {
         align-items: stretch;
-        display: -ms-flexbox;
         display: flex;
+        display: -ms-flexbox;
         -ms-flex-align: stretch;
         -ms-flex-direction: row;
         flex-direction: row;
@@ -360,8 +360,8 @@
           }
         }
         .common_rating {
-          display: -ms-flexbox;
           display: flex;
+          display: -ms-flexbox;
           -ms-flex-direction: column;
           flex-direction: column;
 

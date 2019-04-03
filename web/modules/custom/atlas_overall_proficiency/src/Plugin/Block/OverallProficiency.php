@@ -3,8 +3,6 @@
 namespace Drupal\atlas_overall_proficiency\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**

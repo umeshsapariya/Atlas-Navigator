@@ -42,10 +42,10 @@ class DevelopingPlanBlock extends BlockBase {
     $development_nids = $query->execute();
     if ($development_nids) {
       foreach ($development_nids as $nid) {
-        // Development node id
+        // Development node id.
         $development_node = Node::load($nid);
 
-        // Development completed or not
+        // Development completed or not.
         $completed_or_not = $development_node->field_completed->getValue();
         if ($completed_or_not[0]['value']) {
           $developent_status = "plan_completed";
@@ -55,14 +55,14 @@ class DevelopingPlanBlock extends BlockBase {
           $due_date = $date_obj->format('M d');
         }
         else {
-          // Development due date
+          // Development due date.
           $development_due_date_field = $development_node->field_due_date->getValue();
           $development_due_date = $development_due_date_field[0]['value'];
           $date_obj = new DrupalDateTime($development_due_date, 'UTC');
           $due_date = $date_obj->format('M d');
           $developent_status = "plan_in_pregress";
         }
-        // Check development status
+        // Check development status.
         $due_date_time = strtotime($development_due_date_field[0]['value']);
         if ($due_date_time > time()) {
           $current_status = "not_expired";
@@ -70,7 +70,7 @@ class DevelopingPlanBlock extends BlockBase {
         else {
           $current_status = "expired";
         }
-        // Get activity title
+        // Get activity title.
         $assigned_activity_field = $development_node->field_learning_activity->getValue();
         $assigned_activity = $assigned_activity_field[0]['target_id'];
         $activity_node = Node::load($assigned_activity);
@@ -88,7 +88,7 @@ class DevelopingPlanBlock extends BlockBase {
           $activity_title = Link::fromTextAndUrl($activity_title, $activity_url_obj)->toString();
         }
 
-        // Activity icon
+        // Activity icon.
         $icon_src = '';
         $activity_type_tid_array = $activity_node->field_activity_type->getValue();
         if (isset($activity_type_tid_array[0]['target_id'])) {

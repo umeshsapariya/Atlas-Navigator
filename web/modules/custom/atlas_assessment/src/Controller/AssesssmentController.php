@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\atlas_assessment\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
@@ -15,9 +16,9 @@ class AssesssmentController extends ControllerBase {
    *   A simple renderable array.
    */
   public function thankYouPage() {
-    $element = array(
+    $element = [
       '#markup' => 'THANK YOU FOR YOUR RESPONSE',
-    );
+    ];
     return $element;
   }
 

@@ -45,7 +45,7 @@ class OverallProficiencyDetails extends ControllerBase {
     $connection = Database::getConnection();
 
     $role_id = $connection->select('assessment_invite', 'ai')
-      ->fields('ai', array('role_id'))
+      ->fields('ai', ['role_id'])
       ->condition('ai.invite_id', $invite_id)
       ->execute()
       ->fetchAll();
@@ -93,7 +93,7 @@ class OverallProficiencyDetails extends ControllerBase {
         // Table row.
         $skill_link['#markup'] = '<a href="/category_details/' . $invite_id . '/' . $category_id . '/' . $skill_id . '">' . $skill_name[0]['value'] . '</a>';
         $skill_link_render = \Drupal::service('renderer')->render($skill_link);
-        $url = Url::fromRoute('atlas_results.result_360_skill_relationship', array('category' => 2, 'skill' => 3));
+        $url = Url::fromRoute('atlas_results.result_360_skill_relationship', ['category' => 2, 'skill' => 3]);
         $link = Link::fromTextAndUrl('naresh', $url);
         // If you need some attributes.
         $rows[] = [

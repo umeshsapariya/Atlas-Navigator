@@ -1,9 +1,0 @@
-# atlas_learning_activity.activity_form:
-#   path: 'node/add/activity'
-#   defaults:
-#     _form: '\Drupal\atlas_learning_activity\Form\ActivityCreator'
-#     _title: ''
-#   requirements:
-#     _access: 'TRUE'
-#   options:
-#     no_cache: 'TRUE'

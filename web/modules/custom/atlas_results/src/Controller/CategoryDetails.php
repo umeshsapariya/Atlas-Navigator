@@ -21,11 +21,11 @@ class CategoryDetails extends ControllerBase {
    *   Return Table element.
    */
   public function display($assessment_id = NULL, $category_id = NULL) {
+    global $base_url;
     $connection = Database::getConnection();
     $current_user_id = \Drupal::currentUser()->id();
     $connection = Database::getConnection();
 
-    //$assessment_id = 65;
     $query = $connection->select('assessment_invite', 'ai');
     $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
     $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
@@ -34,19 +34,16 @@ class CategoryDetails extends ControllerBase {
     $query->fields('aid', ['relationship_tid', 'id']);
     $query->fields('ad', ['assessment_id', 'assess_uid']);
     $query->fields('asd');
-    //$query->condition('asd.assessment_id', $assessment_id, '=');
     $query->condition('aid.invite_id', $assessment_id);
     $query->condition('asd.category_id', $category_id);
     $query->condition('asd.score', 0, '>');
-    //$query->condition('ai.uid', $current_user_id);
     $query->condition('aid.completed', 1);
     $raters_skill_data = $query->execute()->fetchAll();
-    //ksm($raters_skill_data);
-    $uid = $raters_skill_data[0]-> uid;
-    //$user_id = $default_values[0]->uid;
+    $uid = $raters_skill_data[0]->uid;
+
     $user = User::load($uid);
     $default_username = $user->getUsername();
-    
+
     $relationship_tid = get_self_relationship_tid();
     $category_details = [];
     $category_wise_ratings = [];
@@ -56,10 +53,10 @@ class CategoryDetails extends ControllerBase {
     $category_wise_ratings_others = [];
     if (!empty($raters_skill_data)) {
       foreach ($raters_skill_data as $rater_skill) {
-          $category_wise_ratings[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
-          if ($rater_skill->relationship_tid != $relationship_tid) {
-            $category_wise_ratings_others[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
-          }
+        $category_wise_ratings[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
+        if ($rater_skill->relationship_tid != $relationship_tid) {
+          $category_wise_ratings_others[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
+        }
       }
       if (!empty($category_wise_ratings)) {
         $total_score = get_total_score($category_id, $category_wise_ratings);
@@ -118,7 +115,7 @@ class CategoryDetails extends ControllerBase {
         $cat_data[$count][] = floatval($category_detail['other']);
         $cat_data[$count][] = floatval($category_detail['self']);
         $cat_data[$count][] = floatval($category_detail['self']);
-        $cat_data[$count][] = '/category_details/' .$assessment_id.'/'. $category_id . '/' . $key;
+        $cat_data[$count][] = $base_url . '/category-details/' . $assessment_id . '/' . $category_id . '/' . $key;
         $count++;
       }
       // Get category name.

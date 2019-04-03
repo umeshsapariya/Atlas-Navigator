@@ -4,30 +4,14 @@
  * @file
  * Contains .module.
  */
+
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
-use Drupal\user\Entity\User;
 use Drupal\node\Entity\Node;
-use Drupal\Core\Database\Connection;
 use Drupal\paragraphs\Entity\Paragraph;
-use Drupal\field\Entity\FieldStorageConfig;
 
 /**
- * Implements hook_theme().
- */
-function atlas_learning_activity_theme($existing, $type, $theme, $path) {
-  return [
-    'learning_activity_form' => [
-      'render element' => 'form',
-    ],
-  ];
-}
-
-/*
  * Implements hook_form_alter().
  */
 function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
@@ -42,7 +26,7 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
 
     // Save field values for forms.
     if (!in_array("administrator", $roles)) {
-      $form['revision_information']['#access'] = false;
+      $form['revision_information']['#access'] = FALSE;
     }
     $form['#prefix'] = "<div id='whole-form'>";
     $form['#suffix'] = "</div>";
@@ -91,7 +75,7 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
         if (!empty($skill_default_value)) {
           $skill_para = Paragraph::load($skill_default_value[0]);
           $levels = $skill_para->field_number_of_levels->value;
-          //\Drupal::logger('Skill Levels')->info('<pre>' . print_r($levels, TRUE) . '</pre>');
+          // \Drupal::logger('Skill Levels')->info('<pre>' . print_r($levels, TRUE) . '</pre>');.
         }
 
         for ($j = 1; $j <= $levels; $j++) {
@@ -117,10 +101,10 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
         $skill_level_informations = $sp->field_skill_level_information->getValue();
         $skill_id = $skill['target_id'];
         foreach ($skill_level_informations as $level_id => $skill_level) {
-          $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_'.$level_id] = [
+          $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id] = [
             '#type' => 'fieldset',
             '#title' => t('Assigned Activities'),
-            "#prefix" => '<div id="assigned-activity-wrapper">',
+            "#prefix" => '<div id="assigned-activity-wrapper" class="scroll_div_content">',
             "#suffix" => '</div>',
             '#weight' => 999,
             '#collapsible' => TRUE,
@@ -143,11 +127,11 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
                       $url = Url::fromRoute('entity.node.edit_form', ['node' => $activity_value['target_id']]);
                       $edit_link = Link::fromTextAndUrl($activity->getTitle(), $url);
                       $activity_link = $edit_link->toRenderable();
-                      $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_'.$level_id]['field_assigned_activity_data_'.$activity_value['target_id']] = [
-                          '#markup' =>/*'<div class="assigned-activities">'. */render($activity_link)/* . '</div>'*/,
-                          '#weight' => 999,
-                          '#prefix' => '<div class="assigned-activity">',
-                          '#suffix' => '</div>',
+                      $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id]['field_assigned_activity_data_' . $activity_value['target_id']] = [
+                        '#markup' => render($activity_link),
+                        '#weight' => 999,
+                        '#prefix' => '<div class="assigned-activity">',
+                        '#suffix' => '</div>',
                       ];
                     }
                   }
@@ -169,9 +153,19 @@ function atlas_learning_activity_field_widget_entity_reference_paragraphs_form_a
   $paragraph_entity_reference_field_name = $field_definition->getName();
   if ($paragraph_entity_reference_field_name == 'field_skill_level_information') {
     unset($element['subform']['field_assigned_activity']['widget']);
+    $add_url = Url::fromRoute('node.add', ['node_type' => 'learning_activity']);
+    $add_link = Link::fromTextAndUrl(t('Add activity'), $add_url);
+    $add_activity_link = $add_link->toRenderable();
+    $element['subform']['activity_add_link'] = [
+      '#markup' => render($add_activity_link),
+      '#weight' => 9999,
+      '#prefix' => '<div class="add-activity-link">',
+      '#suffix' => '</div>',
+    ];
   }
 }
-/*
+
+/**
  * Custom submit handler for activity node.
  */
 function _activity_node_form_submit($form, FormStateInterface $form_state) {
@@ -192,7 +186,7 @@ function _activity_node_form_submit($form, FormStateInterface $form_state) {
                 $level_id = $skill_level['target_id'];
                 $level_para = Paragraph::load($level_id);
                 $field_level_header = $level_para->field_level_header->getValue();
-                if (!empty($field_level_header[0]['value'])) {                  
+                if (!empty($field_level_header[0]['value'])) {
                   $level_activities[] = $level_para->field_assigned_activity->getValue();
                   foreach ($level_activities as $key1 => $value1) {
                     $level_activity_ids = [];
@@ -221,17 +215,23 @@ function _activity_node_form_submit($form, FormStateInterface $form_state) {
   }
 }
 
-/*
+/**
  * Implements AJAX callback for categories().
  */
 function getAjaxCategoriesByRoles($form, FormStateInterface $form_state) {
   return $form;
 }
 
+/**
+ *
+ */
 function getAjaxSkillsByCategory($form, FormStateInterface $form_state) {
   return $form;
 }
 
+/**
+ *
+ */
 function getAjaxLevelsBySkill($form, FormStateInterface $form_state) {
   return $form;
 }

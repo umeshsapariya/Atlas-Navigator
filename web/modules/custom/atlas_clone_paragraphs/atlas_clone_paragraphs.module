@@ -104,7 +104,7 @@ function getSkillsByCategoryID($category_id) {
   return $skill;
 }
 
-/*
+/**
  * Fetch all categories.
  */
 function getAllCategories() {
@@ -126,7 +126,7 @@ function getAllCategories() {
   return $category;
 }
 
-/*
+/**
  * Fetch all skills.
  */
 function getAllSkills() {

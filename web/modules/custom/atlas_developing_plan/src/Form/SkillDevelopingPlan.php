@@ -70,13 +70,11 @@ class SkillDevelopingPlan extends FormBase {
       '#attributes' => ['class' => ['dev-head']],
     ];
     // Development title.
-
     $form['head']['title'] = [
       '#markup' => '<div class="box_title blue_title" rel="box1"><a href="/development-plan-details">Development plan</a></div>',
     ];
 
     // Development select list.
-
     if ($skill_related_activity) {
       foreach ($skill_related_activity as $each_activity) {
         $get_normailised_level = get_normailised_level($each_activity['level'], $each_activity['total_level']);
@@ -87,12 +85,12 @@ class SkillDevelopingPlan extends FormBase {
       $form['head']['title'] = [
         '#markup' => '<div class="box_title blue_title" rel="box1">Development plan</div>',
       ];
-      // Get parameters
+      // Get parameters.
       $parameters = \Drupal::routeMatch()->getParameters();
       $category_id = $parameters->get('category_id');
       $skill_id = $parameters->get('skill_id');
 
-      // Get User skill 360 score
+      // Get User skill 360 score.
       $current_user_id = \Drupal::currentUser()->id();
       $raters_skill_data = get_raters_skill_data($current_user_id);
       $relationship_tid = get_self_relationship_tid();
@@ -143,7 +141,6 @@ class SkillDevelopingPlan extends FormBase {
           '#attributes' => ['class' => ['dev_row_cont change_ques ' . $row_class]],
         ];
 
-
         $form['activites']['activity-' . $delta]['nid-' . $delta] = [
           '#type' => 'hidden',
           '#value' => $activity['nid'],
@@ -165,22 +162,22 @@ class SkillDevelopingPlan extends FormBase {
             }
           }
         }
-       
+
         // Activity logo.
         $form['activites']['activity-' . $delta]['logo-' . $delta] = [
           '#markup' => '<div class="title-logo">' . $icon_src . '</div>',
         ];
-        // Activity Popup
+        // Activity Popup.
         $activity_id = $activity['nid'];
         $actiivityblock = \Drupal::service('plugin.manager.block')->createInstance('activity_popup', []);
 
         if (isset($actiivityblock) && !empty($actiivityblock)) {
           $activity_popup = $actiivityblock->build($activity_id);
         }
-        
+
         $form['activites']['activity-' . $delta]['name-' . $delta] = [
           '#markup' => \Drupal::service('renderer')->render($activity_popup),
-          //'#markup' => $activity_node->getTitle(),
+          // '#markup' => $activity_node->getTitle(),
           '#prefix' => '<div class="title-plan">',
           '#suffix' => '</div>',
         ];
@@ -260,11 +257,11 @@ class SkillDevelopingPlan extends FormBase {
         $name = $account->getUsername();
         // Create node object.
         $node = Node::create([
-            'type' => 'developing_plan',
-            'title' => $name . ' ' . $activity_node->getTitle() . ' Developing plan',
-            'field_assigned_user' => $uid,
-            'field_due_date' => $due_date,
-            'field_learning_activity' => $activity_nid,
+          'type' => 'developing_plan',
+          'title' => $name . ' ' . $activity_node->getTitle() . ' Developing plan',
+          'field_assigned_user' => $uid,
+          'field_due_date' => $due_date,
+          'field_learning_activity' => $activity_nid,
         ]);
         $node->save();
       }

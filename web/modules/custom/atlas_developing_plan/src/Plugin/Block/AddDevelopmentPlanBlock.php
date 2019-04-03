@@ -2,7 +2,6 @@
 
 namespace Drupal\atlas_developing_plan\Plugin\Block;
 
-use Drupal\node\Entity\Node;
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
@@ -25,7 +24,7 @@ class AddDevelopmentPlanBlock extends BlockBase {
     global $base_url;
 
     $link_url = Url::fromRoute('add-development-plan-form');
-    //ksm($link_url);
+    // ksm($link_url);
     $link_url->setOptions([
       'attributes' => [
         'class' => ['use-ajax', 'button', 'button--small', 'btn-primary'],
@@ -33,7 +32,7 @@ class AddDevelopmentPlanBlock extends BlockBase {
         'data-dialog-options' => Json::encode(['width' => 800]),
       ],
     ]);
-   
+
     // ksm($activity_node->title->value);.
     return [
       '#type' => 'markup',

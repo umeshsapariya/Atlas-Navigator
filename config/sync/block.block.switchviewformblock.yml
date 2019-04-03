@@ -1,0 +1,30 @@
+uuid: 31f717c1-9a8a-4080-ad35-8d085364b718
+langcode: en
+status: true
+dependencies:
+  module:
+    - atlas_common
+    - user
+  theme:
+    - yorkshire
+id: switchviewformblock
+theme: yorkshire
+region: sidebar
+weight: 0
+provider: null
+plugin: SwitchViewFormBlock
+settings:
+  id: SwitchViewFormBlock
+  label: 'Switch View Form Block'
+  provider: atlas_common
+  label_display: visible
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      administrator: administrator
+      res: res
+      super_admin: super_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

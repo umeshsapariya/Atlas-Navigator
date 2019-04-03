@@ -72,15 +72,15 @@
 @mixin flex-strech {
   -webkit-align-items: stretch;
   align-items: stretch;
-  display: -webkit-flex;
   display: flex;
+  display: -webkit-flex;
 }
 
 @mixin flex-verticle-center {
   -webkit-align-items: center;
   align-items: center;
-  display: -webkit-flex;
   display: flex;
+  display: -webkit-flex;
 }
 
 // End Flex strech & align item

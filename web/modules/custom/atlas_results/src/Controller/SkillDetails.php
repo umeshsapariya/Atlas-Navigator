@@ -21,10 +21,10 @@ class SkillDetails extends ControllerBase {
    * @return array
    *   Return Table element.
    */
-  public function display($assessment_id = NULL,$category_id = NULL, $skill_id = NULL) {
+  public function display($assessment_id = NULL, $category_id = NULL, $skill_id = NULL) {
     $connection = Database::getConnection();
     $current_user_id = \Drupal::currentUser()->id();
-    
+
     $query = $connection->select('assessment_invite', 'ai');
     $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
     $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
@@ -41,10 +41,12 @@ class SkillDetails extends ControllerBase {
     $query->condition('aid.completed', 1);
     $raters_skill_data = $query->execute()->fetchAll();
     $relationship_tid = get_self_relationship_tid();
-    $uid = $raters_skill_data[0]-> uid;
-    //$user_id = $default_values[0]->uid;
+    $uid = $raters_skill_data[0]->uid;
     $user = User::load($uid);
-    $default_username = $user->getUsername();
+    $default_username = '';
+    if ($user) {
+      $default_username = $user->getUsername();
+    }
     if (!empty($raters_skill_data)) {
       foreach ($raters_skill_data as $rater_skill) {
         $category_wise_ratings[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);

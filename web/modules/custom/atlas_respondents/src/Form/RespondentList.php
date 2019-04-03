@@ -160,10 +160,10 @@ class RespondentList extends FormBase {
         ];
       }
       /* $invite_id = [
-        '#id' => 'row-' . $i . '-invite_id',
-        '#type' => 'hidden',
-        '#value' => $rows[$i]['invite_id'],
-        ]; */
+      '#id' => 'row-' . $i . '-invite_id',
+      '#type' => 'hidden',
+      '#value' => $rows[$i]['invite_id'],
+      ]; */
       $role_id = [
         '#id' => 'row-' . $i . '-role_id',
         '#type' => 'hidden',

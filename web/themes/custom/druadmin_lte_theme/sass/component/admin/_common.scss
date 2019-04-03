@@ -512,8 +512,8 @@ body.admin_custom_theme {
     }
   }
   .label {
-    color: $level_color;
     color: $base-color;
+    color: $level_color;
     display: inline-block;
     float: left;
     font-family: $segoeui-regular;
@@ -541,7 +541,7 @@ body.admin_custom_theme {
     cursor: pointer;
     font-family: $segoeui-regular;
     font-weight: normal;
-    padding: 2px 30px;
+    padding: 6px 30px;
     @media screen and (max-width: 380px) {
       padding: 2px 20px;
     }

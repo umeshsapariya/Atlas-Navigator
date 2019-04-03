@@ -1,0 +1,16 @@
+uuid: e99df425-11b2-47d9-abab-66c5c8436897
+langcode: en
+status: true
+dependencies: {  }
+id: luckcompanies
+label: luckcompanies
+description: ''
+folder: ../config/luckcompanies
+module: {  }
+theme: {  }
+blacklist: {  }
+graylist:
+  - system.site
+graylist_dependents: true
+graylist_skip_equal: true
+weight: 0

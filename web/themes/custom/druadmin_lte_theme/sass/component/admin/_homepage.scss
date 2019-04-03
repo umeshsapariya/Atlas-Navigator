@@ -293,8 +293,8 @@ body.admin_custom_theme {
           &.welcome_text {
             background-color: transparent;
             border: 0;
-            padding: 0;
             padding: 0 15px;
+            padding: 0;
             position: relative;
 
             @media screen and (max-width: 767px) {
