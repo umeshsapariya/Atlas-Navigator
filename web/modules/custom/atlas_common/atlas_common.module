@@ -4,6 +4,9 @@
  * @file
  * Contains atlas_common functions and hooks.
  */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Breadcrumb\Breadcrumb;
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Database\Database;
@@ -83,7 +86,6 @@ function GetAssessmentInvitesSkillData($assessment_id) {
   $query->condition('aid.invite_id', $assessment_id);
   $raters_skill_data = $query->execute()->fetchAll();
 
-
   if ($raters_skill_data) {
     // Strengths and opportunities buttons.
     foreach ($raters_skill_data as $rater_skill) {
@@ -134,7 +136,7 @@ function get_latest_invite_id() {
  * Returns top strenghts and oppoutunities.
  */
 function get_top_strengths_opportunities($role_id, $type, $number) {
-//  GetAssessmentInvitesSkillData
+  // GetAssessmentInvitesSkillData.
   $connection = Database::getConnection();
   $query = $connection->select('assessment_invite', 'ai');
   $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
@@ -173,7 +175,6 @@ function get_top_strengths_opportunities($role_id, $type, $number) {
   foreach ($all_skill_score as $skill_id => $raters_data) {
     $total_score = 0;
 
-
     foreach ($raters_data as $rater_score) {
       $total_score = $total_score + $rater_score['360_score'];
     }
@@ -197,14 +198,13 @@ function get_top_strengths_opportunities($role_id, $type, $number) {
   }
   if ($all_strenghts && $type == 'strengths') {
     array_sort_by_column($all_strenghts, "gap", SORT_DESC);
-    $top_strenghts = array_slice($all_strenghts, 0, $number, true);
+    $top_strenghts = array_slice($all_strenghts, 0, $number, TRUE);
     return $top_strenghts;
   }
 
-
   if ($all_opportunities && $type == "opportunities") {
     array_sort_by_column($all_opportunities, "gap");
-    $top_opportunities = array_slice($all_opportunities, 0, $number, true);
+    $top_opportunities = array_slice($all_opportunities, 0, $number, TRUE);
     return $top_opportunities;
   }
   return FALSE;
@@ -214,7 +214,7 @@ function get_top_strengths_opportunities($role_id, $type, $number) {
  * Sorts multidimensional array.
  */
 function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
-  $sort_col = array();
+  $sort_col = [];
   foreach ($arr as $key => $row) {
     $sort_col[$key] = $row[$col];
   }
@@ -225,7 +225,7 @@ function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
 /**
  * Implements hook_system_breadcrumb_alter().
  */
-function atlas_common_system_breadcrumb_alter(\Drupal\Core\Breadcrumb\Breadcrumb &$breadcrumb, \Drupal\Core\Routing\RouteMatchInterface $route_match, array $context) {
+function atlas_common_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatchInterface $route_match, array $context) {
   $route_name = \Drupal::routeMatch()->getRouteName();
   if ($route_name == "entity.node.edit_form") {
     $breadcrumb_links = $breadcrumb->getLinks();
@@ -238,37 +238,46 @@ function atlas_common_system_breadcrumb_alter(\Drupal\Core\Breadcrumb\Breadcrumb
 
 /**
  * @return Normalised level
- * Respective level as per total level
+ *   Respective level as per total level
  */
 function get_normailised_level($level, $total_level) {
   switch ($total_level) {
     case 10:
       $attached_level = [1 => [1], 2 => [1], 3 => [2], 4 => [2], 5 => [3], 6 => [3], 7 => [4], 8 => [4], 9 => [5], 10 => [5]];
       break;
+
     case 9:
       $attached_level = [1 => [1], 2 => [1], 3 => [2], 4 => [2], 5 => [3], 6 => [3], 7 => [4], 8 => [4], 9 => [5]];
       break;
+
     case 8:
       $attached_level = [1 => [1], 2 => [1], 3 => [2], 4 => [2], 5 => [3], 6 => [4], 7 => [4], 8 => [5]];
       break;
+
     case 7:
       $attached_level = [1 => [1], 2 => [1], 3 => [2], 4 => [3], 5 => [4], 6 => [4], 7 => [5]];
       break;
+
     case 6:
       $attached_level = [1 => [1], 2 => [2], 3 => [2], 4 => [3], 5 => [4], 6 => [5]];
       break;
+
     case 5:
       $attached_level = [1 => [1], 2 => [2], 3 => [3], 4 => [4], 5 => [5]];
       break;
+
     case 4:
       $attached_level = [1 => [1], 2 => [2], 3 => [3, 4], 4 => [5]];
       break;
+
     case 3:
       $attached_level = [1 => [1, 2], 2 => [3, 4], 3 => [5]];
       break;
+
     case 2:
       $attached_level = [1 => [1, 2, 3], 2 => [4, 5]];
       break;
+
     case 1:
       $attached_level = [1 => [1, 2, 3, 4, 5]];
       break;
@@ -287,16 +296,50 @@ function get_respective_level($score) {
   if ($score >= 4.7) {
     return '5';
   }
-  else if ($score >= 3.7 && $score <= 4.6) {
+  elseif ($score >= 3.7 && $score <= 4.6) {
     return '4';
   }
-  else if ($score >= 2.7 && $score <= 3.6) {
+  elseif ($score >= 2.7 && $score <= 3.6) {
     return '3';
   }
-  else if ($score >= 1.7 && $score <= 2.6) {
+  elseif ($score >= 1.7 && $score <= 2.6) {
     return '2';
   }
   else {
     return '1';
   }
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function atlas_common_user_login($account) {
+  $request = \Drupal::request();
+  $session = $request->getSession();
+  // Set Admin view by default for superadmin and resctricted user.
+  if ($account->hasRole('res') || $account->hasRole('administrator') || $account->hasRole('super_admin')) {
+    $session->set('view', 'admin');
+  }
+}
+
+/**
+ * Custom function to get team members uids.
+ */
+function get_team_members_uid($current_user_id) {
+  $request = \Drupal::request();
+  $session = $request->getSession();
+  $connection = Database::getConnection();
+  $results = [];
+  if ($session->get('view') == 'admin') {
+    $query = $connection->select('profile', 'p');
+    $query->Join('profile__field_manager', 'pm', 'pm.entity_id = p.profile_id');
+    $query->fields('p', ['uid']);
+    $query->condition('pm.field_manager_target_id', $current_user_id);
+    $results = $query->execute()->fetchAll(PDO::FETCH_ASSOC);
+  }
+  array_unshift($results, ['uid' => $current_user_id]);
+  foreach ($results as $members_uid) {
+    $members_uids[] = $members_uid['uid'];
+  }
+  return $members_uids;
 }

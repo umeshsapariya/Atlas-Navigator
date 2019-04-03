@@ -7,12 +7,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
 use Drupal\Core\Ajax\CloseModalDialogCommand;
-use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Url;
 use Drupal\Core\Ajax\RedirectCommand;
-use Drupal\taxonomy\Entity\Term;
-
 
 /**
  * Class SkillDevelopingPlan for Learning managment plan.
@@ -44,11 +41,11 @@ class AddDevelopmetPlan extends FormBase {
     $form['body'] = [
       '#type' => 'text_format',
       '#title' => t('Description:'),
-      //'#format' => 'filter_html',
+      // '#format' => 'filter_html',.
     ];
     $activity_type_terms = \Drupal::entityManager()->getStorage('taxonomy_term')->loadTree("learning_activity_type");
 
-    $activity_type['_none'] = 'Select';     
+    $activity_type['_none'] = 'Select';
     foreach ($activity_type_terms as $activity_type_term) {
       $activity_type[$activity_type_term->tid] = $activity_type_term->name;
     }
@@ -65,7 +62,7 @@ class AddDevelopmetPlan extends FormBase {
       '#title' => $this->t('Due Date'),
       '#type' => 'date',
       '#required' => TRUE,
-      //'#default_value' => DrupalDateTime::createFromTimestamp(strtotime($development_plan_date)),
+      // '#default_value' => DrupalDateTime::createFromTimestamp(strtotime($development_plan_date)),
     ];
     $form['actions'] = ['#type' => 'actions'];
     $form['actions']['send'] = [
@@ -100,9 +97,9 @@ class AddDevelopmetPlan extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    
+
   }
-  
+
   /**
    * AJAX callback handler that displays any errors or a success message.
    */
@@ -118,41 +115,40 @@ class AddDevelopmetPlan extends FormBase {
       $activity_type = $form_state->getValue('activity_type');
       $url = $form_state->getValue('url');
       $current_user_id = \Drupal::currentUser()->id();
-      
+
       $body = [
         'value' => $form_state->getValue('body')['value'],
         'format' => $form_state->getValue('body')['format'],
       ];
 
-      // Save activity 
+      // Save activity.
       $node_activity = Node::create([
         'type'        => 'learning_activity',
-        'title'       => $title,  
+        'title'       => $title,
         'field_activity_url' => $url,
         'body' => $body,
-        'uid'=> $current_user_id,
+        'uid' => $current_user_id,
         'status' => 1,
       ]);
       if ($activity_type != '_none') {
         $node_activity->set('field_activity_type', ['target_id' => $activity_type]);
       }
       $node_activity->save();
-                 
-      
-      if ($node_activity->id()) {
+
+      if (!empty($node_activity->id())) {
         $node_plan = Node::create([
-        'type'                     => 'developing_plan',
-        'title'                    => $activity_type,
-        'field_learning_activity'  => [$node_activity->id(),],
-        'field_assigned_user'      => $current_user_id,
-        'field_due_date'           => $date,
-          
-      ]);
+          'type'                     => 'developing_plan',
+          'title'                    => $title,
+          'field_learning_activity'  => [$node_activity->id()],
+          'field_assigned_user'      => $current_user_id,
+          'field_due_date'           => $date,
+
+        ]);
         $node_plan->save();
       }
-      //ksm($node_activity->nid);
-      // Save Development plan 
-      $message = 'Development Plan "'.$title.'" added successfully.';
+      // ksm($node_activity->nid);
+      // Save Development plan.
+      $message = 'Development Plan "' . $title . '" added successfully.';
       $currentURL = Url::fromRoute('development-plan-details-form');
       $response->addCommand(new RedirectCommand($currentURL->toString()));
       drupal_set_message(t($message));
@@ -160,4 +156,5 @@ class AddDevelopmetPlan extends FormBase {
     }
     return $response;
   }
+
 }

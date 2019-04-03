@@ -102,7 +102,7 @@
       .dropbutton {
         border: none;
         > li {
-          background-color: $level_checked;
+          background-color: $theme_color;
           @include border-radius(14px);
           padding-bottom: 0;
           padding-right: 26px;
@@ -115,7 +115,9 @@
             padding: 5px 13px;
           }
           .ajax-progress-throbber {
-            display: none;
+            left: -25px;
+            position: absolute;
+            top: 3px;
           }
         }
         .dropbutton-toggle {

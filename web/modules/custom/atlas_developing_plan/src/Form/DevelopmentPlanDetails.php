@@ -4,15 +4,12 @@ namespace Drupal\atlas_developing_plan\Form;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\FormBase;
-use Drupal\Core\Form\Datetime;
 use Drupal\Core\Form\FormStateInterface;
 // Use Drupal\Component\Utility\String;.
 use Drupal\Core\Url;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\RedirectCommand;
-use Drupal\Component\Serialization\Json;
-use Drupal\Core\Link;
 
 /**
  * Class DevelopmentPlanDetails for Learning managment plan.
@@ -184,13 +181,13 @@ class DevelopmentPlanDetails extends FormBase {
    */
   public function get_development_plan_listing($uid, $status) {
     $rows = [];
-    $completed = false;
+    $completed = FALSE;
     $query = \Drupal::entityQuery('node')
       ->condition('status', NODE_PUBLISHED)
       ->condition('type', 'developing_plan')
       ->condition('field_assigned_user', $uid)
       ->condition('field_completed', $status, '!=')
-      ->sort('created' , 'DESC'); 
+      ->sort('created', 'DESC');
     $development_nids = $query->execute();
 
     foreach ($development_nids as $development_nid) {
@@ -225,15 +222,15 @@ class DevelopmentPlanDetails extends FormBase {
     $activity_node = Node::load($activity_id);
     if (!empty($activity_node->get('field_activity_type')->getValue()[0]['target_id'])) {
       $activity_type = $activity_node->get('field_activity_type')->getValue()[0]['target_id'];
-    
+
       $term = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($activity_type);
-    
+
       if (!empty($term->field_icon->entity)) {
         $icon_uri = $term->field_icon->entity->getFileUri();
         $icon_url = file_create_url($icon_uri);
       }
     }
-    
+
     $element['#markup'] = '<div class="activity-info">
         <div class="activity-image">
         <img src="' . $icon_url . '"/></div>
@@ -253,16 +250,17 @@ class DevelopmentPlanDetails extends FormBase {
     $development_plan_completed_date = '';
     $development_plan_date = $nodes->get('field_due_date')->getValue()[0]['value'];
 
-    if (isset ($nodes->get('field_completed_date')->getValue()[0]['value']))
-    $development_plan_completed_date = $nodes->get('field_completed_date')->getValue()[0]['value'];
-    
-    // To check developement activity is completed 
-    
+    if (isset($nodes->get('field_completed_date')->getValue()[0]['value'])) {
+      $development_plan_completed_date = $nodes->get('field_completed_date')->getValue()[0]['value'];
+    }
+
+    // To check developement activity is completed.
     $development_status = $nodes->get('field_completed')->getValue()[0]['value'];
     if (isset($development_plan_completed_date) && $development_status) {
       $development_plan_date = new DrupalDateTime($development_plan_completed_date, date_default_timezone_get());
-   
-    }else {
+
+    }
+    else {
       $development_plan_date = new DrupalDateTime($development_plan_date, date_default_timezone_get());
     }
     // This will convert date/time in user timezone.
@@ -295,7 +293,7 @@ class DevelopmentPlanDetails extends FormBase {
 
           // This is a Field added in to the content type.
           $node->set('field_completed', 1);
-          $today = date('Y-m-d'); 
+          $today = date('Y-m-d');
           $node->set('field_completed_date', $today);
           $node->save();
           drupal_set_message(t('Activities has been marked as Completed.'));

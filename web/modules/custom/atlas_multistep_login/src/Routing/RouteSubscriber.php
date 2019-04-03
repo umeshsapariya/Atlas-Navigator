@@ -19,4 +19,5 @@ class RouteSubscriber extends RouteSubscriberBase {
       $route->setPath('<front>');
     }
   }
+
 }

@@ -2,25 +2,24 @@
 
 /**
  * @file
- * Contains custom_masquerade.module
+ * Contains custom_masquerade.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Component\Render\MarkupInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\user\Entity\User;
 use Drupal\user\UserInterface;
 
-/*
+/**
  * Implements hook_form_alter().
  */
 function atlas_user_form_alter(&$form, $form_state, $form_id) {
   // Change placeholder text for masquerade form.
   if ($form_id == 'masquerade_block_form') {
     $form['autocomplete']['masquerade_as']['#placeholder'] = t('Search for the user you want to login as..');
-    //$form['#submit'][] = 'atlas_masquerade_switch_redirect';
+    // $form['#submit'][] = 'atlas_masquerade_switch_redirect';.
     array_unshift($form['#submit'], 'atlas_masquerade_form_switch_redirect');
   }
   // Attached js to check Restricted Admin role if is_manager is yes.
@@ -32,7 +31,7 @@ function atlas_user_form_alter(&$form, $form_state, $form_id) {
     $form['account']['roles']['#required'] = TRUE;
     unset($form['account']['mail']['#description']);
     unset($form['account']['notify']);
-    // Add is_manger field account form;
+    // Add is_manger field account form;.
     $form['account']['manager'] = $form['field_is_manager'];
     unset($form['field_is_manager']);
     // Give role access to superadmin user.
@@ -40,10 +39,10 @@ function atlas_user_form_alter(&$form, $form_state, $form_id) {
       $form['account']['roles']['#access'] = TRUE;
       unset($form['account']['roles']['#options']['administrator']);
     }
-    // Arrange roles at the last
+    // Arrange roles at the last.
     $form['account']['roles']['#weight'] = 100;
     // is_manager field just before roles field.
-    $form['account']['manager']['#weight'] = $form['account']['roles']['#weight'] -1;
+    $form['account']['manager']['#weight'] = $form['account']['roles']['#weight'] - 1;
     $form['#attached']['library'][] = 'atlas_user/is_manager';
   }
 }
@@ -51,7 +50,7 @@ function atlas_user_form_alter(&$form, $form_state, $form_id) {
 /**
  * Implements hook_entity_operation_alter().
  */
-function atlas_user_entity_operation_alter(array &$operations, \Drupal\Core\Entity\EntityInterface $entity) {
+function atlas_user_entity_operation_alter(array &$operations, EntityInterface $entity) {
   if ($entity->getEntityTypeId() === 'user') {
     if (masquerade_target_user_access($entity)) {
       $operations['masquerade'] = [
@@ -63,7 +62,7 @@ function atlas_user_entity_operation_alter(array &$operations, \Drupal\Core\Enti
   }
 }
 
-/*
+/**
  * Implements Custom form Submit.
  */
 function atlas_masquerade_form_switch_redirect($form, FormStateInterface $form_state) {
@@ -77,19 +76,19 @@ function atlas_masquerade_form_switch_redirect($form, FormStateInterface $form_s
   }
 }
 
-/*
+/**
  * Implements hook_preprocess_status_messages().
  */
 function atlas_user_preprocess_status_messages(&$variables) {
-  if(isset($variables['message_list']['status'])){
+  if (isset($variables['message_list']['status'])) {
     $status_messages = $variables['message_list']['status'];
-    foreach($status_messages as $delta => $message) {
-      if ($message instanceof \Drupal\Component\Render\MarkupInterface) {
+    foreach ($status_messages as $delta => $message) {
+      if ($message instanceof MarkupInterface) {
         // Change switch back status message.
-        if (\strpos((string) $message, 'You are no longer masquerading as') !== false) {
+        if (\strpos((string) $message, 'You are no longer masquerading as') !== FALSE) {
           // Replace masquerading with logged.
           $new_messgae = str_replace('masquerading', 'logged in', (string) $message);
-          $variables['message_list']['status'][$delta] = $new_messgae;  
+          $variables['message_list']['status'][$delta] = $new_messgae;
           break;
         }
       }
@@ -97,7 +96,7 @@ function atlas_user_preprocess_status_messages(&$variables) {
   }
 }
 
-/*
+/**
  * Implements hook_user_presave().
  */
 function atlas_user_user_presave(UserInterface $user) {

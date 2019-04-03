@@ -62,15 +62,15 @@
             width: 15px;
           }
           &.proficient_skill {
-            color: #018ec4;
+            color: $theme_color;
             &:before {
-              background: #018ec4;
+              background: $theme_color;
             }
           }
           &.skill_gap {
-            color: #ff2f2f;
+            color: $theme_second_color;
             &:before {
-              background: #ff2f2f;
+              background: $theme_second_color;
             }
           }
         }
@@ -95,7 +95,7 @@
         border: none;
         color: #5a5555;
         &.active {
-          background-color: #008ec3;
+          background-color: $theme_color;
           color: #fff;
         }
       }
@@ -122,6 +122,10 @@
               padding: 15px 0;
               text-transform: capitalize;
               vertical-align: middle;
+              a {
+                color: #416e7f;
+                font-family: "Conv_segoeui",Sans-Serif;
+              }
               &:first-child {
                 text-align: left;
               }

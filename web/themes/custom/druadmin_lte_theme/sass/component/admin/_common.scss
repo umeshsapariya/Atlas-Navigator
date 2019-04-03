@@ -494,12 +494,12 @@ body.admin_custom_theme {
     width: 8px;
     .mCSB_dragger {
       .mCSB_dragger_bar {
-        background-color: #008ec3;
+        background-color: $theme_color;
         /*height: 90px;*/
         width: 8px;
 
         &:hover {
-          background-color: $level_checked;
+          background-color: $theme_color;
         }
         @media screen and (max-width: 767px) {
           width: 6px;
@@ -535,20 +535,20 @@ body.admin_custom_theme {
   }
   .btn-primary,
   .button--primary {
-    background: $level_checked;
+    background: $theme_color;
     border-radius: 25px;
     color: #fff;
     cursor: pointer;
     font-family: $segoeui-regular;
     font-weight: normal;
-    padding: 2px 30px;
+    padding: 6px 30px;
     @media screen and (max-width: 380px) {
       padding: 2px 20px;
     }
     &:hover,
     &:active,
     &:focus {
-      border: 1px solid $level_checked;
+      border: 1px solid $theme_color;
     }
   }
   .btn {
@@ -636,7 +636,7 @@ body.admin_custom_theme {
     padding: 0 10px;
     &.blue-box {
       &:before {
-        background-color: #0598d8;
+        background-color: $theme_color;
         content: "";
         display: inline-block;
         height: 10px;
@@ -747,7 +747,7 @@ body.admin_custom_theme {
   }
   [type="checkbox"]:checked + label {
     &:before {
-      border: solid #008ec3;
+      border: solid $theme_color;
       border-width: 0 3px 3px 0;
       content: "";
       height: 17px;
@@ -798,7 +798,7 @@ input[type="date"]::-webkit-clear-button {
   padding: 0 !important;
 
   .ui-dialog-title {
-    background: #008ec3;
+    background: $theme_color;
     border: 0;
     color: #fff;
     display: inline-block;
@@ -836,6 +836,16 @@ input[type="date"]::-webkit-clear-button {
       }
       p {
         margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.table-hover {
+  & > tbody {
+    & > tr {
+      &:hover {
+        background-color: transparent;
       }
     }
   }

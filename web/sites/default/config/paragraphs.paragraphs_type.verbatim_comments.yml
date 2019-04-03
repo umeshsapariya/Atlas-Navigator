@@ -1,9 +1,0 @@
-uuid: 2f79b5bb-6138-4caa-b6d8-d96d7dfeea85
-langcode: en
-status: true
-dependencies: {  }
-id: verbatim_comments
-label: 'Verbatim Comments'
-icon_uuid: null
-description: ''
-behavior_plugins: {  }

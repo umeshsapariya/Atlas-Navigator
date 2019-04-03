@@ -1,14 +1,8 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\atlas_multistep_login\Plugin\Block\MultiStepLogin.
- */
-
 namespace Drupal\atlas_multistep_login\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
-use Drupal\Core\Form\FormInterface;
 
 /**
  * Provides a 'atlas_multistep_login' block.
@@ -21,14 +15,14 @@ use Drupal\Core\Form\FormInterface;
  */
 class MultiStepLogin extends BlockBase {
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function build() {
+  /**
+   * {@inheritdoc}
+   */
+  public function build() {
 
-		$form = \Drupal::formBuilder()->getForm('Drupal\atlas_multistep_login\Form\AtlasMultiStepForm');
+    $form = \Drupal::formBuilder()->getForm('Drupal\atlas_multistep_login\Form\AtlasMultiStepForm');
 
-		return $form;
-	}
+    return $form;
+  }
 
 }

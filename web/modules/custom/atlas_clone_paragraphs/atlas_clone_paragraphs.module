@@ -103,3 +103,47 @@ function getSkillsByCategoryID($category_id) {
   }
   return $skill;
 }
+
+/**
+ * Fetch all categories.
+ */
+function getAllCategories() {
+  $category = ['_none' => '- Select -'];
+  $query = \Drupal::database()->select('paragraph__field_new_category', 'pfc');
+  $query->fields('pfc', ['entity_id', 'field_new_category_value']);
+  $query->fields('pfd', ['parent_id']);
+  $query->join('paragraphs_item_field_data', 'pfd', 'pfd.revision_id = pfc.revision_id');
+  $query->condition('pfd.parent_field_name', 'field_category');
+  $query->condition('pfc.bundle', 'category');
+  $query->distinct('pfc.entity_id');
+
+  $data = $query->execute()->fetchAll();
+  if (!empty($data)) {
+    foreach ($data as $id => $category_data) {
+      $category[$category_data->entity_id] = $category_data->field_new_category_value;
+    }
+  }
+  return $category;
+}
+
+/**
+ * Fetch all skills.
+ */
+function getAllSkills() {
+  $skill = ['_none' => '- Select -'];
+  $query = \Drupal::database()->select('paragraph__field_skill', 'pfc');
+  $query->fields('pfc', ['entity_id', 'field_skill_value']);
+  $query->fields('pfd', ['parent_id']);
+  $query->join('paragraphs_item_field_data', 'pfd', 'pfd.revision_id = pfc.revision_id');
+  $query->condition('pfd.parent_field_name', 'field_skills');
+  $query->condition('pfc.bundle', 'skill');
+  $query->distinct('pfc.entity_id');
+
+  $data = $query->execute()->fetchAll();
+  if (!empty($data)) {
+    foreach ($data as $id => $skill_data) {
+      $skill[$skill_data->entity_id] = $skill_data->field_skill_value;
+    }
+  }
+  return $skill;
+}

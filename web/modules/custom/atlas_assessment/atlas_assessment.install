@@ -1,6 +1,7 @@
 <?php
 
-/* 
+/**
+ * @file
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -10,7 +11,7 @@
  * Implements hook_schema().
  */
 function atlas_assessment_schema() {
-  $schema = array();
+  $schema = [];
   $schema['assessment_data'] = [
     'description' => 'Stores the data about Assessment (Assessment ID, Assess ID, Role ID, ...).',
     'fields' => [
@@ -40,12 +41,12 @@ function atlas_assessment_schema() {
         'type' => 'int',
         'default' => 1,
         'not null' => TRUE,
-      ],      
+      ],
       'atlas_assessment_id' => [
         'description' => "A custom ID for Assessment form after submit.",
         'type' => 'varchar',
         'length' => 255,
-    ],
+      ],
     ],
     'primary key' => ['assessment_id'],
   ];
@@ -71,7 +72,7 @@ function atlas_assessment_schema() {
         'description' => "Skill ID.",
         'type' => 'int',
         'not null' => TRUE,
-      ], 
+      ],
       'score' => [
         'description' => "Score.",
         'type' => 'int',
@@ -80,7 +81,7 @@ function atlas_assessment_schema() {
     ],
     'primary key' => ['assessment_skill_id'],
   ];
-  
+
   $schema['assessment_verbatim_comments'] = [
     'description' => 'Stores the data about about Assessment verbatim comments (Assessment ID, Assess ID, Role ID, ...).',
     'fields' => [

@@ -30,7 +30,7 @@
       line-height: 20px;
       padding: 0 15px;
       &:before {
-        color: #008ec3;
+        color: $theme_color;
         content: "\e907";
         cursor: pointer;
         display: inline-block;
@@ -97,6 +97,9 @@
         .content {
           min-height: auto;
           padding: 0;
+          .messages--error {
+            background-image: none;
+          }
           @media screen and (max-width: 767px) {
             height: auto !important;
           }

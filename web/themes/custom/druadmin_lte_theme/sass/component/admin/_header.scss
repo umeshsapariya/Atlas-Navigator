@@ -9,18 +9,18 @@
     position: fixed;
     width: 100%;
     .navbar {
+      background-color: $theme_color;
       margin-left: 0 !important;
-
       .sidebar-menu {
         display: none;
       }
     }
     .logo {
-      background-color: #3c8dbc;
+      background-color: $theme_color;
       height: 60px;
       padding: 8px 15px;
       &:hover {
-        background-color: #3c8dbc;
+        background-color: $theme_color;
       }
       @media (min-width: 768px) {
         width: 188px !important;

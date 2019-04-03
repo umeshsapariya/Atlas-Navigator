@@ -59,7 +59,7 @@ body.path-assessment-form {
         width: 100%;
 
         .rating_heading {
-          background: #008ec3;
+          background: $theme_color;
           color: #fff;
           display: inline-block;
           font-family: $segoeui-semibold;
@@ -163,7 +163,7 @@ body.path-assessment-form {
               }
             }
             [type="radio"]:checked + label {
-              background-color: $level_checked;
+              background-color: $theme_color;
             }
             &.form-group.js-form-type-radio {
               float: left;
@@ -199,7 +199,7 @@ body.path-assessment-form {
             display: none;
           }
           .current_page {
-            background: #008ec3;
+            background: $theme_color;
             border-radius: 27px;
             color: transparent;
             display: inline-block;
@@ -263,7 +263,7 @@ body.path-assessment-form {
         max-height: 290px;
       }
       .mCSB_inside > .mCSB_container .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
-        background-color: #008ec3 !important;
+        background-color: $theme_color !important;
       }
 
 
@@ -327,7 +327,7 @@ body.path-assessment-form {
       top: 50%;
       transform: translate(-50%, -50%);
       a {
-        background: #008ec3;
+        background: $theme_color;
         border-radius: 25px;
         color: #fff;
         cursor: pointer;

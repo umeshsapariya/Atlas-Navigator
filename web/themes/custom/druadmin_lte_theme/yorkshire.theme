@@ -2,6 +2,7 @@
 
 use Drupal\taxonomy\Entity\Term;
 use Drupal\user\Entity\User;
+use Drupal\node\Entity\Node;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
 
@@ -69,6 +70,16 @@ function yorkshire_preprocess_html(&$variables) {
   if (isset($arg[1]) && $arg[1] == "home") {
     $variables['attributes']['class'][] = 'atlas-home';
   }
+  // Assessment edit form body class.
+  if (isset($arg[1]) && $arg[1] == 'node' && isset($arg[2]) && isset($arg[3]) && $arg[3] == 'edit') {
+    $nid = $arg[2];
+    if (is_numeric($arg[2])) {
+      $node = Node::load($nid);
+      if ($node->getType() == 'assessment_form') {
+        $variables['attributes']['class'][] = 'assessment-form-edit';
+      }
+    }
+  }
 }
 
 function yorkshire_preprocess_page(&$variables) {
@@ -135,20 +146,28 @@ function yorkshire_preprocess_block(&$variables) {
 }
 
 function yorkshire_preprocess_menu(&$variables) {
-  $icon_setting = explode("\n", theme_get_setting('menu_icons'));
-  $icons = [];
-  for ($i = 0; $i < sizeof($icon_setting); $i++) {
-    $icon_setting[$i] = explode('|', $icon_setting[$i]);
-    if (array_key_exists($i, $icon_setting) && sizeof($icon_setting[$i]) >= 2) {
-      $icons[$icon_setting[$i][0]] = $icon_setting[$i][1];
-    }
-  }
-  foreach ($variables['items'] as $id => $item) {
-    $title = (string) $item['title'];
-    if (array_key_exists($title, $icons) && $icons[$title]) {
-      $variables['items'][$id]['icon'] = $icons[$title];
-    }
-  }
+ $icon_setting = explode("\n", theme_get_setting('menu_icons'));
+ $icons = [];
+ for ($i = 0; $i < sizeof($icon_setting); $i++) {
+   $icon_setting[$i] = explode('|', $icon_setting[$i]);
+   if (array_key_exists($i, $icon_setting) && sizeof($icon_setting[$i]) >= 2) {
+     $icons[$icon_setting[$i][0]] = $icon_setting[$i][1];
+   }
+ }
+ foreach ($variables['items'] as $id => $item) {
+   $title = (string) $item['title'];
+   $request = \Drupal::request();
+   $session = $request->getSession();
+   if ($session->get('view') != 'admin') {
+     if ($title == 'Learning Solution Management' || $title == 'My Team' || $title == 'Users') {
+       unset($variables['items'][$id]);
+     }
+   }
+   if (array_key_exists($title, $icons) && $icons[$title]) {
+     $variables['items'][$id]['icon'] = $icons[$title];
+   }
+ }
+ $variables['#cache']['max-age'] = 0;
 }
 
 function yorkshire_form_system_theme_settings_alter(&$form, $form_state) {
@@ -191,7 +210,7 @@ function yorkshire_preprocess_breadcrumb(&$variables) {
     $path = \Drupal::request()->getpathInfo();
     $arg = explode('/', $path);
 
-    if (isset($arg[1]) && $arg[1] == "category_details" && count($arg) == 4) {
+    if (isset($arg[1]) && $arg[1] == "category-details" && count($arg) == 5) {
       $variables['breadcrumb'][1]['text'] = 'Category';
     }
 

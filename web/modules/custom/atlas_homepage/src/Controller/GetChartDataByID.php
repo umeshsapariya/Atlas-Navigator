@@ -17,10 +17,29 @@ class GetChartDataByID extends ControllerBase {
    * Handler for autocomplete request.
    */
   public function getdata(Request $request) {
-    $input = $request->query->get('invite_id');
+    global $base_url;
+    $assessment_id = $request->query->get('invite_id');
     $connection = Database::getConnection();
     $current_user_id = \Drupal::currentUser()->id();
-    $raters_skill_data = get_raters_skill_data($current_user_id);
+
+    $input = $assessment_id;
+    $connection = Database::getConnection();
+
+    // $raters_skill_data = get_raters_skill_data($input);
+    $query = $connection->select('assessment_invite', 'ai');
+    $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
+    $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
+    $query->Join('assessment_skill_data', 'asd', 'asd.assessment_id = ad.assessment_id');
+    $query->fields('ai');
+    $query->fields('aid', ['relationship_tid', 'id']);
+    $query->fields('ad', ['assessment_id']);
+    $query->fields('asd');
+    $query->condition('asd.score', 0, '>');
+    $query->condition('aid.invite_id', $assessment_id);
+    // $query->condition('ai.uid', $current_user_id);.
+    $query->condition('aid.completed', 1);
+    $raters_skill_data = $query->execute()->fetchAll();
+
     $relationship_tid = get_self_relationship_tid();
 
     foreach ($raters_skill_data as $rater_skill) {
@@ -56,13 +75,14 @@ class GetChartDataByID extends ControllerBase {
       $category_360[$cat]['avg_others'] = number_format($others_score[$cat]['avg'], 1);
     }
     $count = 0;
+
     foreach ($category_360 as $key => $category) {
       $cat_data[$count][] = $category['category_name'];
       $cat_data[$count][] = floatval($category['avg_others']);
       $cat_data[$count][] = floatval($category['avg_others']);
       $cat_data[$count][] = floatval($category['avg_self']);
       $cat_data[$count][] = floatval($category['avg_self']);
-      $cat_data[$count][] = 'category_details/' .$input.'/'. $key;
+      $cat_data[$count][] = $base_url . '/category-details/' . $assessment_id . '/' . $key;
       $count++;
     }
     return new JsonResponse($cat_data);

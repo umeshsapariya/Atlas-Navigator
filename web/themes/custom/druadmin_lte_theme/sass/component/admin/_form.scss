@@ -11,6 +11,11 @@
   }
   .view-users {
     .views-table {
+      thead {
+        tr {
+          background-color: $theme_color;
+        }
+      }
       td {
         .form-type-checkbox {
           input {

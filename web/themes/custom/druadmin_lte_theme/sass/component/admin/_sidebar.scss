@@ -37,12 +37,12 @@
           max-width: 230px;
           padding: 5px 25px 10px 0;
           &.is-active {
-            color: $light-blue;
+            color: $theme_color;
             font-family: $segoeui-semibold;
           }
           &:hover {
             background-color: transparent;
-            color: $light-blue;
+            color: $theme_color;
           }
         }
         ul {
@@ -72,6 +72,30 @@
         margin-top: 0;
       }
     }
+    #switch-view-form {
+      border-top: 1px solid #9a9a9a;
+      bottom: 10px;
+      margin: auto 10px;
+      max-width: 230px;
+      padding: 5px 35px 10px 0;
+      position: absolute;
+      @media only screen and (max-width: 767px) {
+        position: relative;
+      }
+      .btn-primary {
+        background: transparent;
+        border: none;
+        color: #474645;
+        padding-left: 0;
+        &:active {
+          background: transparent;
+        }
+        @media only screen and (max-width: 767px) {
+          font-size: 14px;
+          padding: 8px 0;
+        }
+      }
+    }
   }
   &.sidebar-collapse {
     .main-sidebar {
@@ -85,6 +109,9 @@
               font-size: 0;
             }
           }
+        }
+        #switch-view-form {
+          display: none;
         }
       }
     }

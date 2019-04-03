@@ -115,6 +115,14 @@ body.admin_custom_theme {
               /*@media screen and (max-width: 767px) {
                 min-height: auto;
               }*/
+              #user-name {
+                color: #416e7f;
+                display: inline-block;
+                margin-top: 10px;
+                @media screen and (max-width: 767px) {
+                  margin-top: 0;
+                }
+              }
               .btn_wrapper {
                 align-items: center;
                 /*bottom: 15px;*/
@@ -133,7 +141,7 @@ body.admin_custom_theme {
 
 
                 .btn {
-                  background: $level_checked;
+                  background: $theme_color;
                   border-radius: 25px;
                   color: #fff;
                   cursor: pointer;
@@ -175,7 +183,7 @@ body.admin_custom_theme {
               }
               .btn_wrapper_top {
                 .btn {
-                  background: $level_checked;
+                  background: $theme_color;
                   border-radius: 25px;
                   color: #fff;
                   cursor: pointer;
@@ -218,7 +226,7 @@ body.admin_custom_theme {
                   float: right;
                   position: relative;
                   &:after {
-                    color: #008ec3;
+                    color: $theme_color;
                     content: "\e908";
                     cursor: pointer;
                     display: inline-block;
@@ -311,13 +319,13 @@ body.admin_custom_theme {
               }
             }
             @media screen and (max-width: 767px) {
-              background: #3c8dbc;
+              background: $theme_color;
               border-radius: 5px;
               color: #000;
             }
             &.blue_title {
               @media screen and (max-width: 767px) {
-                background: #008ec3;
+                background: $theme_color;
                 color: #fff;
               }
             }
@@ -413,15 +421,15 @@ body.admin_custom_theme {
                     width: 10px;
                   }
                   &.proficient_skill {
-                    color: #018ec4;
+                    color: $theme_color;
                     &:before {
-                      background: #018ec4;
+                      background: $theme_color;
                     }
                   }
                   &.skill_gap {
-                    color: #ff2f2f;
+                    color: $theme_second_color;
                     &:before {
-                      background: #ff2f2f;
+                      background: $theme_second_color;
                     }
                   }
                 }
@@ -465,6 +473,10 @@ body.admin_custom_theme {
       }
     }
     .home_dev_block {
+      .dev_plan_cont {
+        max-height: 140px;
+        overflow: hidden;
+      }
       .row_plan_block {
         border-bottom: 1px solid #d7d7d7;
         display: table;
@@ -489,7 +501,7 @@ body.admin_custom_theme {
             padding: 0 5px;
             width: 23px;
             &:active {
-              border: solid #008ec3;
+              border: solid $theme_color;
               border-width: 0 3px 3px 0;
               content: "";
               height: 23px;
@@ -551,7 +563,7 @@ body.admin_custom_theme {
               font-family: $segoeui-regular;
             }
             &.expired {
-              background-color: #ff2f2f;
+              background-color: $theme_second_color;
               /*color: #fff;*/
             }
           }
