@@ -88,6 +88,7 @@ module:
   pathauto: 1
   views: 10
   paragraphs: 11
+  new_tenant: 1000
 theme:
   stable: 0
   classy: 0
@@ -95,5 +96,6 @@ theme:
   seven: 0
   adminimal_theme: 0
   yorkshire: 0
+profile: new_tenant
 _core:
   default_config_hash: R4IF-ClDHXxblLcG0L7MgsLvfBIMAvi_skumNFQwkDc
