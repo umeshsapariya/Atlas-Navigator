@@ -9,7 +9,7 @@ mysqldb:
             login:
                 default_schema: logindb
                 privileges:
-                    atlasdb: admin
+                    logindb: admin
             luckcompanies:
                 default_schema: luckcompaniesdb
                 privileges:
