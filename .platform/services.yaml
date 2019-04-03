@@ -3,13 +3,13 @@ mysqldb:
     disk: 2048
     configuration:
         schemas:
-            - atlasdb
+            - logindb
             - luckcompaniesdb
         endpoints:
-            atlas:
-                default_schema: atlasdb
+            login:
+                default_schema: logindb
                 privileges:
-                    atlasdb: admin
+                    logindb: admin
             luckcompanies:
                 default_schema: luckcompaniesdb
                 privileges:

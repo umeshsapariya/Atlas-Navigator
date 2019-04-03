@@ -19,7 +19,7 @@ build:
 # to the application in the PLATFORM_RELATIONSHIPS variable. The right-hand
 # side is in the form `<service name>:<endpoint name>`.
 relationships:
-    atlas: 'mysqldb:atlas'
+    login: 'mysqldb:login'
     luckcompanies: 'mysqldb:luckcompanies'
 #    solr: 'solrsearch:solr'
 #    redis: 'rediscache:redis'

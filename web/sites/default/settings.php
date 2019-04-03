@@ -34,7 +34,7 @@ $config_directories[CONFIG_SYNC_DIRECTORY] = '../config/sync';
 
 // Automatic Platform.sh settings.
 if (file_exists($app_root . '/' . $site_path . '/../settings.platformsh.php')) {
-  $platformsh_subsite_id = 'atlas';
+  $platformsh_subsite_id = 'login';
   include $app_root . '/' . $site_path . '/../settings.platformsh.php';
 }
 
