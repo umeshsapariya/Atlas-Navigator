@@ -6,7 +6,7 @@ mysqldb:
             - logindb
             - luckcompaniesdb
         endpoints:
-            atlas:
+            login:
                 default_schema: logindb
                 privileges:
                     atlasdb: admin
