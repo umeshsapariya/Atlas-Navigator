@@ -110,3 +110,10 @@ if (isset($_ENV['PLATFORM_VARIABLES'])) {
 if (isset($_ENV['PLATFORM_PROJECT_ENTROPY']) && empty($settings['hash_salt'])) {
   $settings['hash_salt'] = $_ENV['PLATFORM_PROJECT_ENTROPY'] . $platformsh_subsite_id;
 }
+
+// Configuration split based on subsite 
+if($platformsh_subsite_id == 'luckcompanies'){
+  $config['config_split.config_split.luckcompanies']['status']= TRUE;
+}else{
+  $config['config_split.config_split.luckcompanies']['status']= FALSE;
+}
