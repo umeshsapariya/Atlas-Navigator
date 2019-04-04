@@ -35,6 +35,7 @@ $config_directories[CONFIG_SYNC_DIRECTORY] = '../config/sync';
 // Automatic Platform.sh settings.
 if (file_exists($app_root . '/' . $site_path . '/../settings.platformsh.php')) {
   $platformsh_subsite_id = 'login';
+  $config['config_split.config_split.luckcompanies']['status']= FALSE;
   include $app_root . '/' . $site_path . '/../settings.platformsh.php';
 }
 
