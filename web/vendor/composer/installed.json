@@ -1262,7 +1262,7 @@
         "version_normalized": "1.4.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/address",
+            "url": "https://git.drupalcode.org/project/address.git",
             "reference": "8.x-1.4"
         },
         "dist": {
@@ -1323,7 +1323,7 @@
         "version_normalized": "1.26.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/admin_toolbar",
+            "url": "https://git.drupalcode.org/project/admin_toolbar.git",
             "reference": "8.x-1.26"
         },
         "dist": {
@@ -1406,7 +1406,7 @@
         "version_normalized": "1.9.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/adminimal_admin_toolbar",
+            "url": "https://git.drupalcode.org/project/adminimal_admin_toolbar.git",
             "reference": "8.x-1.9"
         },
         "dist": {
@@ -1457,7 +1457,7 @@
         "version_normalized": "1.4.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/adminimal_theme",
+            "url": "https://git.drupalcode.org/project/adminimal_theme.git",
             "reference": "8.x-1.4"
         },
         "dist": {
@@ -1554,7 +1554,7 @@
         "version_normalized": "3.1.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/ctools",
+            "url": "https://git.drupalcode.org/project/ctools.git",
             "reference": "8.x-3.1"
         },
         "dist": {
@@ -1649,7 +1649,7 @@
         "version_normalized": "1.2.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/devel",
+            "url": "https://git.drupalcode.org/project/devel.git",
             "reference": "8.x-1.2"
         },
         "dist": {
@@ -1733,7 +1733,7 @@
         "version_normalized": "1.3.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/pathauto",
+            "url": "https://git.drupalcode.org/project/pathauto.git",
             "reference": "8.x-1.3"
         },
         "dist": {
@@ -1796,7 +1796,7 @@
         "version_normalized": "1.5.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/token",
+            "url": "https://git.drupalcode.org/project/token.git",
             "reference": "8.x-1.5"
         },
         "dist": {
@@ -6236,7 +6236,7 @@
         "version_normalized": "1.4.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/config_filter",
+            "url": "https://git.drupalcode.org/project/config_filter.git",
             "reference": "8.x-1.4"
         },
         "dist": {
@@ -6307,7 +6307,7 @@
         "version_normalized": "1.4.0.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/config_split",
+            "url": "https://git.drupalcode.org/project/config_split.git",
             "reference": "8.x-1.4"
         },
         "dist": {
@@ -6373,6 +6373,67 @@
             "source": "http://cgit.drupalcode.org/config_split",
             "issues": "https://www.drupal.org/project/issues/config_split",
             "irc": "irc://irc.freenode.org/drupal-contribute"
+        }
+    },
+    {
+        "name": "drupal/redis",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/redis.git",
+            "reference": "8.x-1.1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/redis-8.x-1.1.zip",
+            "reference": "8.x-1.1",
+            "shasum": "33337fe1cbd2824797e87533b30e4886b48ecd77"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "suggest": {
+            "predis/predis": "^1.1.1"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.1",
+                "datestamp": "1541600580",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Drupal\\redis\\": "src"
+            }
+        },
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0"
+        ],
+        "authors": [
+            {
+                "name": "Berdir",
+                "homepage": "https://www.drupal.org/user/214652"
+            },
+            {
+                "name": "pounard",
+                "homepage": "https://www.drupal.org/user/240164"
+            }
+        ],
+        "description": "Provide a module placeholder, for using as dependency for module that needs Redis.",
+        "homepage": "https://www.drupal.org/project/redis",
+        "support": {
+            "source": "https://git.drupalcode.org/project/redis"
         }
     }
 ]
