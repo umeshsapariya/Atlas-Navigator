@@ -14,3 +14,5 @@ mysqldb:
                 default_schema: luckcompaniesdb
                 privileges:
                     luckcompaniesdb: admin
+rediscache:
+    type: redis:5.0                    

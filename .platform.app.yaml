@@ -9,6 +9,11 @@ name: 'app'
 # The runtime the application uses.
 type: 'php:7.2'
 
+#Add Redis Extension for PHP
+runtime:
+    extensions:
+        - redis
+
 # Configuration of the build of this application.
 build:
     flavor: composer
@@ -21,8 +26,7 @@ build:
 relationships:
     login: 'mysqldb:login'
     luckcompanies: 'mysqldb:luckcompanies'
-#    solr: 'solrsearch:solr'
-#    redis: 'rediscache:redis'
+    redis: 'rediscache:redis'
 
 # The configuration of app when it is exposed to the web.
 web:
