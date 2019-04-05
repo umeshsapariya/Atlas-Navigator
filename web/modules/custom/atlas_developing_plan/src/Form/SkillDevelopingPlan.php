@@ -32,17 +32,20 @@ class SkillDevelopingPlan extends FormBase {
       ->condition('type', 'developing_plan')
       ->condition('field_assigned_user', \Drupal::currentUser()->id());
     $development_nids = $query->execute();
+
     foreach ($development_nids as $development_nid) {
       $development_node = Node::load($development_nid);
       $assigned_activity_arr = $development_node->field_learning_activity->getValue();
       $assigned_activities[] = $assigned_activity_arr[0]['target_id'];
     }
+
     $current_path = \Drupal::service('path.current')->getPath();
     $current_path_array = explode('/', $current_path);
     $skill_paragraph_id = end($current_path_array);
 
     $skill_paragraph = Paragraph::load($skill_paragraph_id);
     $level_description_paragraph_ids = $skill_paragraph->field_skill_level_information->getValue();
+
     $number_of_level_field = $skill_paragraph->field_number_of_levels->getValue();
 
     $skill_related_activity = [];
@@ -53,7 +56,8 @@ class SkillDevelopingPlan extends FormBase {
       for ($delta = 1; $delta <= $number_of_level; $delta++) {
         $skill_level_target_id = $level_description_paragraph_ids[$delta - 1]['target_id'];
         $paragraph_skill_level = Paragraph::load($skill_level_target_id);
-        if ($paragraph_skill_level->field_assigned_activity->getValue()) {
+
+        if (isset($paragraph_skill_level->field_assigned_activity)) {
           $activity_nids = $paragraph_skill_level->field_assigned_activity->getValue();
           foreach ($activity_nids as $value) {
             if (!in_array($value['target_id'], $assigned_activities)) {
@@ -64,6 +68,7 @@ class SkillDevelopingPlan extends FormBase {
         }
       }
     }
+
 
     $form['head'] = [
       '#type' => 'container',
@@ -82,6 +87,7 @@ class SkillDevelopingPlan extends FormBase {
           $normailised_activities[] = ['level' => $level, 'total_level' => 5, 'nid' => $each_activity['nid']];
         }
       }
+
       $form['head']['title'] = [
         '#markup' => '<div class="box_title blue_title" rel="box1">Development plan</div>',
       ];
@@ -90,29 +96,8 @@ class SkillDevelopingPlan extends FormBase {
       $category_id = $parameters->get('category_id');
       $skill_id = $parameters->get('skill_id');
 
-      // Get User skill 360 score.
-      $current_user_id = \Drupal::currentUser()->id();
-      $raters_skill_data = get_raters_skill_data($current_user_id);
-      $relationship_tid = get_self_relationship_tid();
-
-      if (!empty($raters_skill_data)) {
-        foreach ($raters_skill_data as $rater_skill) {
-          if ($rater_skill->category_id == $category_id) {
-            $category_wise_ratings[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
-            if ($rater_skill->relationship_tid != $relationship_tid) {
-              $category_wise_ratings_others[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
-            }
-          }
-        }
-        $rel_arr = get_relationship_skill_rating($category_wise_ratings[$skill_id]);
-        // Get total score.
-        $total_score = get_total_score($category_id, $category_wise_ratings);
-      }
-      $default_level = get_respective_level($total_score[$skill_id]);
-
       $form['head']['level_select'] = [
         '#type' => 'select',
-        '#default_value' => $default_level,
         '#options' => [1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5],
       ];
 
@@ -131,11 +116,9 @@ class SkillDevelopingPlan extends FormBase {
         '#type' => 'container',
         '#attributes' => ['class' => ['dev-plan-cont scroll_div_content']],
       ];
-
       foreach ($normailised_activities as $delta => $activity) {
         // Each activity container.
-        $class_count = $delta + 1;
-        $row_class = 'level_' . (string) $class_count;
+        $row_class = 'level_' . $activity['level'];
         $form['activites']['activity-' . $delta] = [
           '#type' => 'container',
           '#attributes' => ['class' => ['dev_row_cont change_ques ' . $row_class]],
@@ -257,11 +240,11 @@ class SkillDevelopingPlan extends FormBase {
         $name = $account->getUsername();
         // Create node object.
         $node = Node::create([
-          'type' => 'developing_plan',
-          'title' => $name . ' ' . $activity_node->getTitle() . ' Developing plan',
-          'field_assigned_user' => $uid,
-          'field_due_date' => $due_date,
-          'field_learning_activity' => $activity_nid,
+            'type' => 'developing_plan',
+            'title' => $name . ' ' . $activity_node->getTitle() . ' Developing plan',
+            'field_assigned_user' => $uid,
+            'field_due_date' => $due_date,
+            'field_learning_activity' => $activity_nid,
         ]);
         $node->save();
       }

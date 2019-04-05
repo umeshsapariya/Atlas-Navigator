@@ -29,6 +29,7 @@ class AddDevelopmetPlan extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form['#prefix'] = '<div id="add_development_plan_form">';
     $form['#suffix'] = '</div>';
+    //$form['#validate'][] = 'custom_add_plan_url_validate';
     $form['status_messages'] = [
       '#type' => 'status_messages',
       '#weight' => -10,
@@ -55,7 +56,8 @@ class AddDevelopmetPlan extends FormBase {
       '#options' => $activity_type,
     ];
     $form['url'] = [
-      '#type' => 'url',
+      //'#type' => 'url',
+      '#type' => 'textfield',
       '#title' => t('URL:'),
     ];
     $form['date'] = [
@@ -84,13 +86,6 @@ class AddDevelopmetPlan extends FormBase {
 
     $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    // Nothing.
   }
 
   /**
@@ -146,7 +141,6 @@ class AddDevelopmetPlan extends FormBase {
         ]);
         $node_plan->save();
       }
-      // ksm($node_activity->nid);
       // Save Development plan.
       $message = 'Development Plan "' . $title . '" added successfully.';
       $currentURL = Url::fromRoute('development-plan-details-form');
@@ -156,5 +150,18 @@ class AddDevelopmetPlan extends FormBase {
     }
     return $response;
   }
-
-}
+  
+  
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+  $activity_url = $form_state->getValue('url');
+    if (isset($activity_url) && !empty($activity_url)) {
+      $activity_url = strpos($activity_url, 'http') !== 0 ? "http://".$activity_url : $activity_url;
+        if(!preg_match( '/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}'.'((:[0-9]{1,5})?\\/.*)?$/i' ,$activity_url)){
+          $form_state->setErrorByName('url', t('Not a valid URL'));
+        } 
+      }
+    }
+  }

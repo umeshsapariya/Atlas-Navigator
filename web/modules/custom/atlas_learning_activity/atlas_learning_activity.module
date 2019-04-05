@@ -4,7 +4,6 @@
  * @file
  * Contains .module.
  */
-
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
@@ -18,6 +17,7 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
 
   if ($form_id == 'node_learning_activity_form' || $form_id == 'node_learning_activity_edit_form') {
     $form['#theme'] = 'learning_activity_form';
+    $form['#validate'][] = 'custom_url_validate';
     $form['#title'] = t('Activity Creator');
     unset($form['field_activity_url']['widget'][0]['uri']['#description']);
     $current_user = \Drupal::currentUser();
@@ -75,10 +75,9 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
         if (!empty($skill_default_value)) {
           $skill_para = Paragraph::load($skill_default_value[0]);
           $levels = $skill_para->field_number_of_levels->value;
-          // \Drupal::logger('Skill Levels')->info('<pre>' . print_r($levels, TRUE) . '</pre>');.
         }
 
-        for ($j = 1; $j <= $levels; $j++) {
+        for ($j = $levels; $j >= 1; $j--) {
           $level_options[$j] = $j;
         }
         $form['field_activity_categories']['widget'][$key]['subform']['field_activity_level']['widget']['#options'] = $level_options;
@@ -90,7 +89,7 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
 
   // Node assessment edit form.
   if ($form_id == 'node_assessment_form_edit_form') {
-    $node = $form_state->getFormObject()->getEntity()->toArray();;
+    $node = $form_state->getFormObject()->getEntity()->toArray();
     foreach ($node['field_category'] as $key => $category) {
       $category_id = $category['target_id'];
       $p = Paragraph::load($category['target_id']);
@@ -111,28 +110,30 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
             '#collapsed' => FALSE,
           ];
           $level_activities = [];
-          $sl = Paragraph::load($skill_level['target_id']);
-          $skill_level_id = $skill_level['target_id'];
-          $field_level_header = $sl->field_level_header->getValue();
-          if (!empty($field_level_header[0]['value'])) {
+          if (isset($skill_level['target_id'])) {
+            $sl = Paragraph::load($skill_level['target_id']);
+            $skill_level_id = $skill_level['target_id'];
             if (isset($sl)) {
-              $level_activities[] = $sl->field_assigned_activity->getValue();
-              foreach ($level_activities as $key1 => $value1) {
-                $level_activity_ids = [];
-                foreach ($value1 as $activity_index => $activity_value) {
-                  if (!empty($activity_value['target_id'])) {
-                    if (!in_array($activity_value['target_id'], $level_activity_ids)) {
-                      $level_activity_ids[] = $activity_value['target_id'];
-                      $activity = Node::load($activity_value['target_id']);
-                      $url = Url::fromRoute('entity.node.edit_form', ['node' => $activity_value['target_id']]);
-                      $edit_link = Link::fromTextAndUrl($activity->getTitle(), $url);
-                      $activity_link = $edit_link->toRenderable();
-                      $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id]['field_assigned_activity_data_' . $activity_value['target_id']] = [
-                        '#markup' => render($activity_link),
-                        '#weight' => 999,
-                        '#prefix' => '<div class="assigned-activity">',
-                        '#suffix' => '</div>',
-                      ];
+              $field_level_header = $sl->field_level_header->getValue();
+              if (!empty($field_level_header[0]['value'])) {
+                $level_activities[] = $sl->field_assigned_activity->getValue();
+                foreach ($level_activities as $key1 => $value1) {
+                  $level_activity_ids = [];
+                  foreach ($value1 as $activity_index => $activity_value) {
+                    if (!empty($activity_value['target_id'])) {
+                      if (!in_array($activity_value['target_id'], $level_activity_ids)) {
+                        $level_activity_ids[] = $activity_value['target_id'];
+                        $activity = Node::load($activity_value['target_id']);
+                        $url = Url::fromRoute('entity.node.edit_form', ['node' => $activity_value['target_id']]);
+                        $edit_link = Link::fromTextAndUrl($activity->getTitle(), $url);
+                        $activity_link = $edit_link->toRenderable();
+                        $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id]['field_assigned_activity_data_' . $activity_value['target_id']] = [
+                          '#markup' => render($activity_link),
+                          '#weight' => 999,
+                          '#prefix' => '<div class="assigned-activity">',
+                          '#suffix' => '</div>',
+                        ];
+                      }
                     }
                   }
                 }
@@ -202,8 +203,6 @@ function _activity_node_form_submit($form, FormStateInterface $form_state) {
                     }
                     $level_para->set('field_assigned_activity', $level_activity_ids);
                     $level_para->save();
-                    $url = Url::fromUri('internal:' . '/activity-list');
-                    $form_state->setRedirectUrl($url);
                   }
                 }
               }
@@ -213,6 +212,8 @@ function _activity_node_form_submit($form, FormStateInterface $form_state) {
       }
     }
   }
+  $url = Url::fromUri('internal:' . '/activity-list');
+  $form_state->setRedirectUrl($url);
 }
 
 /**
@@ -234,4 +235,17 @@ function getAjaxSkillsByCategory($form, FormStateInterface $form_state) {
  */
 function getAjaxLevelsBySkill($form, FormStateInterface $form_state) {
   return $form;
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function custom_url_validate($form, FormStateInterface $form_state) {
+  $activity_url = $form_state->getValue('field_activity_url');
+  $activity_url =  $activity_url[0]['value'];
+  $activity_url = strpos($activity_url, 'http') !== 0 ? "http://".$activity_url : $activity_url;
+  
+  if(!preg_match( '/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}'.'((:[0-9]{1,5})?\\/.*)?$/i' ,$activity_url)){
+    $form_state->setErrorByName('field_activity_url', t('Not a valid URL'));
+  } 
 }

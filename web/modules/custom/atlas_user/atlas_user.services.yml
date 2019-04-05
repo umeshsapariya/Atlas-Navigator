@@ -1,0 +1,7 @@
+services:
+  example.access_checker:
+    class: Drupal\atlas_user\Access\CustomAccessCheck
+    arguments: ['@current_user']
+    tags:
+      - { name: access_check, applies_to: _view_access_check }
+

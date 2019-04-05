@@ -74,47 +74,54 @@ class DevelopingPlanBlock extends BlockBase {
         $assigned_activity_field = $development_node->field_learning_activity->getValue();
         $assigned_activity = $assigned_activity_field[0]['target_id'];
         $activity_node = Node::load($assigned_activity);
-        $activity_title = $activity_node->getTitle();
-        $activity_url_arr = $activity_node->field_activity_url->getValue();
-        if (isset($activity_url_arr[0]['uri'])) {
-          $options = [
-            'attributes' => [
-              'target' => [
-                '_blank',
+        $activity_title = '';
+        if ($activity_node) {
+          $activity_title = $activity_node->getTitle();
+          $activity_url_arr = $activity_node->field_activity_url->getValue();
+          if (isset($activity_url_arr[0]['value'])) {
+            $options = [
+              'attributes' => [
+                'target' => [
+                  '_blank',
+                ],
               ],
-            ],
-          ];
-          $activity_url_obj = Url::fromUri($activity_url_arr[0]['uri'], $options);
-          $activity_title = Link::fromTextAndUrl($activity_title, $activity_url_obj)->toString();
-        }
-
-        // Activity icon.
-        $icon_src = '';
-        $activity_type_tid_array = $activity_node->field_activity_type->getValue();
-        if (isset($activity_type_tid_array[0]['target_id'])) {
-          $activity_type_tid = $activity_type_tid_array[0]['target_id'];
-          if ($activity_type_tid) {
-            $activity_type_term = Term::load($activity_type_tid);
-            $activity_type_term_array = $activity_type_term->field_icon->getValue();
-            if (isset($activity_type_term_array[0]['target_id']) && $activity_type_term_array[0]['target_id']) {
-              $icon_fid = $activity_type_term_array[0]['target_id'];
-              $icon = File::load($icon_fid);
-              $icon_url = $icon->url();
-              $icon_src = '<img src="' . $icon_url . '">';
+            ];
+            $activity_url = $activity_url_arr[0]['value'];
+            $activity_url = strpos($activity_url, 'http') !== 0 ? "http://".$activity_url : $activity_url;
+            $activity_url_obj = Url::fromUri($activity_url, $options);
+            $activity_title = Link::fromTextAndUrl($activity_title, $activity_url_obj)->toString();
+          }
+          // Activity icon.
+          $icon_src = '';
+          $activity_type_tid_array = $activity_node->field_activity_type->getValue();
+          if (isset($activity_type_tid_array[0]['target_id'])) {
+            $activity_type_tid = $activity_type_tid_array[0]['target_id'];
+            if ($activity_type_tid) {
+              $activity_type_term = Term::load($activity_type_tid);
+              $activity_type_term_array = $activity_type_term->field_icon->getValue();
+              if (isset($activity_type_term_array[0]['target_id']) && $activity_type_term_array[0]['target_id']) {
+                $icon_fid = $activity_type_term_array[0]['target_id'];
+                $icon = File::load($icon_fid);
+                $icon_url = $icon->url();
+                $icon_src = '<img src="' . $icon_url . '">';
+              }
             }
           }
         }
+
         $form['logo'] = [
           '#markup' => $icon_src,
         ];
-        $development_plan[] = [
-          'nid' => $nid,
-          'icon' => $form['logo'],
-          'activity_title' => $activity_title,
-          'due_date' => $due_date,
-          'expired' => $current_status,
-          'class' => $developent_status,
-        ];
+        if ($activity_title != '') {
+          $development_plan[] = [
+            'nid' => $nid,
+            'icon' => $form['logo'],
+            'activity_title' => $activity_title,
+            'due_date' => $due_date,
+            'expired' => $current_status,
+            'class' => $developent_status,
+          ];
+        }
       }
     }
 

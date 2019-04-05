@@ -147,7 +147,7 @@
                   @media only screen and (max-width: 480px) {
                     display: inline-block;
                     margin: 5px 1%;
-                    width: 70%;
+                    width: 50%;
                   }
                 }
               }
@@ -163,90 +163,59 @@
               }
               .dev-plan-cont {
                 .dev_row_cont {
-                  align-items: center;
-                  border-bottom: 1px solid #ccc;
-                  /* display: flex;*/
+                  border-bottom: 1px solid #d7d7d7;
+                  display: table;
                   height: 70px;
-                  div {
-                    display: inline-block;
-                  }
+                  width: 100%;
                   .title-logo {
-                    left: 2%;
-                    position: relative;
+                    display: table-cell;
+                    vertical-align: middle;
                     width: 15%;
                     img {
                       display: inline-block;
                       height: auto;
                       width: 30px;
                     }
-                    &:before {
-                      display: none;
-                      // color: $theme_color;
-                      // display: inline-block;
-                      // font-family: "icomoon";
-                      // font-size: 35px;
-                      // height: 35px;
-                      // position: relative;
-                      // text-rendering: auto;
-                      // top: 10px;
-                      // width: 35px;
-                    }
                   }
                   .dev-date {
                     color: #416e7f;
-                    display: block;
+                    display: table-caption;
                     font-family: $segoeui-regular;
                     font-size: 12px;
                     text-align: right;
+                    vertical-align: middle;
                     @media screen and (max-width: 767px) {
                       font-size: 10px;
                     }
                   }
                   .title-plan {
                     color: #416e7f;
+                    display: table-cell;
                     font-family: $segoeui-regular;
                     font-size: 13px;
                     position: relative;
-                    width: 50%;
+                    vertical-align: middle;
+                    width: 60%;
                     a {
                       color: #416e7f;
                       font-family: $segoeui-regular;
                       font-size: 13px;
                     }
                   }
-                  &.change_ques {
-                    .title-logo {
-                      &:before {
-                        content: "\e912";
-                      }
-                    }
-                  }
-                  &.how-to-lead {
-                    .title-logo {
-                      &:before {
-                        content: "\e913";
-                      }
-                    }
-                  }
-                  &.leadership {
-                    .title-logo {
-                      &:before {
-                        content: "\e914";
-                      }
-                    }
-                  }
                 }
                 .form-type-checkbox {
+                  display: table-cell;
+                  vertical-align: middle;
                   width: 10%;
                   label {
-                    top: -5px;
+                    top: -10px;
                     width: auto;
                   }
                 }
                 .js-form-type-date {
-                  margin: 7px 0;
-                  position: relative;
-                  width: 20%;
+                  display: table-cell;
+                  vertical-align: middle;
+                  width: 10%;
                   &:after {
                     color: $theme_color;
                     content: "\e915";
@@ -254,9 +223,9 @@
                     display: inline-block;
                     font-family: "icomoon";
                     font-size: 30px;
+                    left: 7px;
                     pointer-events: none;
-                    position: absolute;
-                    right: 5px;
+                    position: relative;
                     top: 0;
                   }
                   &.no-after {
@@ -268,9 +237,12 @@
                     -webkit-appearance: none;
                     -moz-appearance: none;
                     appearance: none;
+                    display: inline-block;
                     font-size: 20px;
                     opacity: 0;
                     padding: 0;
+                    position: absolute;
+                    width: 40px;
                   }
                   &:hover {
                     -webkit-appearance: none;

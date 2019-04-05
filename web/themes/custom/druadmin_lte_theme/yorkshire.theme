@@ -5,9 +5,28 @@ use Drupal\user\Entity\User;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Template\Attribute;
 use Drupal\Core\Url;
+use Drupal\file\Entity\File;
 
 function yorkshire_preprocess(&$variables) {
   $variables['base_path'] = base_path();
+  $variables['login_logo_path'] = '';
+  $variables['watermark_path'] = '';
+  // Get Login logo
+  if (!empty(theme_get_setting('login_logo')[0])) {
+    $file_id = theme_get_setting('login_logo')[0];
+    $file = \Drupal\file\Entity\File::load($file_id);
+    $uri = $file->getFileUri();
+    $url = \Drupal\Core\Url::fromUri(file_create_url($uri))->toString();
+    $variables['login_logo_path'] = $url;
+  }
+  // Get Login watermark
+  if (!empty(theme_get_setting('watermark')[0])) {
+    $watermark_file_id = theme_get_setting('watermark')[0];
+    $watermark_file = \Drupal\file\Entity\File::load($watermark_file_id);
+    $watermark_uri = $watermark_file->getFileUri();
+    $watermark_url = \Drupal\Core\Url::fromUri(file_create_url($watermark_uri))->toString();
+    $variables['watermark_path'] = $watermark_url;
+  }
 }
 
 /**
@@ -21,12 +40,11 @@ function yorkshire_preprocess_node(&$variables) {
       //Loads custom blocks for homepage
       $block_manager = \Drupal::service('plugin.manager.block');
       $config = [];
-      
-      // Get Current username 
+
+      // Get Current username
 //      $current_user = \Drupal::currentUser();
 //      $user = User::load($current_user->id());
 //      $variables['username'] = $user->getUsername();
-
       //360 results page
       $plugin_Results360Block = $block_manager->createInstance('Results360Block', $config);
       $variables['results_custom_block'] = $plugin_Results360Block->build();
@@ -146,28 +164,56 @@ function yorkshire_preprocess_block(&$variables) {
 }
 
 function yorkshire_preprocess_menu(&$variables) {
- $icon_setting = explode("\n", theme_get_setting('menu_icons'));
- $icons = [];
- for ($i = 0; $i < sizeof($icon_setting); $i++) {
-   $icon_setting[$i] = explode('|', $icon_setting[$i]);
-   if (array_key_exists($i, $icon_setting) && sizeof($icon_setting[$i]) >= 2) {
-     $icons[$icon_setting[$i][0]] = $icon_setting[$i][1];
-   }
- }
- foreach ($variables['items'] as $id => $item) {
-   $title = (string) $item['title'];
-   $request = \Drupal::request();
-   $session = $request->getSession();
-   if ($session->get('view') != 'admin') {
-     if ($title == 'Learning Solution Management' || $title == 'My Team' || $title == 'Users') {
-       unset($variables['items'][$id]);
-     }
-   }
-   if (array_key_exists($title, $icons) && $icons[$title]) {
-     $variables['items'][$id]['icon'] = $icons[$title];
-   }
- }
- $variables['#cache']['max-age'] = 0;
+  $icon_setting = explode("\n", theme_get_setting('menu_icons'));
+  $icons = [];
+//  ksm()
+  for ($i = 0; $i < sizeof($icon_setting); $i++) {
+    $icon_setting[$i] = explode('|', $icon_setting[$i]);
+    if (array_key_exists($i, $icon_setting) && sizeof($icon_setting[$i]) >= 2) {
+      $icons[$icon_setting[$i][0]] = $icon_setting[$i][1];
+    }
+  }
+
+  $current_user = \Drupal::currentUser();
+  $roles = $current_user->getRoles();
+  $request = \Drupal::request();
+  $session = $request->getSession();
+  foreach ($variables['items'] as $id => $item) {
+    $title = (string) $item['title'];
+    $request = \Drupal::request();
+    $session = $request->getSession();
+    if (!in_array('super_admin', $roles) && !in_array('administrator', $roles)) {
+      $superadmin_links = ['Learning Solution Management', 'Add Role'];
+      if (in_array($title, $superadmin_links)) {
+        unset($variables['items'][$id]);
+      }
+    }
+    if (!in_array('res', $roles) && !in_array('super_admin', $roles) && !in_array('administrator', $roles)) {
+      $restricted_links = ['My Team', 'Users', 'Role Management'];
+      if (in_array($title, $restricted_links)) {
+        unset($variables['items'][$id]);
+      }
+    }
+
+    if ((in_array('super_admin', $roles) || in_array('res', $roles) || in_array('administrator', $roles)) && $session->get('view') == 'admin') {
+      $learner_links = ['New Assessment', 'Assessments in Progress', 'Dashboard', 'Development Plan', 'Overall Proficiency', 'View Verbatim Comments', 'Respondents'];
+      if (in_array($title, $learner_links)) {
+        unset($variables['items'][$id]);
+      }
+    }
+    else {
+      $superadmin_links = ['Learning Solution Management', 'Add Role', 'My Team', 'Users', 'Role Management'];
+      if (in_array($title, $superadmin_links)) {
+        unset($variables['items'][$id]);
+      }
+    }
+
+
+    if (array_key_exists($title, $icons) && $icons[$title]) {
+      $variables['items'][$id]['icon'] = $icons[$title];
+    }
+  }
+  $variables['#cache']['max-age'] = 0;
 }
 
 function yorkshire_form_system_theme_settings_alter(&$form, $form_state) {
@@ -196,6 +242,20 @@ function yorkshire_form_system_theme_settings_alter(&$form, $form_state) {
     '#default_value' => theme_get_setting('menu_icons'),
     '#description' => t("<a href='https://fortawesome.github.io/Font-Awesome/icons/' target='_blank'>Font Awesome</a> icon class with associated menu item. One per line. Format: Menu link title|class")
   );
+  $form['login_logo'] = array(
+    '#type' => 'managed_file',
+    '#title' => 'Login Logo',
+    '#default_value' => theme_get_setting('login_logo'),
+    '#upload_location' => 'public://'
+  );
+  $form['watermark'] = array(
+    '#type' => 'managed_file',
+    '#title' => 'Upload Watermark',
+    '#upload_location' => 'public://',
+    '#default_value' => theme_get_setting('watermark')
+  );
+
+  $form['#submit'][] = 'custom_form_system_theme_settings_submit';
 }
 
 function yorkshire_preprocess_breadcrumb(&$variables) {
@@ -313,4 +373,24 @@ function yorkshire_preprocess_form_element_label(&$variables) {
  */
 function yorkshire_preprocess_input(&$variables) {
   $variables['attributes']['class'][] = 'input_text';
+}
+
+/**
+ * Custom function to save file permanatly.
+ */
+function custom_form_system_theme_settings_submit(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  $login_logo = $form_state->getValue('login_logo');
+  $watermark = $form_state->getValue('watermark');
+
+  /* Load the object of the file by it's fid */
+  $login_logo_file = \Drupal\file\Entity\File::load($login_logo[0]);
+  $watermark_file = \Drupal\file\Entity\File::load($watermark[0]);
+
+  /* Set the status flag permanent of the file object */
+  $login_logo_file->setPermanent();
+  $watermark_file->setPermanent();
+
+  /* Save the file in database */
+  $login_logo_file->save();
+  $watermark_file->save();
 }

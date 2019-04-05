@@ -12,5 +12,5 @@ atlas_common.my-team:
     _controller: '\Drupal\atlas_common\Controller\MyTeamController::content'
     _title: 'My Team'
   requirements:
-    _permission: 'access content'
+    _custom_access: '\Drupal\atlas_common\Controller\MyTeamController::access'
 

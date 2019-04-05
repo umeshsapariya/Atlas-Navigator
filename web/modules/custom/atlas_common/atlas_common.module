@@ -4,7 +4,6 @@
  * @file
  * Contains atlas_common functions and hooks.
  */
-
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Breadcrumb\Breadcrumb;
 use Drupal\node\Entity\Node;
@@ -289,28 +288,6 @@ function get_normailised_level($level, $total_level) {
 }
 
 /**
- * @return defalut level
- */
-function get_respective_level($score) {
-
-  if ($score >= 4.7) {
-    return '5';
-  }
-  elseif ($score >= 3.7 && $score <= 4.6) {
-    return '4';
-  }
-  elseif ($score >= 2.7 && $score <= 3.6) {
-    return '3';
-  }
-  elseif ($score >= 1.7 && $score <= 2.6) {
-    return '2';
-  }
-  else {
-    return '1';
-  }
-}
-
-/**
  * Implements hook_user_login().
  */
 function atlas_common_user_login($account) {
@@ -342,4 +319,26 @@ function get_team_members_uid($current_user_id) {
     $members_uids[] = $members_uid['uid'];
   }
   return $members_uids;
+}
+
+/**
+ * Custom function to get all team members uids.
+ */
+function get_all_team_members($parentId, array &$elements) {
+  $connection = Database::getConnection();
+  $query = $connection->select('profile', 'p');
+  $query->Join('profile__field_manager', 'pm', 'pm.entity_id = p.profile_id');
+  $query->fields('p', ['uid']);
+  $query->condition('pm.field_manager_target_id', $parentId);
+  $results = $query->execute()->fetchAll(PDO::FETCH_ASSOC);
+  if ($results) {
+    foreach ($results as $result) {
+      if (!in_array($result['uid'], $elements)) {
+        $elements[] = $result['uid'];
+        get_all_team_members($result['uid'], $elements);
+      }
+    }
+    return $elements;
+  }
+  return FALSE;
 }

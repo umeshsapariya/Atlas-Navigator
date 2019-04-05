@@ -1,1 +1,1 @@
-../../.platform/local/shared/settings.local.php
+../../../.platform/local/shared/settings.local.php

@@ -474,8 +474,10 @@ body.admin_custom_theme {
     }
     .home_dev_block {
       .dev_plan_cont {
-        max-height: 140px;
-        overflow: hidden;
+        @media screen and (min-width: 1025px) {
+          min-height: 140px;
+          overflow: hidden;
+        }
       }
       .row_plan_block {
         border-bottom: 1px solid #d7d7d7;
@@ -500,6 +502,9 @@ body.admin_custom_theme {
             line-height: 30px;
             padding: 0 5px;
             width: 23px;
+            @media screen and (min-width: 767px) {
+              margin-right: 7px;
+            }
             &:active {
               border: solid $theme_color;
               border-width: 0 3px 3px 0;

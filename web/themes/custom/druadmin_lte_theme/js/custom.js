@@ -19,15 +19,11 @@ $(document).ready(function () {
   }
   selectvalue();
   /* To add Mcustom Scroll - GLobal */
-  $(".admin_custom_theme .content").addClass('scroll_div_content');
-  $("#overall-proficiency-right tbody").addClass('scroll_div_content');
-  $("#overall-proficiency-right tbody").addClass('scroll_div_content');
-  $(".role-container .role-tab-container tbody, .role-container .top-strengths tbody, .role-container .top-opportunities tbody").addClass('scroll_div_content');
-  $(".scroll_div_content").mCustomScrollbar({
-  });
+  
   /* End add Mcustom Scroll */
 
   /* To add Scroll height as per page size - GLobal */
+  
   const scrollHeight = function () {
     var heightWindow = $(window).height();
 
@@ -62,7 +58,6 @@ $(document).ready(function () {
   }
   /* End croll height as per page size - GLobal*/
 
-
   /*Add Class - Homepage*/
   $('.atlasnavigator_home').parents('.content').addClass('atlasnavigator_home_content');
   /*End add Class - Homepage*/
@@ -78,6 +73,10 @@ $(document).ready(function () {
     $('.tab-content').css("padding-bottom", "25px");
   }
   /*end if admin login then - Global*/
+  // if($('.path-assessment-form .messages.messages--status')[0]) {
+  //   var error_ht = $('.path-assessment-form .content_wrapper').height();
+  //   $(".path-assessment-form .content_wrapper").css({"max-height": error_ht - 50});
+  // }
 
   /* Outside popup close functionality  - Global*/
   $(document.body).on("click", ".ui-widget-overlay", function ()
@@ -128,11 +127,20 @@ $(document).ready(function () {
   });
   /* End toggle Strengths &  Opportunities  - Overall Proficiency Page*/
 
-  $(window).resize(function () {
-    scrollHeight();
+  // $(window).resize(function () {
+  //   scrollHeight();
+  // });
+  $(".scroll_div_content").mCustomScrollbar({
   });
-
+  
+if ($(window).width() > 768) {
+  $(".admin_custom_theme .content").addClass('scroll_div_content');
+  $("#overall-proficiency-right tbody").addClass('scroll_div_content');
+  $("#overall-proficiency-right tbody").addClass('scroll_div_content');
+  $(".role-container .role-tab-container tbody, .role-container .top-strengths tbody, .role-container .top-opportunities tbody").addClass('scroll_div_content');
+  
   scrollHeight();
+}
 
   if ($(window).width() < 767) {
     $(".admin_custom_theme .content .atlasnavigator_home, .admin_custom_theme .content .overall-proficiency-wrapper").css({"height": "auto"});

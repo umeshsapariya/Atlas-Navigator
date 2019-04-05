@@ -23,7 +23,10 @@ class ActivityPopupController extends ControllerBase {
 
     $activity_type_id = $node->get('field_activity_type')->getValue()[0]['target_id'];
     $activity_desc = $node->get('body')->getValue()[0]['value'];
-    $activity_url = $node->get('field_activity_url')->getValue()[0]['uri'];
+    $activity_url = $node->get('field_activity_url')->getValue()[0]['value'];
+    if (isset($activity_url) && !empty($activity_url)) {
+      $activity_url = strpos($activity_url, 'http') !== 0 ? "http://".$activity_url : $activity_url;
+    }
     $activity_type_name = '';
     if ($activity_type_id) {
       $activity_type_term = Term::load($activity_type_id);
@@ -32,7 +35,7 @@ class ActivityPopupController extends ControllerBase {
     // $term = Term::load($tid);
     $output = '<div class="activity_type row-popup"> <span class="row-popup-title" >Activity Type </span>:  <span class="regular-font"> ' . $activity_type_name . '</span ></div>
             <div class="activity_description row-popup"><span class="row-popup-title"> Activity Description</span >:  <span class="regular-font">' . $activity_desc . '<span ></div>
-            <div class="activity_url row-popup"><span class="row-popup-title"> Activity url </span >:  <span class="regular-font"><a target="_BLANK" href=' . file_create_url($activity_url) . '>' . file_create_url($activity_url) . '</a></span ></div>';
+            <div class="activity_url row-popup"><span class="row-popup-title"> Activity url </span >:  <span class="regular-font"><a target="_BLANK" href=' . $activity_url . '>' . $activity_url . '</a></span ></div>';
 
     $options = [
       'dialogClass' => 'popup-dialog-class rating_desc_popup',

@@ -36,10 +36,13 @@
 
 // Body & Other general elements
 /*css*/
+
+
 body {
-  background: url(../images/backgroung.jpg) no-repeat;
-  background-position: right;
-  background-size: 80%;
+  /*background: url(../images/backgroung.jpg) no-repeat;*/
+  background-position: bottom right;
+  background-repeat: no-repeat;
+  background-size: 25%;
   border: 0 none;
   color: $base-color;
   -webkit-font-smoothing: antialiased;
@@ -50,7 +53,7 @@ body {
 
   @media (max-width: 767px) {
     background-position: right bottom;
-    background-size: 850px;
+    background-size: 325px;
     width: 100%;
   }
   * {
@@ -413,6 +416,9 @@ img {
 body.admin_custom_theme {
   overflow-x: auto;
   overflow-y: hidden;
+  @media screen and (max-width: 767px) {
+    overflow-y: scroll;
+  }
   .page-title {
     font-size: 26px;
     padding: 0 10px;
@@ -420,10 +426,10 @@ body.admin_custom_theme {
   .main-header {
     .logo {
       display: inline-block;
-      height: 55px;
-      width: 130px !important;
+      height: 60px;
+      width: auto !important;
       @media screen and (max-width: 767px) {
-        padding: 8px 5px;
+        padding: 6px 5px;
         width: 115px !important;
       }
       @media screen and (max-width: 420px) {
@@ -694,7 +700,7 @@ body.admin_custom_theme {
     position: relative;
     &.form-control {
       @media screen and (max-width: 767px) {
-        width: 190px;
+        width: 100%;
       }
     }
   }
@@ -846,6 +852,20 @@ input[type="date"]::-webkit-clear-button {
     & > tr {
       &:hover {
         background-color: transparent;
+      }
+    }
+  }
+}
+
+.user-360-header {
+  text-align: center;
+}
+
+.nav {
+  & > li {
+    & > a {
+      @media screen and (max-width: 350px) {
+        padding: 10px 6px;
       }
     }
   }

@@ -20,6 +20,7 @@
   padding: 40px 35px;
   @media screen and (max-width: 767px) {
     padding: 10px;
+    /*height: auto !important;*/
   }
   .table {
     border: none;
@@ -163,6 +164,9 @@
 }
 
 .dev-page-head-cta {
+  @media screen and (max-width: 767px) {
+    margin-top: 10px;
+  }
   .activity-info-btn {
     a {
       padding: 8px 25px;
@@ -171,6 +175,7 @@
       }
       @media screen and (max-width: 767px) {
         margin: 6px 14px;
+        padding: 7px 25px;
       }
     }
     @media screen and (max-width: 767px) {
@@ -186,6 +191,7 @@
     input {
       text-transform: capitalize;
       @media screen and (max-width: 767px) {
+        font-size: 14px;
         margin: 10px auto 10px;
       }
     }

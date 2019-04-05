@@ -4,6 +4,7 @@ namespace Drupal\atlas_common\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 
 /**
  * ModalForm class.
@@ -51,6 +52,8 @@ class SwitchViewForm extends FormBase {
     else {
       $session->set('view', 'learner');
     }
+    $url = Url::fromRoute('<front>');
+    $form_state->setRedirectUrl($url);
   }
 
 }

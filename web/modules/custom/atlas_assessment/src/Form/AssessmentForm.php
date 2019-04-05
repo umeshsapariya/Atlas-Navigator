@@ -8,6 +8,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\user\Entity\User;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Url;
+
 
 /**
  * Contribute form.
@@ -588,8 +590,11 @@ class AssessmentForm extends FormBase {
         }
       }
       drupal_set_message(t('Your form has been saved. You can come back and continue from here.'));
-      // Go to step 1.
-      $form_state->setRebuild(TRUE);
+
+      // Redirect to home page 
+      $url = Url::fromRoute('atlas_peer_invite.take_assessment_list');
+      $form_state->setRedirectUrl($url);
+      //$form_state->setRebuild(TRUE);
     }
   }
 

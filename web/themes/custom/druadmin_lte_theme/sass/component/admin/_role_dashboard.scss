@@ -374,6 +374,9 @@
                       @media only screen and (max-width: 767px) {
                         font-size: 14px;
                         line-height: 18px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
                       }
                       &.empty.message {
                         color: #2b4853;
@@ -435,7 +438,7 @@
 }
 
 .dashboard-user-info {
-  display: inline-block;
+  /* display: inline-block;*/
 
   .dashboard-user-image {
     /*background-image: url(../images/role_dashboard_user.png);*/
@@ -445,14 +448,16 @@
     height: auto;
     overflow: hidden;
     vertical-align: middle;
-    width: 25%;
+    /*width: 25%;*/
+    /*max-width: 15%;*/
+    width: 60px;
 
-    @media screen and (max-width: 767px) {
+    /*@media screen and (max-width: 767px) {
       width: 20%;
     }
     @media screen and (max-width: 480px) {
       width: 35%;
-    }
+    }*/
   }
   .dashboard-user-text {
     color: #416e7f;

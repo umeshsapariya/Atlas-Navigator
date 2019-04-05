@@ -23,6 +23,9 @@
               appearance: checkbox;
               opacity: 1;
               z-index: 0;
+              @media screen and (max-width: 767px) {
+                position: relative;
+              }
             }
           }
         }

@@ -7,6 +7,8 @@ use Drupal\Core\Database\Database;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\user\Entity\User;
 use Drupal\Core\Url;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
 
 /**
  *
@@ -49,9 +51,9 @@ class MyTeamController extends ControllerBase {
         $user_profile = \Drupal::entityTypeManager()
           ->getStorage('profile')
           ->loadByProperties([
-            'uid' => \Drupal::currentUser()->id(),
-            'type' => 'general_profile',
-          ]);
+          'uid' => \Drupal::currentUser()->id(),
+          'type' => 'general_profile',
+        ]);
         if ($user_profile) {
           $user_profile = reset($user_profile);
           $designation_id = $user_profile->get('field_job_title')->target_id;
@@ -71,11 +73,25 @@ class MyTeamController extends ControllerBase {
        </div>';
         $user_info = \Drupal::service('renderer')->render($element);
         $element = [];
-        $element['#markup'] = '<a class="btn-primary" href="login-as-user">Login as user</a>';
-        $login_link = \Drupal::service('renderer')->render($element);
+
+        $account = User::load($user->uid);
+        $login_link = $account->toUrl('masquerade')->toString();
+        $button[$user->uid] = [
+          '#type' => 'operations',
+          '#links' => [],
+        ];
+        $button[$user->uid]['#links']['edit'] = [
+          'url' => Url::fromRoute('entity.user.edit_form', ['user' => $user->uid]),
+          'title' => t('edit'),
+        ];
+        $button[$user->uid]['#links']['login-as-user'] = [
+          'url' => $account->toUrl('masquerade'),
+          'title' => t('login-as-user'),
+        ];
+        $element['#markup'] = '<a class="btn-primary" href="' . $login_link . '">Login as user</a>';
         $rows[] = [
           $user_info,
-          $login_link,
+          render($button[$user->uid]),
         ];
       }
     }
@@ -90,6 +106,30 @@ class MyTeamController extends ControllerBase {
       ],
     ];
     return $form;
+  }
+
+  /**
+   * Custom access callback for my team page.
+   */
+  public function access(AccountInterface $account, $userid) {
+    $all_members = [];
+    $request = \Drupal::request();
+    $session = $request->getSession();
+    $access = FALSE;
+    if ($session->get('view') == 'admin') {
+      $all_members = get_all_team_members(\Drupal::currentUser()->id(), $all_members);
+      if (!empty($all_members)) {
+        if (in_array($userid, $all_members) || $userid == "root") {
+          $access = TRUE;
+        }
+      }
+    }
+    if ($access) {
+      return AccessResult::allowed();
+    }
+    else {
+      return AccessResult::forbidden();
+    }
   }
 
 }

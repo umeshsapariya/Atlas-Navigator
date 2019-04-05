@@ -6,7 +6,8 @@
   font-size: 26px;
 }
 .path-frontpage {
-  .nav-tabs-custom > .tab-content {
+  .nav-tabs-custom > .tab-content,
+  .messages--error {
     display: none;
   }
 }
@@ -202,7 +203,10 @@
                     text-align: right;
                     width: 60%;
                   }
-                  @media (max-width: 35 0) {
+                  @media (max-width: 385px) {
+                    width: 50%;
+                  }
+                  @media (max-width: 350px) {
                     width: 40%;
                   }
                   a {
