@@ -111,7 +111,7 @@ if (isset($_ENV['PLATFORM_PROJECT_ENTROPY']) && empty($settings['hash_salt'])) {
   $settings['hash_salt'] = $_ENV['PLATFORM_PROJECT_ENTROPY'] . $platformsh_subsite_id;
 }
 
-/*
+
 # Platform config reader
 $platformsh = new \Platformsh\ConfigReader\Config();
 if (!$platformsh->inRuntime()) {
@@ -171,7 +171,7 @@ if ($platformsh->hasRelationship('redis') && !drupal_installation_attempted() &&
       ],
     ],
   ];
-}*/
+}
 
 
 // Configuration split based on subsite 
