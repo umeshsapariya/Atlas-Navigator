@@ -14,8 +14,7 @@
         "drupal/address": "^1.4",
         "drupal/config_split": "^1.4",
         "drupal/redis": "^1.1",
-        "platformsh/config-reader": "^2.1",
-        "drush/drush": "^9.6"
+        "platformsh/config-reader": "^2.1"
     },
     "replace": {
         "drupal/core": "^8.6"

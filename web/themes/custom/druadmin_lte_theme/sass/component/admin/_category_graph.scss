@@ -17,7 +17,7 @@
       .left_rating_section {
         float: left;
         padding-right: 10px;
-        width: 70%;
+        width: 65%;
 
         .category_name {
           border-bottom: 1px solid #ccc;
@@ -33,6 +33,26 @@
         }
         #category_details_chart {
           padding-top: 20px;
+          > div {
+            * {
+              display: inline-block;
+              font-size: 14px;
+              @media screen and (max-width: 767px) {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+        #skill_details_chart {
+          > div {
+            * {
+              display: inline-block;
+              font-size: 14px;
+              @media screen and (max-width: 767px) {
+                font-size: 12px;
+              }
+            }
+          }
         }
       }
       .right_rating_section {
@@ -45,10 +65,10 @@
           width: 100%;
         }
         &.skill_right {
-          background-color: #dbe8f0;
           background-color: transparent !important;
-          border: 0;
+          background-color: #dbe8f0;
           border: 0 !important;
+          border: 0;
           border-radius: 10px;
           border-radius: 10px;
           padding: 0 !important;
@@ -283,8 +303,8 @@
 
       .inner_wrapper {
         align-items: stretch;
-        display: flex;
         display: -ms-flexbox;
+        display: flex;
         -ms-flex-align: stretch;
         -ms-flex-direction: row;
         flex-direction: row;
@@ -332,8 +352,8 @@
           }
         }
         .common_rating {
-          display: flex;
           display: -ms-flexbox;
+          display: flex;
           -ms-flex-direction: column;
           flex-direction: column;
 
@@ -440,6 +460,9 @@
       }
     }
   }
+  .mCSB_inside > .mCSB_container {
+    margin-right: 10px;
+  }
 }
 
 
@@ -478,7 +501,7 @@
         border-bottom: none;
         border-color: #a1a1a1;
         border-right: none;
-        font-size: 12px;
+        font-size: 15px;
         padding: 17px 10px;
         width: 33.33%;
         &:first-child {

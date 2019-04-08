@@ -29,9 +29,9 @@ class AssessmentInviteForm extends FormBase {
     $user_profile = \Drupal::entityTypeManager()
       ->getStorage('profile')
       ->loadByProperties([
-        'uid' => \Drupal::currentUser()->id(),
-        'type' => 'general_profile',
-      ]);
+      'uid' => \Drupal::currentUser()->id(),
+      'type' => 'general_profile',
+    ]);
     if ($user_profile) {
       $user_profile = reset($user_profile);
       $first_name = $user_profile->get('field_first_name')->value;
@@ -53,7 +53,7 @@ class AssessmentInviteForm extends FormBase {
 
     // Get all active assessment node's title for dropdown field.
     $query = \Drupal::entityQuery('node')
-    // Published or not.
+      // Published or not.
       ->condition('status', 1)
       ->condition('type', 'assessment_form');
     $nids = $query->execute();
@@ -234,11 +234,11 @@ class AssessmentInviteForm extends FormBase {
     $uid = \Drupal::currentUser()->id();
 
     $invites_same_month = $connection->select('assessment_invite', 'ai')
-      ->fields('ai')
-      ->where('MONTH(FROM_UNIXTIME(invited_date))= MONTH(CURDATE())')
-      ->condition('role_id', $role_selected)
-      ->condition('uid', $uid)
-      ->execute()->fetchAll();
+        ->fields('ai')
+        ->where('MONTH(FROM_UNIXTIME(invited_date))= MONTH(CURDATE())')
+        ->condition('role_id', $role_selected)
+        ->condition('uid', $uid)
+        ->execute()->fetchAll();
     if ($invites_same_month) {
       $append = count($invites_same_month);
       $assessment_id = $account->get('name')->value . '-' . $role_name . '-' . date('M-y') . '-' . $append;
@@ -340,9 +340,7 @@ class AssessmentInviteForm extends FormBase {
           // Body.
           $body = 'Hi ' . $rater_name . ',<br><br>'
             . '<b>' .
-            $sender_username . '</b> has requested you to rate them for <b> ' . $role_name . '</b> role at Atlas Navigator. Click here (' . $link . ')
-
-<br><br>to take the assessment. Please note that this link will stay active till the time you submit your assessment.<br><br>
+            $sender_username . '</b> has requested you to rate them for <b> ' . $role_name . '</b> role at Atlas Navigator. Click here (' . $link . ') to take the assessment. <br><br> Please note that this link will stay active till the time you submit your assessment.<br><br>
 
 Thank you,<br>
 ' . \Drupal::config('system.site')->get('name') . ' team';

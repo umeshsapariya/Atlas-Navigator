@@ -183,7 +183,7 @@ function yorkshire_preprocess_menu(&$variables) {
     $request = \Drupal::request();
     $session = $request->getSession();
     if (!in_array('super_admin', $roles) && !in_array('administrator', $roles)) {
-      $superadmin_links = ['Learning Solution Management', 'Add Role'];
+      $superadmin_links = ['Learning Solution Management', 'Add Role', 'Respondents'];
       if (in_array($title, $superadmin_links)) {
         unset($variables['items'][$id]);
       }
@@ -196,7 +196,7 @@ function yorkshire_preprocess_menu(&$variables) {
     }
 
     if ((in_array('super_admin', $roles) || in_array('res', $roles) || in_array('administrator', $roles)) && $session->get('view') == 'admin') {
-      $learner_links = ['New Assessment', 'Assessments in Progress', 'Dashboard', 'Development Plan', 'Overall Proficiency', 'View Verbatim Comments', 'Respondents'];
+      $learner_links = ['New Assessment', 'Assessments in Progress', 'Dashboard', 'Development Plan', 'Overall Proficiency', 'View Verbatim Comments'];
       if (in_array($title, $learner_links)) {
         unset($variables['items'][$id]);
       }

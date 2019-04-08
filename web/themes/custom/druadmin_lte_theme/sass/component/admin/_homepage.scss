@@ -293,8 +293,8 @@ body.admin_custom_theme {
           &.welcome_text {
             background-color: transparent;
             border: 0;
-            padding: 0 15px;
             padding: 0;
+            padding: 0 15px;
             position: relative;
 
             @media screen and (max-width: 767px) {
@@ -362,7 +362,10 @@ body.admin_custom_theme {
                   width: 100% !important;
                   * {
                     display: inline-block;
-                    font-size: 12px;
+                    font-size: 14px;
+                    @media screen and (max-width: 767px) {
+                      font-size: 12px;
+                    }
                   }
                 }
               }
@@ -606,6 +609,9 @@ body.admin_custom_theme {
       color: #416e7f;
       font-family: $segoeui-regular;
       text-align: center;
+      @media screen and (min-width: 767px) {
+        margin-top: 10px;
+      }
     }
   }
   &.sidebar-mini {

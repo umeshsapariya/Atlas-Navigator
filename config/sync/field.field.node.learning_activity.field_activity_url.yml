@@ -1,12 +1,10 @@
-uuid: 4e2baea1-ea40-4ffa-b9f3-c792a8d0eda2
+uuid: 9c7d4693-faef-486e-b1ef-726aa1c09c2c
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_activity_url
     - node.type.learning_activity
-  module:
-    - link
 id: node.learning_activity.field_activity_url
 field_name: field_activity_url
 entity_type: node
@@ -17,7 +15,5 @@ required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings:
-  link_type: 17
-  title: 0
-field_type: link
+settings: {  }
+field_type: string

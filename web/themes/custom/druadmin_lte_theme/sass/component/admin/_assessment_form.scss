@@ -223,8 +223,8 @@
         background-color: #fff;
         float: left;
         font-family: $segoeui-regular;
-        margin-bottom: 0;
         margin-bottom: 5px;
+        margin-bottom: 0;
         padding: 8px;
         text-align: center;
         width: 80%;
@@ -350,8 +350,8 @@
       width: 100% ;
 
       .label {
-        color: $level_color;
         color: $base-color;
+        color: $level_color;
         display: inline-block;
         float: left;
         font-family: $segoeui-semibold;

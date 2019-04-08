@@ -9,6 +9,7 @@ is_admin: null
 permissions:
   - 'Atlas Role Dashboard'
   - 'access content overview'
+  - 'administer profile form display'
   - 'administer user form display'
   - 'administer users'
   - 'create assessment_form content'
@@ -19,8 +20,6 @@ permissions:
   - 'edit any learning_activity content'
   - 'edit own assessment_form content'
   - 'edit own learning_activity content'
-  - 'masquerade as any user'
-  - 'masquerade as authenticated'
   - 'masquerade as non_admin'
   - 'masquerade as res'
   - 'masquerade as super_admin'
@@ -30,3 +29,4 @@ permissions:
   - 'unpublish any node type assessment_form'
   - 'unpublish editable node type assessment_form'
   - 'unpublish own node type assessment_form'
+  - 'update any general_profile profile'

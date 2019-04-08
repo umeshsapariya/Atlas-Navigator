@@ -1,16 +1,18 @@
-uuid: be7e69bd-291b-4c82-938a-c662c26bb29a
+uuid: f27c87d2-87a6-42b2-bfd0-f99ef19734b3
 langcode: en
 status: true
 dependencies:
   module:
-    - link
     - node
 id: node.field_activity_url
 field_name: field_activity_url
 entity_type: node
-type: link
-settings: {  }
-module: link
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true

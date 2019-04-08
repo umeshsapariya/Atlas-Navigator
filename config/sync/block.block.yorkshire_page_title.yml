@@ -22,6 +22,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: "/home\r\n/begin-assessment/*\r\n/overall-proficiency-details/*\r\n/category_details/*\r\n/skill_details/*\r\n/verbatim-comments\r\n/respondents"
+    pages: "/home\r\n/begin-assessment/*\r\n/overall-proficiency-details/*\r\n/category-details/*\r\n/skill-details/*\r\n/verbatim-comments\r\n/respondents"
     negate: true
     context_mapping: {  }

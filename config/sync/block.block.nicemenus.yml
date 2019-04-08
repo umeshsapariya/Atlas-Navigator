@@ -4,6 +4,7 @@ status: true
 dependencies:
   module:
     - nice_menus
+    - user
   theme:
     - yorkshire
 id: nicemenus
@@ -22,4 +23,15 @@ settings:
   nice_menus_depth: '-1'
   nice_menus_type: right
   nice_menus_respect_expand: '1'
-visibility: {  }
+visibility:
+  user_role:
+    id: user_role
+    roles:
+      authenticated: authenticated
+      administrator: administrator
+      res: res
+      super_admin: super_admin
+      non_admin: non_admin
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'

@@ -226,7 +226,7 @@ function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
  */
 function atlas_common_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatchInterface $route_match, array $context) {
   $route_name = \Drupal::routeMatch()->getRouteName();
-  if ($route_name == "entity.node.edit_form") {
+  if ($route_name == "entity.node.edit_form" || $route_name == "entity.node.delete_form") {
     $breadcrumb_links = $breadcrumb->getLinks();
     $node = \Drupal::routeMatch()->getParameter('node');
     $breadcrumb_links[1]->setText($node->getTitle());

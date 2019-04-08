@@ -7,6 +7,7 @@ dependencies:
     - field.storage.node.field_no_of_associates
     - node.type.assessment_form
     - user.role.administrator
+    - user.role.res
     - user.role.super_admin
   module:
     - better_exposed_filters
@@ -34,6 +35,7 @@ display:
         options:
           role:
             administrator: administrator
+            res: res
             super_admin: super_admin
       cache:
         type: tag

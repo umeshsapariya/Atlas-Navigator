@@ -17,13 +17,32 @@ $(document).ready(function () {
     $('.dev_row_cont').hide();
     $('.dev_row_cont.level_' + option_value).show();
   }
-  selectvalue();
+
+
+  const dev_default_val = function () {
+    var dev_option_value = $('.right_rating_section .Opportunities td:nth-child(2)').text();
+    var level;
+    if (dev_option_value <= 1.6) {
+      level = 1;
+    } else if (dev_option_value >= 1.7 && dev_option_value <= 2.6) {
+      level = 2;
+    } else if (dev_option_value >= 2.7 && dev_option_value <= 3.6) {
+      level = 3;
+    } else if (dev_option_value >= 3.7 && dev_option_value <= 4.6) {
+      level = 4;
+    } else {
+      level = 5;
+    }
+    $(".atlas-skill-developing-plan-form select").val(level);
+    selectvalue();
+  }
+  dev_default_val();
   /* To add Mcustom Scroll - GLobal */
-  
+
   /* End add Mcustom Scroll */
 
   /* To add Scroll height as per page size - GLobal */
-  
+
   const scrollHeight = function () {
     var heightWindow = $(window).height();
 
@@ -33,7 +52,7 @@ $(document).ready(function () {
     var left_outer_section = $('.left-outer-section').height();
     $(".admin_custom_theme .content").css({"height": heightWindow});
     $(".admin_custom_theme .content .atlasnavigator_home").css({"height": heightWindow - 120});
-    $(".admin_custom_theme .content .category_details_graph").css({"height": heightWindow - 150});
+    $(".admin_custom_theme .content .category_details_graph").css({"min-height": heightWindow - 150});
     $(".admin_custom_theme .content .skill_details_outer .inner_wrapper").css({"height": heightWindow - 150});
     $(".admin_custom_theme .content .overall-proficiency-wrapper").css({"height": heightWindow - 150});
     $(".admin_custom_theme .content .role-container").css({"height": heightWindow - 150});
@@ -132,15 +151,17 @@ $(document).ready(function () {
   // });
   $(".scroll_div_content").mCustomScrollbar({
   });
-  
-if ($(window).width() > 768) {
-  $(".admin_custom_theme .content").addClass('scroll_div_content');
-  $("#overall-proficiency-right tbody").addClass('scroll_div_content');
-  $("#overall-proficiency-right tbody").addClass('scroll_div_content');
-  $(".role-container .role-tab-container tbody, .role-container .top-strengths tbody, .role-container .top-opportunities tbody").addClass('scroll_div_content');
-  
-  scrollHeight();
-}
+
+  if ($(window).width() > 768) {
+    $(".admin_custom_theme .content").addClass('scroll_div_content');
+    $("#overall-proficiency-right tbody").addClass('scroll_div_content');
+    $("#overall-proficiency-right tbody").addClass('scroll_div_content');
+    $(".role-container .role-tab-container tbody, .role-container .top-strengths tbody, .role-container .top-opportunities tbody").addClass('scroll_div_content');
+    $(".scroll_div_content").mCustomScrollbar({
+    });
+    scrollHeight();
+
+  }
 
   if ($(window).width() < 767) {
     $(".admin_custom_theme .content .atlasnavigator_home, .admin_custom_theme .content .overall-proficiency-wrapper").css({"height": "auto"});

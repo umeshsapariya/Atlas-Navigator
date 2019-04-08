@@ -39,9 +39,10 @@
 
 
 body {
+  background-color: #f0f4f7 !important;
   /*background: url(../images/backgroung.jpg) no-repeat;*/
-  background-position: bottom right;
-  background-repeat: no-repeat;
+  background-position: bottom right !important;
+  background-repeat: no-repeat !important;
   background-size: 25%;
   border: 0 none;
   color: $base-color;
@@ -50,10 +51,9 @@ body {
   @include no-margin-padding;
   transition: all .35s linear 0s;
   width: 100%;
-
   @media (max-width: 767px) {
     background-position: right bottom;
-    background-size: 325px;
+    background-size: 325px !important;
     width: 100%;
   }
   * {
@@ -99,7 +99,8 @@ body {
   }
   &.sidebar-mini.sidebar-collapse {
     .content-wrapper {
-      background: #f0f4f7;
+      /*background: #f0f4f7;*/
+      background: transparent;
       margin-left: 0 !important;
       padding-left: 50px !important;
     }
@@ -441,12 +442,14 @@ body.admin_custom_theme {
     }
   }
   .wrapper {
-    background-color: #f0f4f7;
+    /*background-color: #f0f4f7;*/
+    background-color: transparent;
     overflow-x: unset;
     overflow-y: unset;
     .content-wrapper {
+      background-color: transparent;
       .content {
-        background: #f0f4f7 url(../images/admin_back.jpg) no-repeat;
+        /*background: #f0f4f7 url(../images/admin_back.jpg) no-repeat;*/
         background-attachment: fixed;
         background-position: right;
         background-size: 80%;
@@ -518,8 +521,8 @@ body.admin_custom_theme {
     }
   }
   .label {
-    color: $base-color;
     color: $level_color;
+    color: $base-color;
     display: inline-block;
     float: left;
     font-family: $segoeui-regular;

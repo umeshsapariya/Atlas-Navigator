@@ -8,9 +8,12 @@ weight: 3
 is_admin: null
 permissions:
   - 'access user profiles'
-  - 'masquerade as any user'
-  - 'masquerade as authenticated'
+  - 'administer profile form display'
+  - 'administer user form display'
+  - 'administer users'
+  - 'masquerade as non_admin'
   - 'masquerade as res'
+  - 'update any general_profile profile'
   - 'view any general_profile profile'
   - 'view general_profile profile'
   - 'view own general_profile profile'

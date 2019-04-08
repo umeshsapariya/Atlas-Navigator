@@ -17,21 +17,23 @@ class AutocompleteController extends ControllerBase {
    */
   public function handleAutocomplete(Request $request) {
     $input = $request->query->get('q');
-    $connection = Database::getConnection();
-    $current_user_id = \Drupal::currentUser()->id();
-    // To get User ids
-    // $user_ids = [$current_user_id, 1, 5, 93];.
-    $members_uids = get_team_members_uid($current_user_id);
+
     $invite_id_query = db_select('assessment_invite', 'ai')->fields('ai', [
       'invite_id',
       'assessment_id',
-    ])
-      ->condition('assessment_id', '%' . db_like($input) . '%', 'LIKE')
-     // ->condition('uid', $current_user_id)
-      ->condition('uid', $members_uids, 'IN')
-      ->range(0, 10)
-      ->execute();
-    $invite_ids = $invite_id_query->fetchAll();
+    ]);
+    $invite_id_query->condition('assessment_id', '%' . db_like($input) . '%', 'LIKE');
+
+    $roles = \Drupal::currentUser()->getRoles();
+    if (!in_array('super_admin', $roles) && !in_array('administrator', $roles)) {
+      $current_user_id = \Drupal::currentUser()->id();
+      $members_uids = get_team_members_uid($current_user_id);
+      $invite_id_query->condition('uid', $members_uids, 'IN');
+    }
+    $invite_id_query->range(0, 10);
+
+    $invite_ids = $invite_id_query->execute()->fetchAll();
+
     if ($invite_ids) {
       foreach ($invite_ids as $invite_id) {
         $results[] = [
