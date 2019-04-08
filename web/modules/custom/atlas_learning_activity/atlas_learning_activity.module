@@ -78,7 +78,7 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
         }
 
         for ($j = $levels; $j >= 1; $j--) {
-          $level_options[$j] = $j;
+          $level_options[$levels-$j] = $j;
         }
         $form['field_activity_categories']['widget'][$key]['subform']['field_activity_level']['widget']['#options'] = $level_options;
         $form['field_activity_categories']['widget'][$key]['subform']['field_activity_category']['#validated'] = TRUE;
@@ -124,15 +124,17 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
                       if (!in_array($activity_value['target_id'], $level_activity_ids)) {
                         $level_activity_ids[] = $activity_value['target_id'];
                         $activity = Node::load($activity_value['target_id']);
-                        $url = Url::fromRoute('entity.node.edit_form', ['node' => $activity_value['target_id']]);
-                        $edit_link = Link::fromTextAndUrl($activity->getTitle(), $url);
-                        $activity_link = $edit_link->toRenderable();
-                        $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id]['field_assigned_activity_data_' . $activity_value['target_id']] = [
-                          '#markup' => render($activity_link),
-                          '#weight' => 999,
-                          '#prefix' => '<div class="assigned-activity">',
-                          '#suffix' => '</div>',
-                        ];
+                        if ($activity) {
+                          $url = Url::fromRoute('entity.node.edit_form', ['node' => $activity_value['target_id']]);
+                          $edit_link = Link::fromTextAndUrl($activity->getTitle(), $url);
+                          $activity_link = $edit_link->toRenderable();
+                          $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id]['field_assigned_activity_data_' . $activity_value['target_id']] = [
+                            '#markup' => render($activity_link),
+                            '#weight' => 999,
+                            '#prefix' => '<div class="assigned-activity">',
+                            '#suffix' => '</div>',
+                          ];
+                        }
                       }
                     }
                   }
@@ -182,7 +184,7 @@ function _activity_node_form_submit($form, FormStateInterface $form_state) {
           $skill_level_informations = $skill_para->field_skill_level_information->getValue();
           foreach ($selected_levels as $key => $levels) {
             foreach ($skill_level_informations as $id => $skill_level) {
-              if ($levels['value'] == ($id + 1)) {
+              if ($levels['value'] == ($id)) {
                 $level_activities = [];
                 $level_id = $skill_level['target_id'];
                 $level_para = Paragraph::load($level_id);
