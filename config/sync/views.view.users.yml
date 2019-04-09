@@ -29,7 +29,6 @@ display:
         options:
           role:
             administrator: administrator
-            res: res
             super_admin: super_admin
       cache:
         type: tag
