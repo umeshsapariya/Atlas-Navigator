@@ -118,11 +118,11 @@ class MyTeamController extends ControllerBase {
     $access = FALSE;
     if ($session->get('view') == 'admin') {
       $all_members = get_all_team_members(\Drupal::currentUser()->id(), $all_members);
-      if (!empty($all_members)) {
+      //if (!empty($all_members)) {
         if (in_array($userid, $all_members) || $userid == "root") {
           $access = TRUE;
         }
-      }
+     // }
     }
     if ($access) {
       return AccessResult::allowed();

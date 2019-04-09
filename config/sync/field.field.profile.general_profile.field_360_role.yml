@@ -12,7 +12,7 @@ entity_type: profile
 bundle: general_profile
 label: '360 Role'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
