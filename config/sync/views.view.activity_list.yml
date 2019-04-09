@@ -406,7 +406,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          empty: false
+          empty: true
           tokenize: true
           content:
             value: '<a class= "button button-action button--primary button--small" href="/node/add/learning_activity">New Activity</a>'
