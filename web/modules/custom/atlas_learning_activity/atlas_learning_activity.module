@@ -78,7 +78,7 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
         }
 
         for ($j = $levels; $j >= 1; $j--) {
-          $level_options[$levels-$j] = $j;
+          $level_options[$levels - $j + 1] = $j;
         }
         $form['field_activity_categories']['widget'][$key]['subform']['field_activity_level']['widget']['#options'] = $level_options;
         $form['field_activity_categories']['widget'][$key]['subform']['field_activity_category']['#validated'] = TRUE;
@@ -184,7 +184,7 @@ function _activity_node_form_submit($form, FormStateInterface $form_state) {
           $skill_level_informations = $skill_para->field_skill_level_information->getValue();
           foreach ($selected_levels as $key => $levels) {
             foreach ($skill_level_informations as $id => $skill_level) {
-              if ($levels['value'] == ($id)) {
+              if (($levels['value'] - 1) == $id) {
                 $level_activities = [];
                 $level_id = $skill_level['target_id'];
                 $level_para = Paragraph::load($level_id);
