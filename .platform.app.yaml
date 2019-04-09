@@ -9,6 +9,10 @@ name: 'app'
 # The runtime the application uses.
 type: 'php:7.2'
 
+dependencies:
+    php:
+        "drush/drush": "^8.0"
+
 #Add Redis Extension for PHP
 runtime:
     extensions:
