@@ -588,7 +588,7 @@ display:
           expose:
             label: ''
           granularity: second
-      title: ''
+      title: 'Role Management'
       header:
         area:
           id: area

@@ -397,7 +397,7 @@ display:
           expose:
             label: ''
           granularity: second
-      title: 'Activity List'
+      title: 'Learning Solution Management'
       header:
         area:
           id: area

@@ -342,3 +342,28 @@ function get_all_team_members($parentId, array &$elements) {
   }
   return FALSE;
 }
+
+/**
+ * My team page
+ * Get parent user ids for creating breacrumbs.
+ */
+function get_parent_members($member_id, array &$elements) {
+  $connection = Database::getConnection();
+  $query = $connection->select('profile', 'p');
+  $query->Join('profile__field_manager', 'pm', 'pm.entity_id = p.profile_id');
+  $query->Join('users_field_data', 'ufd', 'ufd.uid = p.uid');
+  $query->fields('pm', ['field_manager_target_id']);
+  $query->fields('ufd', ['name']);
+  $query->fields('p', ['uid']);
+  $query->condition('p.uid', $member_id);
+  $results = $query->execute()->fetchAll(PDO::FETCH_ASSOC);
+
+  if (!empty($results)) {
+    if ($results[0]['field_manager_target_id'] != \Drupal::currentUser()->id()) {
+      $elements[] = $results[0]['field_manager_target_id'];
+      get_parent_members($results[0]['field_manager_target_id'], $elements);
+    }
+  }
+
+  return array_reverse($elements, TRUE);
+}

@@ -20,7 +20,7 @@ $(document).ready(function () {
 
 
   const dev_default_val = function () {
-    var dev_option_value = $('.right_rating_section .Opportunities td:nth-child(2)').text();
+    var dev_option_value = $('.right_rating_section .tyg-table td:nth-child(2)').text();
     var level;
     if (dev_option_value <= 1.6) {
       level = 1;

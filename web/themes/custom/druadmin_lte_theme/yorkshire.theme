@@ -166,7 +166,6 @@ function yorkshire_preprocess_block(&$variables) {
 function yorkshire_preprocess_menu(&$variables) {
   $icon_setting = explode("\n", theme_get_setting('menu_icons'));
   $icons = [];
-//  ksm()
   for ($i = 0; $i < sizeof($icon_setting); $i++) {
     $icon_setting[$i] = explode('|', $icon_setting[$i]);
     if (array_key_exists($i, $icon_setting) && sizeof($icon_setting[$i]) >= 2) {
@@ -263,8 +262,33 @@ function yorkshire_preprocess_breadcrumb(&$variables) {
     $request = \Drupal::request();
     if ($route = $request->attributes->get(\Symfony\Cmf\Component\Routing\RouteObjectInterface::ROUTE_OBJECT)) {
       $variables['breadcrumb'][] = array(
-        'text' => \Drupal::service('title_resolver')->getTitle($request, $route)
+        'text' => \Drupal::service('title_resolver')->getTitle($request, $route),
       );
+    }
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    if ($route_name == 'atlas_overall_proficiency.details') {
+      $variables['breadcrumb'][2]['text'] = "Overall Proficiency";
+    }
+    if ($route_name == "atlas_common.my-team") {
+      $parameters = \Drupal::routeMatch()->getParameters();
+      $param = $parameters->get('userid');
+      if ($param != "root") {
+        $parents = [];
+        $parents = get_parent_members($param, $parents);
+        array_push($parents, $param);
+        foreach ($parents as $parent) {
+          $user_obj = User::load($parent); // pass your uid
+          $user_name = $user_obj->getUsername();
+          $variables['breadcrumb'][] = array(
+            'text' => $user_name,
+            'url' => "/my-team/" . $parent
+          );
+        }
+        end($variables['breadcrumb']);         // move the internal pointer to the end of the array
+        $key = key($variables['breadcrumb']);
+        unset($variables['breadcrumb'][$key]['url']);
+        $variables['breadcrumb'][1]['url'] = "/my-team/root";
+      }
     }
     // Change text for category details page.
     $path = \Drupal::request()->getpathInfo();
@@ -276,6 +300,11 @@ function yorkshire_preprocess_breadcrumb(&$variables) {
 
     if (isset($arg[1]) && $arg[1] == "user" && count($arg) == 4) {
       $variables['breadcrumb'][1]['text'] = 'User';
+    }
+    // Removed admin default admin/people page from breadcrum.
+    if (count($arg) == 4 && isset($arg[1]) && $arg[1] == "admin" && isset($arg[2]) && $arg[2] == "people" && isset($arg[3]) && $arg[3] == "create" ) {
+      $variables['breadcrumb'][1]['text'] = 'Users';
+      $variables['breadcrumb'][1]['url'] = '/users';
     }
   }
 }
@@ -381,16 +410,17 @@ function yorkshire_preprocess_input(&$variables) {
 function custom_form_system_theme_settings_submit(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
   $login_logo = $form_state->getValue('login_logo');
   $watermark = $form_state->getValue('watermark');
-
+  // If login logo is selected save it permanently.
+  if (isset($login_logo) && !empty($login_logo[0])) {
   /* Load the object of the file by it's fid */
-  $login_logo_file = \Drupal\file\Entity\File::load($login_logo[0]);
-  $watermark_file = \Drupal\file\Entity\File::load($watermark[0]);
-
-  /* Set the status flag permanent of the file object */
-  $login_logo_file->setPermanent();
-  $watermark_file->setPermanent();
-
-  /* Save the file in database */
-  $login_logo_file->save();
-  $watermark_file->save();
+    $login_logo_file = \Drupal\file\Entity\File::load($login_logo[0]);
+    $login_logo_gefile->setPermanent();
+    $login_logo_file->save();
+  }
+  // If watermark image is selected save it permanently.
+  if (isset($watermark) && !empty($watermark[0])) {
+    $watermark_file = \Drupal\file\Entity\File::load($watermark[0]);
+    $watermark_file->setPermanent();
+    $watermark_file->save();
+  }
 }
