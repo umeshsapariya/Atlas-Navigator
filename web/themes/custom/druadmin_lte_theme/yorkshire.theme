@@ -414,7 +414,7 @@ function custom_form_system_theme_settings_submit(&$form, \Drupal\Core\Form\Form
   if (isset($login_logo) && !empty($login_logo[0])) {
   /* Load the object of the file by it's fid */
     $login_logo_file = \Drupal\file\Entity\File::load($login_logo[0]);
-    $login_logo_gefile->setPermanent();
+    $login_logo_file->setPermanent();
     $login_logo_file->save();
   }
   // If watermark image is selected save it permanently.
