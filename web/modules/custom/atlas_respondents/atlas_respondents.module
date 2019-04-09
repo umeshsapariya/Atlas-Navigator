@@ -14,8 +14,9 @@ function atlas_respondents_mail($key, &$message, $params) {
   ];
   switch ($key) {
     case 'send_assessment_reminder':
+      $site_name = \Drupal::config('system.site')->get('name');
       $message['from'] = \Drupal::config('system.site')->get('mail');
-      $message['subject'] = $params['sender_username'] . ' wants you to rate them at Atlas Nav';
+      $message['subject'] = $params['sender_username'] . ' wants you to rate them at ' . $site_name;
       $message['body'][] = $params['message'];
       $message['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed; delsp=yes';
   }
