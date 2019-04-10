@@ -173,9 +173,9 @@ body {
       display: none;
     }
     .table {
+      border: none;
       display: flex;
       flex-wrap: wrap;
-
       &.table-striped {
         tbody {
           tr {
@@ -198,6 +198,7 @@ body {
         }
       }
       td {
+        border: none;
         padding: 0;
       }
     }
@@ -292,5 +293,8 @@ body {
         }
       }
     }
+  }
+  .form-actions {
+    text-align: right;
   }
 }

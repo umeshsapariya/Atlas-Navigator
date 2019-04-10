@@ -441,23 +441,17 @@
   /* display: inline-block;*/
 
   .dashboard-user-image {
-    /*background-image: url(../images/role_dashboard_user.png);*/
     background-size: 100%;
     border-radius: 50%;
     display: inline-block;
-    height: auto;
+    height: 60px;
     overflow: hidden;
     vertical-align: middle;
-    /*width: 25%;*/
-    /*max-width: 15%;*/
     width: 60px;
-
-    /*@media screen and (max-width: 767px) {
-      width: 20%;
+    img {
+      height: 60px;
+      width: 60px;
     }
-    @media screen and (max-width: 480px) {
-      width: 35%;
-    }*/
   }
   .dashboard-user-text {
     color: #416e7f;

@@ -1,0 +1,54 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+.skin-green {
+  &.path-frontpage,
+  &.path-user {
+    .wrapper {
+      .content-wrapper {
+        .content {
+          .main_wrapper {
+            input {
+              &.input_text {
+                border-bottom: 2px solid #6eb43e;
+              }
+            }
+            .btn {
+              #edit-actions {
+                input {
+                  background: #6eb43e;
+                }
+              }
+            }
+            .form-type-checkbox {
+              [type="checkbox"]:checked + label:before {
+                border: solid #6eb43e;
+                border-width: 0 3px 3px 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .reset_pass_wrapper {
+    .nav-tabs-custom {
+      > .nav-tabs {
+        > li {
+          &.active {
+            border-top-color: #6eb43e;
+          }
+        }
+      }
+    }
+  }
+
+  #user-pass {
+    #edit-actions {
+      .btn {
+        background: #6eb43e !important;
+      }
+    }
+  }
+}
