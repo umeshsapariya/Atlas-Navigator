@@ -35,6 +35,11 @@
         background: none !important;
       }
     }
+    li {
+      &.user-header {
+        background-color: $theme_color;
+      }
+    }
   }
   .navbar-custom-menu {
     @media screen and (max-width: 420px) {
