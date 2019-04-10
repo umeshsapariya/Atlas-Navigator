@@ -159,8 +159,22 @@ function atlas_assessment_views_pre_render(ViewExecutable $view) {
       }
       // Override nid with no of associates.
       $value->_entity->set('field_no_of_associates', $count_associates);
+     
     }
   }
+}
+
+/**
+ * Implements hook_views_pre_view().
+ */
+function atlas_assessment_views_pre_view($view, $display_id, array &$args) {
+   // To remove dropown operations for other user than sueradmin and admin.
+   if ($view->id() == "roles_list" && $view->current_display == 'page_1') {
+      $roles = \Drupal::currentUser()->getRoles();
+      if (!in_array('super_admin', $roles) && !in_array('administrator', $roles)) {
+        $view->removeHandler($display_id, 'field', 'dropbutton');
+      }
+   }
 }
 
 /*

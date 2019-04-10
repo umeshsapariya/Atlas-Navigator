@@ -296,7 +296,13 @@ class RoleDashboardForm extends FormBase {
       $query->condition('ai.invited_date', $required_date, '>=');
     }
     // $query->condition('ai.uid', 16);.
-    $query->condition('ai.uid', $members_uids, 'IN');
+    $roles = \Drupal::currentUser()->getRoles();
+    if (!in_array('super_admin', $roles) && !in_array('administrator', $roles)) {
+      $current_user_id = \Drupal::currentUser()->id();
+      $members_uids = get_team_members_uid($current_user_id);
+      $query->condition('ai.uid', $members_uids, 'IN');
+    }
+    
     $query->condition('aid.completed', 1);
     $query->condition('aid.relationship_tid', $relationship_tid);
     $query->orderBy('aid.invite_id', 'DESC');
@@ -380,8 +386,12 @@ class RoleDashboardForm extends FormBase {
     $query->fields('ai', ['uid']);
     $query->fields('aid', ['invite_id']);
     $query->condition('ai.role_id', $role_id);
-    // $query->condition('ai.uid', 16);.
-    $query->condition('ai.uid', $members_uids, 'IN');
+    $roles = \Drupal::currentUser()->getRoles();
+    if (!in_array('super_admin', $roles) && !in_array('administrator', $roles)) {
+      $current_user_id = \Drupal::currentUser()->id();
+      $members_uids = get_team_members_uid($current_user_id);
+      $query->condition('ai.uid', $members_uids, 'IN');
+    }
     $query->condition('aid.completed', 1);
     $query->condition('aid.relationship_tid', $relationship_tid);
     $query->condition('u.status', 1);
