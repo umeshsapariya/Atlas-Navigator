@@ -257,7 +257,7 @@ class RespondentList extends FormBase {
         $options = ['absolute' => TRUE];
         $assessment_link = Link::fromTextAndUrl(t('Assessment Link'), Url::fromUri('internal:/assessment-form/' . $data['assessment_hash'], ['absolute' => TRUE]))->toString();
         $params['message'] = t('Hi @rater_name,
-        <p>Gentle reminder! @enduser has requested you to rate them for @rolename role at Atlas Navigator.
+        <p>Gentle reminder! @enduser has requested you to rate them for @rolename role at @siteadmin.
         Click here @link to take the assessment.</p>
         <p>Please note that this link will stay active till the time you submit your assessment.</p>
         <p>Thank you,<br>

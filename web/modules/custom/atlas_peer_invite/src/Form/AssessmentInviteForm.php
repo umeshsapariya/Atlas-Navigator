@@ -337,13 +337,15 @@ class AssessmentInviteForm extends FormBase {
           // Link.
           $link = Link::fromTextAndUrl(t('Link'), Url::fromUri('internal:/assessment-form/' . $record['hash'], ['absolute' => TRUE]))->toString()->getGeneratedLink();
 
+          $site_name = \Drupal::config('system.site')->get('name');
+          
           // Body.
           $body = 'Hi ' . $rater_name . ',<br><br>'
             . '<b>' .
-            $sender_username . '</b> has requested you to rate them for <b> ' . $role_name . '</b> role at Atlas Navigator. Click here (' . $link . ') to take the assessment. <br><br> Please note that this link will stay active till the time you submit your assessment.<br><br>
+            $sender_username . '</b> has requested you to rate them for <b> ' . $role_name . '</b> role at' . $site_name . '. Click here (' . $link . ') to take the assessment. <br><br> Please note that this link will stay active till the time you submit your assessment.<br><br>
 
 Thank you,<br>
-' . \Drupal::config('system.site')->get('name') . ' team';
+' . $site_name . ' team';
           $params['message'] = $body;
           $params['sender_username'] = $sender_username;
 
