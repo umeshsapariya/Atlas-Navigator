@@ -93,47 +93,49 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
     foreach ($node['field_category'] as $key => $category) {
       $category_id = $category['target_id'];
       $p = Paragraph::load($category['target_id']);
-      $skills_name = $p->field_skills->getValue();
-      foreach ($skills_name as $sk_id => $skill) {
-        $sp = Paragraph::load($skill['target_id']);
-        $skills = $sp->field_skill->getValue();
-        $skill_level_informations = $sp->field_skill_level_information->getValue();
-        $skill_id = $skill['target_id'];
-        foreach ($skill_level_informations as $level_id => $skill_level) {
-          $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id] = [
-            '#type' => 'fieldset',
-            '#title' => t('Assigned Activities'),
-            "#prefix" => '<div id="assigned-activity-wrapper" class="scroll_div_content">',
-            "#suffix" => '</div>',
-            '#weight' => 999,
-            '#collapsible' => TRUE,
-            '#collapsed' => FALSE,
-          ];
-          $level_activities = [];
-          if (isset($skill_level['target_id'])) {
-            $sl = Paragraph::load($skill_level['target_id']);
-            $skill_level_id = $skill_level['target_id'];
-            if (isset($sl)) {
-              $field_level_header = $sl->field_level_header->getValue();
-              if (!empty($field_level_header[0]['value'])) {
-                $level_activities[] = $sl->field_assigned_activity->getValue();
-                foreach ($level_activities as $key1 => $value1) {
-                  $level_activity_ids = [];
-                  foreach ($value1 as $activity_index => $activity_value) {
-                    if (!empty($activity_value['target_id'])) {
-                      if (!in_array($activity_value['target_id'], $level_activity_ids)) {
-                        $level_activity_ids[] = $activity_value['target_id'];
-                        $activity = Node::load($activity_value['target_id']);
-                        if ($activity) {
-                          $url = Url::fromRoute('entity.node.edit_form', ['node' => $activity_value['target_id']]);
-                          $edit_link = Link::fromTextAndUrl($activity->getTitle(), $url);
-                          $activity_link = $edit_link->toRenderable();
-                          $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id]['field_assigned_activity_data_' . $activity_value['target_id']] = [
-                            '#markup' => render($activity_link),
-                            '#weight' => 999,
-                            '#prefix' => '<div class="assigned-activity">',
-                            '#suffix' => '</div>',
-                          ];
+      if (isset($p)) {
+        $skills_name = $p->field_skills->getValue();
+        foreach ($skills_name as $sk_id => $skill) {
+          $sp = Paragraph::load($skill['target_id']);
+          $skills = $sp->field_skill->getValue();
+          $skill_level_informations = $sp->field_skill_level_information->getValue();
+          $skill_id = $skill['target_id'];
+          foreach ($skill_level_informations as $level_id => $skill_level) {
+            $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id] = [
+              '#type' => 'fieldset',
+              '#title' => t('Assigned Activities'),
+              "#prefix" => '<div id="assigned-activity-wrapper" class="scroll_div_content">',
+              "#suffix" => '</div>',
+              '#weight' => 999,
+              '#collapsible' => TRUE,
+              '#collapsed' => FALSE,
+            ];
+            $level_activities = [];
+            if (isset($skill_level['target_id'])) {
+              $sl = Paragraph::load($skill_level['target_id']);
+              $skill_level_id = $skill_level['target_id'];
+              if (isset($sl)) {
+                $field_level_header = $sl->field_level_header->getValue();
+                if (!empty($field_level_header[0]['value'])) {
+                  $level_activities[] = $sl->field_assigned_activity->getValue();
+                  foreach ($level_activities as $key1 => $value1) {
+                    $level_activity_ids = [];
+                    foreach ($value1 as $activity_index => $activity_value) {
+                      if (!empty($activity_value['target_id'])) {
+                        if (!in_array($activity_value['target_id'], $level_activity_ids)) {
+                          $level_activity_ids[] = $activity_value['target_id'];
+                          $activity = Node::load($activity_value['target_id']);
+                          if ($activity) {
+                            $url = Url::fromRoute('entity.node.edit_form', ['node' => $activity_value['target_id']]);
+                            $edit_link = Link::fromTextAndUrl($activity->getTitle(), $url);
+                            $activity_link = $edit_link->toRenderable();
+                            $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id]['field_assigned_activity_data_' . $activity_value['target_id']] = [
+                              '#markup' => render($activity_link),
+                              '#weight' => 999,
+                              '#prefix' => '<div class="assigned-activity">',
+                              '#suffix' => '</div>',
+                            ];
+                          }
                         }
                       }
                     }
