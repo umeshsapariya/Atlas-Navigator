@@ -446,6 +446,9 @@ body.admin_custom_theme {
     background-color: transparent;
     overflow-x: unset;
     overflow-y: unset;
+    @media screen and (max-width: 767px) {
+      overflow-x: auto;
+    }
     .content-wrapper {
       background-color: transparent;
       .content {

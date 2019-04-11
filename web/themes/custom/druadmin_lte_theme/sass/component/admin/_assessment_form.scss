@@ -11,8 +11,8 @@
     width: 100%;
 
     @media screen and (max-width: 767px) {
-      border: 1px solid $border_mobile;
-      padding: 20px 10px;
+      /*border: 1px solid $border_mobile;*/
+      padding: 0;
     }
     .form-item {
       margin: 0;
@@ -23,10 +23,10 @@
       padding: 20px 0;
       width: 100%;
 
-      @media screen and (max-width: 767px) {
+      /*@media screen and (max-width: 767px) {
         border: 1px solid $border_mobile;
         padding: 20px 10px;
-      }
+      }*/
     }
     #edit-field-category-0,
     #edit-field-category-0-subform-field-skills-0 {
@@ -39,6 +39,9 @@
       right: 10px;
       top: 5px;
       width: 20px;
+      @media screen and (max-width: 767px) {
+        top: -5px;
+      }
       input {
         background-color: $theme_color;
         border: 1px solid $theme_color;
@@ -82,9 +85,9 @@
           font-family: $segoeui-semibold;
           font-weight: normal;
 
-          @media screen and (max-width: 420px) {
+          /*@media screen and (max-width: 420px) {
             font-size: 12px;
-          }
+          }*/
         }
 
         @media screen and (max-width: 767px) {
@@ -102,6 +105,9 @@
 
           @media (max-width: 1024px) {
             margin: 5px 5px 5px -3px;
+          }
+          @media (max-width: 767px) {
+            margin: 5px 5px 5px 0;
           }
         }
       }
@@ -196,7 +202,9 @@
       @media (max-width: 1024px) {
         width: 80%;
       }
-
+      @media (max-width: 767px) {
+        width: 95%;
+      }
       .form-item {
         .form-group {
           margin: 0;
@@ -291,9 +299,9 @@
         font-family: $segoeui-semibold;
         font-weight: normal;
 
-        @media screen and (max-width: 420px) {
+        /*@media screen and (max-width: 420px) {
           font-size: 12px;
-        }
+        }*/
       }
     }
     table {
@@ -369,10 +377,10 @@
         @media screen and (max-width: 767px) {
           width: 80px;
         }
-        @media screen and (max-width: 420px) {
+        /*@media screen and (max-width: 420px) {
           font-size: 12px;
           margin-right: 3px;
-        }
+        }*/
       }
       .form-control.input_text,
       .form-select.form-control {
@@ -385,12 +393,12 @@
         }
 
         @media screen and (max-width: 767px) {
-          width: 150px;
+          width: calc(100% - 100px);
         }
-        @media screen and (max-width: 420px) {
+        /*@media screen and (max-width: 420px) {
           font-size: 12px;
           width: 130px;
-        }
+        }*/
       }
       &.form-type-textfield {
         margin-bottom: 5px;
@@ -411,6 +419,9 @@
           .draggable.paragraph-type--verbatim-comments {
             display: inline-block;
             width: 60%;
+            @media (max-width: 767px) {
+              width: 100%;
+            }
             td {
               display: inline-block;
               width: 100%;

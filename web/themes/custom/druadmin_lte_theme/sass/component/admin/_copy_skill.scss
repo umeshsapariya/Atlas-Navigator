@@ -6,6 +6,9 @@
 .admin_custom_theme {
   #skill-name {
     display: inline-block;
+    @media (max-width: 767px) {
+      display: block;
+    }
   }
   .copy-skill-div {
     display: inline-block;

@@ -178,6 +178,7 @@ function _activity_node_form_submit($form, FormStateInterface $form_state) {
   if ($activity_id) {
     foreach ($form_state->getValues()['field_activity_categories'] as $key => $data) {
       if (isset($data['subform'])) {
+        $level_arr = [];
         $role_id = $data['subform']['field_activity_role'][0]['target_id'];
         $skill_id = $data['subform']['field_activity_skill'][0]['value'];
         $selected_levels = $data['subform']['field_activity_level'];
@@ -185,29 +186,60 @@ function _activity_node_form_submit($form, FormStateInterface $form_state) {
         if (isset($skill_para)) {
           $skill_level_informations = $skill_para->field_skill_level_information->getValue();
           foreach ($selected_levels as $key => $levels) {
-            foreach ($skill_level_informations as $id => $skill_level) {
-              if (($levels['value'] - 1) == $id) {
-                $level_activities = [];
-                $level_id = $skill_level['target_id'];
-                $level_para = Paragraph::load($level_id);
-                $field_level_header = $level_para->field_level_header->getValue();
-                if (!empty($field_level_header[0]['value'])) {
-                  $level_activities[] = $level_para->field_assigned_activity->getValue();
-                  foreach ($level_activities as $key1 => $value1) {
-                    $level_activity_ids = [];
-                    foreach ($value1 as $activity_index => $activity_value) {
-                      if (!empty($activity_value['target_id'])) {
-                        if (!in_array($activity_value['target_id'], $level_activity_ids)) {
-                          $level_activity_ids[] = $activity_value['target_id'];
+            if (!empty($levels['value'])) {
+              $level_arr[] = $levels['value'];
+              foreach ($skill_level_informations as $id => $skill_level) {
+                if (($levels['value'] - 1) == $id) {
+                  $level_activities = [];
+                  $level_id = $skill_level['target_id'];
+                  $level_para = Paragraph::load($level_id);
+                  $field_level_header = $level_para->field_level_header->getValue();
+                  if (!empty($field_level_header[0]['value'])) {
+                    $level_activities[] = $level_para->field_assigned_activity->getValue();
+                    foreach ($level_activities as $key1 => $value1) {
+                      $level_activity_ids = [];
+                      foreach ($value1 as $activity_index => $activity_value) {
+                        if (!empty($activity_value['target_id'])) {
+                          if (!in_array($activity_value['target_id'], $level_activity_ids)) {
+                            $level_activity_ids[] = $activity_value['target_id'];
+                          }
                         }
                       }
+                      if (!in_array($activity_id, $level_activity_ids)) {
+                        $level_activity_ids[] = $activity_id;
+                      }
+                      $level_para->set('field_assigned_activity', $level_activity_ids);
+                      $level_para->save();
                     }
-                    if (!in_array($activity_id, $level_activity_ids)) {
-                      $level_activity_ids[] = $activity_id;
-                    }
-                    $level_para->set('field_assigned_activity', $level_activity_ids);
-                    $level_para->save();
                   }
+                }
+              }
+            }
+          }
+          // Remove activity for unselected skills and at particular levels.
+          foreach ($skill_level_informations as $id => $skill_level) {
+            if (!in_array($id + 1, $level_arr)) {
+              $level_activities = [];
+              $level_id = $skill_level['target_id'];
+              $level_para = Paragraph::load($level_id);
+              $field_level_header = $level_para->field_level_header->getValue();
+              if (!empty($field_level_header[0]['value'])) {
+                $level_activities[] = $level_para->field_assigned_activity->getValue();
+                foreach ($level_activities as $key1 => $value1) {
+                  $level_activity_ids = [];
+                  foreach ($value1 as $activity_index => $activity_value) {
+                    if (!empty($activity_value['target_id'])) {
+                      if (!in_array($activity_value['target_id'], $level_activity_ids)) {
+                        $level_activity_ids[] = $activity_value['target_id'];
+                      }
+                    }
+                  }
+                  // Remove activity if unselected.
+                  if (($remove_key = array_search($activity_id, $level_activity_ids)) !== false) {
+                    unset($level_activity_ids[$remove_key]);
+                  }
+                  $level_para->set('field_assigned_activity', $level_activity_ids);
+                  $level_para->save();
                 }
               }
             }
