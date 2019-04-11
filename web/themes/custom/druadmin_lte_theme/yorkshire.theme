@@ -201,7 +201,7 @@ function yorkshire_preprocess_menu(&$variables) {
       }
     }
     else {
-      $superadmin_links = ['Learning Solution Management', 'Add Role', 'My Team', 'Users', 'Role Management'];
+      $superadmin_links = ['Learning Solution Management', 'Add Role', 'My Team', 'Users', 'Role Management', 'Respondents'];
       if (in_array($title, $superadmin_links)) {
         unset($variables['items'][$id]);
       }

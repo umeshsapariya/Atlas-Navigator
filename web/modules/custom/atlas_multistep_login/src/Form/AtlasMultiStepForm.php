@@ -169,7 +169,13 @@ class AtlasMultiStepForm extends ConfigFormBase {
       $uid = \Drupal::service('user.auth')->authenticate($name, $password);
       $user = User::load($uid);
       if (isset($user)) {
-        $form_state->setRedirect('<front>');
+        // Super Admin & Restricted Admin landing page - My Team
+        $roles = $user->getRoles();
+        if (in_array('super_admin', $roles) || in_array('res', $roles)) {
+          $form_state->setRedirect('atlas_common.my-team',['userid' => 'root']);
+        }else {
+          $form_state->setRedirect('<front>');  
+        }
         user_login_finalize($user);
       }
       else {
