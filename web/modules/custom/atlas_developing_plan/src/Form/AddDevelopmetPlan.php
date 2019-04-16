@@ -156,12 +156,12 @@ class AddDevelopmetPlan extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-  $activity_url = $form_state->getValue('url');
+    /*$activity_url = $form_state->getValue('url');
     if (isset($activity_url) && !empty($activity_url)) {
       $activity_url = strpos($activity_url, 'http') !== 0 ? "http://".$activity_url : $activity_url;
-        if(!preg_match( '/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}'.'((:[0-9]{1,5})?\\/.*)?$/i' ,$activity_url)){
-          $form_state->setErrorByName('url', t('Not a valid URL'));
-        } 
-      }
-    }
+      if(!preg_match( '/^(http|https):\\/\\/[a-z0-9_]+([\\-\\.]{1}[a-z_0-9]+)*\\.[_a-z]{2,5}'.'((:[0-9]{1,5})?\\/.*)?$/i' ,$activity_url)){
+        $form_state->setErrorByName('url', t('Not a valid URL'));
+      } 
+    }*/
   }
+}

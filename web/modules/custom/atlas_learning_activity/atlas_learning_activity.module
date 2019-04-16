@@ -17,7 +17,7 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
 
   if ($form_id == 'node_learning_activity_form' || $form_id == 'node_learning_activity_edit_form') {
     $form['#theme'] = 'learning_activity_form';
-    $form['#validate'][] = 'custom_url_validate';
+    //$form['#validate'][] = 'custom_url_validate';
     $form['#title'] = t('Activity Creator');
     unset($form['field_activity_url']['widget'][0]['uri']['#description']);
     $current_user = \Drupal::currentUser();
@@ -276,7 +276,7 @@ function getAjaxLevelsBySkill($form, FormStateInterface $form_state) {
 /**
  * Implements hook_field_widget_WIDGET_TYPE_form_alter().
  */
-function custom_url_validate($form, FormStateInterface $form_state) {
+/*function custom_url_validate($form, FormStateInterface $form_state) {
   $activity_url = $form_state->getValue('field_activity_url');
   $activity_url =  $activity_url[0]['value'];
   if ($activity_url) {
@@ -285,4 +285,4 @@ function custom_url_validate($form, FormStateInterface $form_state) {
       $form_state->setErrorByName('field_activity_url', t('Not a valid URL'));
     }
   }
-}
+}*/

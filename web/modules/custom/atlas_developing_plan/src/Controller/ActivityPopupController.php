@@ -24,9 +24,17 @@ class ActivityPopupController extends ControllerBase {
     $activity_type_id = $node->get('field_activity_type')->getValue()[0]['target_id'];
     $activity_desc = $node->get('body')->getValue()[0]['value'];
     $activity_url = $node->get('field_activity_url')->getValue()[0]['value'];
+
+    // If URL is email then append mailto otherwise change URL to proper URL path.
     if (isset($activity_url) && !empty($activity_url)) {
-      $activity_url = strpos($activity_url, 'http') !== 0 ? "http://".$activity_url : $activity_url;
+      if (filter_var($activity_url, FILTER_VALIDATE_EMAIL)) {
+        $activity_url = "mailto:".$activity_url;
+      }
+      else {
+        $activity_url = strpos($activity_url, 'http') !== 0 ? "http://".$activity_url : $activity_url;
+      }
     }
+
     $activity_type_name = '';
     if ($activity_type_id) {
       $activity_type_term = Term::load($activity_type_id);
