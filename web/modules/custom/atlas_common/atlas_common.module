@@ -9,6 +9,8 @@ use Drupal\Core\Breadcrumb\Breadcrumb;
 use Drupal\node\Entity\Node;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
 
 /**
  * Returns skills of given Role id.
@@ -229,8 +231,14 @@ function atlas_common_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatc
   if ($route_name == "entity.node.edit_form" || $route_name == "entity.node.delete_form") {
     $breadcrumb_links = $breadcrumb->getLinks();
     $node = \Drupal::routeMatch()->getParameter('node');
-    $breadcrumb_links[1]->setText($node->getTitle());
-    return $breadcrumb_links;
+    if (isset($breadcrumb_links[1])) {
+      $breadcrumb_links[1]->setText($node->getTitle());
+      $breadcrumb_links[1]->setUrl(Url::fromRoute('<nolink>'));
+      return $breadcrumb_links;
+    }
+    else {
+      $breadcrumb->addLink(Link::createFromRoute($node->getTitle(), '<nolink>'));
+    }
   }
   return $breadcrumb;
 }
