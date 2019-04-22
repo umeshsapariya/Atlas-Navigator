@@ -56,7 +56,8 @@ $(document).ready(function () {
     $(".admin_custom_theme .content .skill_details_outer .inner_wrapper").css({"height": heightWindow - 150});
     $(".admin_custom_theme .content .overall-proficiency-wrapper").css({"height": heightWindow - 150});
     $(".admin_custom_theme .content .role-container").css({"height": heightWindow - 150});
-    //$(".role-container .top-strengths tbody, .role-container .top-opportunities tbody").css({"height": height_top_strength});
+    var path_assessment_form = $('.path-assessment-form .content').height() - $('.path-assessment-form .heading_titles').outerHeight() - $('.path-assessment-form .bottom_content').outerHeight() - $('.path-assessment-form .no_of_levels').outerHeight() - $('.path-assessment-form .rating_heading').outerHeight()- $('.path-assessment-form .content-header').outerHeight();
+    $(".path-assessment-form .rating_main_wrapper .content_wrapper").css({"height": path_assessment_form - 40});
 
 
     var page_prof_content = $('.path-overall-proficiency-details .content').height();

@@ -412,6 +412,11 @@
       .field-multiple-table.responsive-enabled {
         display: inline-block;
         width: 100%;
+        thead {
+          th {
+            border: none;
+          }
+        }
         tbody {
           display: inline-block;
           width: 100%;

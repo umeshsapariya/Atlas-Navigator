@@ -42,8 +42,8 @@
     }
   }
   .navbar-custom-menu {
-    @media screen and (max-width: 420px) {
-      width: 55%;
+    @media screen and (max-width: 450px) {
+      width: auto;
     }
     .user-menu {
       padding: 0;
@@ -67,6 +67,9 @@
             span {
               display: block;
               margin-right: 10px;
+            }
+            @media screen and (max-width: 450px) {
+              display: none;
             }
           }
           &.user-designation {

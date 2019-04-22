@@ -104,8 +104,8 @@
         border: none;
         > li {
           background-color: $theme_color;
-          @include border-radius(14px);
-          padding-bottom: 0;
+          @include border-radius(20px);
+          /* padding-bottom: 0;*/
           padding-right: 26px;
         }
         .dropbutton-action {
@@ -113,12 +113,17 @@
             color: $white-color;
             font-family: $segoeui-regular;
             margin-right: 0;
-            padding: 5px 13px;
+            padding: 4px 6px 0 15px;
           }
           .ajax-progress-throbber {
             left: -25px;
             position: absolute;
             top: 3px;
+          }
+          &.remove {
+            a {
+              padding: 2px 6px 1px 5px;
+            }
           }
         }
         .dropbutton-toggle {
@@ -136,6 +141,15 @@
           color: $white-color;
           font-family: $segoeui-regular;
           padding: 3px 13px;
+        }
+      }
+    }
+  }
+  .dropbutton-single {
+    .dropbutton-action {
+      &.remove {
+        a {
+          padding: 2px 6px 1px 25px !important;
         }
       }
     }
@@ -240,7 +254,8 @@
     img {
       height: 35px;
       @media screen and (max-width: 767px) {
-        height: 20px;
+        height: 30px;
+        margin-right: 20px;
       }
     }
   }

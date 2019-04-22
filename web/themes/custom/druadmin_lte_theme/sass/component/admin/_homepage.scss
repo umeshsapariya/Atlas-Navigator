@@ -530,6 +530,9 @@ body.admin_custom_theme {
             display: inline-block;
             height: 35px;
             width: auto;
+            @media screen and (max-width: 370px) {
+              height: 25px;
+            }
           }
         }
         .act_title_details {
@@ -560,6 +563,9 @@ body.admin_custom_theme {
           padding: 5px;
           vertical-align: middle;
           width: 15%;
+          @media screen and (max-width: 370px) {
+            min-width: 60px;
+          }
           .due-btn {
             background-color: #d0cdc5;
             border-radius: 25px;
@@ -608,9 +614,10 @@ body.admin_custom_theme {
       clear: both;
       color: #416e7f;
       font-family: $segoeui-regular;
+      margin-top: 10px;
       text-align: center;
-      @media screen and (min-width: 767px) {
-        margin-top: 10px;
+      @media screen and (max-width: 767px) {
+        margin-top: 20px;
       }
     }
   }

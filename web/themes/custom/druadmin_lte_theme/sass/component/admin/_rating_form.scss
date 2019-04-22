@@ -15,25 +15,25 @@ body.path-assessment-form {
     padding-bottom: 20px;
     position: relative;
 
-    @media screen and (max-width: 1024px) {
+    /*@media screen and (max-width: 1024px) {
       padding-bottom: 125px;
-    }
+    }*/
     * {
       font-family: $segoeui-regular;
     }
     .outer_wrapper {
-      max-height: 360px;
+      /*max-height: 360px;*/
       padding: 0 60px;
 
       @media screen and (max-width: 1024px) {
         max-height: 300px;
         padding: 0 20px;
       }
-      @media screen and (max-width: 480px) {
+      /* @media screen and (max-width: 480px) {
         max-height: 250px;
         padding: 0 5px;
-      }
-      @media screen and (max-width: 340px) {
+      }*/
+      @media screen and (max-width: 767px) {
         max-height: none;
       }
       .heading_titles {
@@ -73,7 +73,7 @@ body.path-assessment-form {
           background: #fff;
           border: 1px solid #e7e7e7;
           display: inline-block;
-          max-height: 250px;
+          /*max-height: 250px;*/
           min-height: auto;
           padding-right: 5px;
           width: 100%;
@@ -185,7 +185,8 @@ body.path-assessment-form {
       padding-left: 250px;
       position: fixed;
       width: 95%;
-      @media screen and (max-width: 340px) {
+      @media screen and (max-width: 767px) {
+        margin-top: 15px;
         position: relative;
       }
       .left_section {

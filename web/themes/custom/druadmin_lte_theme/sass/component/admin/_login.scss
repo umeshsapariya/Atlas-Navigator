@@ -247,4 +247,13 @@
       }
     }
   }
+  .nav-tabs-custom {
+    & > .nav-tabs {
+      & > li {
+        @media (max-width: 340px) {
+          margin-right: 3px;
+        }
+      }
+    }
+  }
 }

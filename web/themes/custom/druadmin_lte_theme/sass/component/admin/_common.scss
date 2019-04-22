@@ -430,11 +430,11 @@ body.admin_custom_theme {
       height: 60px;
       width: auto !important;
       @media screen and (max-width: 767px) {
+        max-width: 190px !important;
         padding: 6px 5px;
-        width: 115px !important;
       }
-      @media screen and (max-width: 420px) {
-        width: 95px !important;
+      @media screen and (max-width: 450px) {
+        max-width: 190px !important;
       }
       img {
         width: 100%;
