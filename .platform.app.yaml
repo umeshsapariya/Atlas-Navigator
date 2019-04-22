@@ -102,7 +102,7 @@ mounts:
 hooks:
     # Build hooks can modify the application files on disk but not access any services like databases.
     build: |
-    curl -sS https://platform.sh/cli/installer | php
+        curl -sS https://platform.sh/cli/installer | php
     
 # Auto Backup 8 AM UTC Daily
 snapshot:
