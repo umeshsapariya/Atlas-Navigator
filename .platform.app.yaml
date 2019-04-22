@@ -105,10 +105,11 @@ hooks:
         curl -sS https://platform.sh/cli/installer | php
     
 # Auto Backup 8 AM UTC Daily
-snapshot:
-    spec: '*/10 * * * *'
-    cmd: |
-        if [ "$PLATFORM_BRANCH" = master ]; then
-            platform snapshot:create --yes --no-wait
-        fi
+crons:
+    snapshot:
+        spec: '35 9 * * *'
+        cmd: |
+            if [ "$PLATFORM_BRANCH" = master ]; then
+                platform snapshot:create --yes --no-wait
+            fi
 
