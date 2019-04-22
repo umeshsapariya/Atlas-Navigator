@@ -97,10 +97,16 @@ mounts:
     '/tmp/luckcompanies': 'shared:files/tmp-luckcompanies'
     '/private': 'shared:files/private'
     '/drush-backups': 'shared:files/drush-backups'
+
+# The hooks that will be triggered when the package is deployed.
+hooks:
+    # Build hooks can modify the application files on disk but not access any services like databases.
+    build: |
+    curl -sS https://platform.sh/cli/installer | php
     
-# Auto Backup 7 AM UTC Daily
+# Auto Backup 8 AM UTC Daily
 snapshot:
-    spec: '0 7 * * *'
+    spec: '0 8 * * *'
     cmd: |
         if [ "$PLATFORM_BRANCH" = master ]; then
             platform snapshot:create --yes --no-wait
