@@ -104,10 +104,10 @@ hooks:
     build: |
         curl -sS https://platform.sh/cli/installer | php
     
-# Auto Backup 8 AM UTC Daily
+# Auto Backup 6 AM UTC Daily
 crons:
     snapshot:
-        spec: '35 9 * * *'
+        spec: '0 6 * * *'
         cmd: |
             if [ "$PLATFORM_BRANCH" = master ]; then
                 platform snapshot:create --yes --no-wait
