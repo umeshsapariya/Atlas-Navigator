@@ -4,18 +4,22 @@ status: true
 dependencies:
   config:
     - field.field.profile.general_profile.field_360_role
+    - field.field.profile.general_profile.field_birthdate
     - field.field.profile.general_profile.field_department
     - field.field.profile.general_profile.field_employee_id
     - field.field.profile.general_profile.field_first_name
+    - field.field.profile.general_profile.field_hire_date
     - field.field.profile.general_profile.field_job_title
     - field.field.profile.general_profile.field_last_name
     - field.field.profile.general_profile.field_manager
     - field.field.profile.general_profile.field_phone
     - field.field.profile.general_profile.field_preferred_name
+    - field.field.profile.general_profile.field_role_start_date
     - field.field.profile.general_profile.field_time_zone
     - field.field.profile.general_profile.field_work_location
     - profile.type.general_profile
   module:
+    - datetime
     - telephone
     - tzfield
 id: profile.general_profile.default
@@ -31,6 +35,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
+    region: content
+  field_birthdate:
+    weight: 11
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
     region: content
   field_department:
     weight: 8
@@ -56,6 +66,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_hire_date:
+    weight: 12
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
     region: content
   field_job_title:
     weight: 4
@@ -97,6 +113,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_role_start_date:
+    weight: 13
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
     region: content
   field_time_zone:
     weight: 2

@@ -1,0 +1,8 @@
+
+atlas_user_import.user_importer:
+  path: '/admin/people/import'
+  defaults:
+    _form: '\Drupal\atlas_user_import\Form\UserImporterForm'
+    _title: 'User Importer'
+  requirements:
+    _access: 'TRUE'

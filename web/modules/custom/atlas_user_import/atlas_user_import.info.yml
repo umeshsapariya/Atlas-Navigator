@@ -1,0 +1,5 @@
+name: 'atlas User Import'
+type: module
+description: 'User Importer module'
+core: 8.x
+package: 'Custom'

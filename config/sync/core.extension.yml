@@ -2,6 +2,7 @@ module:
   admin_toolbar: 0
   admin_toolbar_tools: 0
   adminimal_admin_toolbar: 0
+  anonymous_login: 0
   atlas_assessment: 0
   atlas_clone_paragraphs: 0
   atlas_common: 0
@@ -15,6 +16,7 @@ module:
   atlas_results: 0
   atlas_role_dashboard: 0
   atlas_user: 0
+  atlas_user_import: 0
   atlas_verbatim_comments: 0
   automated_cron: 0
   better_exposed_filters: 0

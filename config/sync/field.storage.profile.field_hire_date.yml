@@ -1,0 +1,20 @@
+uuid: 7c2d1bd0-da41-4c2f-9e6e-dcb96fca2eec
+langcode: en
+status: true
+dependencies:
+  module:
+    - datetime
+    - profile
+id: profile.field_hire_date
+field_name: field_hire_date
+entity_type: profile
+type: datetime
+settings:
+  datetime_type: date
+module: datetime
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

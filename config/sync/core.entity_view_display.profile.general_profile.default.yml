@@ -4,18 +4,22 @@ status: true
 dependencies:
   config:
     - field.field.profile.general_profile.field_360_role
+    - field.field.profile.general_profile.field_birthdate
     - field.field.profile.general_profile.field_department
     - field.field.profile.general_profile.field_employee_id
     - field.field.profile.general_profile.field_first_name
+    - field.field.profile.general_profile.field_hire_date
     - field.field.profile.general_profile.field_job_title
     - field.field.profile.general_profile.field_last_name
     - field.field.profile.general_profile.field_manager
     - field.field.profile.general_profile.field_phone
     - field.field.profile.general_profile.field_preferred_name
+    - field.field.profile.general_profile.field_role_start_date
     - field.field.profile.general_profile.field_time_zone
     - field.field.profile.general_profile.field_work_location
     - profile.type.general_profile
   module:
+    - datetime
     - telephone
 id: profile.general_profile.default
 targetEntityType: profile
@@ -29,6 +33,15 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
+  field_birthdate:
+    weight: 11
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
     region: content
   field_department:
     weight: 8
@@ -53,6 +66,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_hire_date:
+    weight: 12
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
     region: content
   field_job_title:
     weight: 4
@@ -93,6 +115,15 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
+  field_role_start_date:
+    weight: 13
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
     region: content
   field_time_zone:
     weight: 2

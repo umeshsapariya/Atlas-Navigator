@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains atlas_user_import.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function atlas_user_import_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the mrw_user_import module.
+    case 'help.page.atlas_user_import':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('User Importer module') . '</p>';
+      return $output;
+
+    default:
+  }
+}

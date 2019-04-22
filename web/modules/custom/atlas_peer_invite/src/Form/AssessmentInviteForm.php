@@ -342,7 +342,7 @@ class AssessmentInviteForm extends FormBase {
           // Body.
           $body = 'Hi ' . $rater_name . ',<br><br>'
             . '<b>' .
-            $sender_username . '</b> has requested you to rate them for <b> ' . $role_name . '</b> role at' . $site_name . '. Click here (' . $link . ') to take the assessment. <br><br> Please note that this link will stay active till the time you submit your assessment.<br><br>
+            $sender_username . '</b> has requested you to rate them for <b> ' . $role_name . '</b> role at ' . $site_name . '. Click here (' . $link . ') to take the assessment. <br><br> Please note that this link will stay active till the time you submit your assessment.<br><br>
 
 Thank you,<br>
 ' . $site_name . ' team';

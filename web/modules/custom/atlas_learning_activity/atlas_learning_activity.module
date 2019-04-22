@@ -100,16 +100,21 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
           $skills = $sp->field_skill->getValue();
           $skill_level_informations = $sp->field_skill_level_information->getValue();
           $skill_id = $skill['target_id'];
+         
           foreach ($skill_level_informations as $level_id => $skill_level) {
+            $add_url = Url::fromRoute('node.add', ['node_type' => 'learning_activity']);
+            $add_link = Link::fromTextAndUrl(t('Add activity'), $add_url);
+            $add_activity_link = $add_link->toRenderable();
             $form['field_category']['widget'][$key]['subform']['field_skills']['widget'][$sk_id]['subform']['field_skill_level_information']['widget'][$level_id]['subform']['activity_wrapper_' . $level_id] = [
               '#type' => 'fieldset',
               '#title' => t('Assigned Activities'),
-              "#prefix" => '<div id="assigned-activity-wrapper" class="scroll_div_content">',
-              "#suffix" => '</div>',
+              "#prefix" => '<div id="assigned-activity-wrapper">',
+              "#suffix" => render($add_activity_link).'</div>',
               '#weight' => 999,
               '#collapsible' => TRUE,
               '#collapsed' => FALSE,
             ];
+            
             $level_activities = [];
             if (isset($skill_level['target_id'])) {
               $sl = Paragraph::load($skill_level['target_id']);
@@ -154,20 +159,20 @@ function atlas_learning_activity_form_alter(&$form, $form_state, $form_id) {
  * Implements hook_field_widget_WIDGET_TYPE_form_alter().
  */
 function atlas_learning_activity_field_widget_entity_reference_paragraphs_form_alter(&$element, &$form_state, $context) {
-  $field_definition = $context['items']->getFieldDefinition();
-  $paragraph_entity_reference_field_name = $field_definition->getName();
-  if ($paragraph_entity_reference_field_name == 'field_skill_level_information') {
-    unset($element['subform']['field_assigned_activity']['widget']);
-    $add_url = Url::fromRoute('node.add', ['node_type' => 'learning_activity']);
-    $add_link = Link::fromTextAndUrl(t('Add activity'), $add_url);
-    $add_activity_link = $add_link->toRenderable();
-    $element['subform']['activity_add_link'] = [
-      '#markup' => render($add_activity_link),
-      '#weight' => 9999,
-      '#prefix' => '<div class="add-activity-link">',
-      '#suffix' => '</div>',
-    ];
-  }
+//  $field_definition = $context['items']->getFieldDefinition();
+//  $paragraph_entity_reference_field_name = $field_definition->getName();
+//  if ($paragraph_entity_reference_field_name == 'field_skill_level_information') {
+//    unset($element['subform']['field_assigned_activity']['widget']);
+//    $add_url = Url::fromRoute('node.add', ['node_type' => 'learning_activity']);
+//    $add_link = Link::fromTextAndUrl(t('Add activity'), $add_url);
+//    $add_activity_link = $add_link->toRenderable();
+//    $element['subform']['activity_add_link'] = [
+//      '#markup' => render($add_activity_link),
+//      '#weight' => 9999,
+////      '#prefix' => '<div class="add-activity-link">',
+////      '#suffix' => '</div>',
+//    ];
+//  }
 }
 
 /**
