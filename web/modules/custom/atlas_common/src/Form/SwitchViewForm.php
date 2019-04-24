@@ -48,12 +48,13 @@ class SwitchViewForm extends FormBase {
 
     if ($session->get('view') == 'learner') {
       $session->set('view', 'admin');
+      $form_state->setRedirect('atlas_common.my-team',['userid' => 'root']);
     }
     else {
       $session->set('view', 'learner');
+      $url = Url::fromRoute('<front>');
+      $form_state->setRedirectUrl($url);
     }
-    $url = Url::fromRoute('<front>');
-    $form_state->setRedirectUrl($url);
   }
 
 }

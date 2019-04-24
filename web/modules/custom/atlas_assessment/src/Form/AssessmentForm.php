@@ -260,7 +260,7 @@ class AssessmentForm extends FormBase {
           $form['actions']['submit']['#limit_validation_errors'] = [];
         }
         else {
-          $button_label = $this->t('Save');
+          $button_label = $this->t('Submit');
         }
 
         $form['actions']['submit'] = [
@@ -341,7 +341,7 @@ class AssessmentForm extends FormBase {
 
     if (!empty($triggering_element['#is_button'])) {
       $button_value = $triggering_element['#value'];
-      if ($button_value == 'Save') {
+      if ($button_value == 'Submit') {
         $t_count = 1;
         if ($ass_data != NULL) {
           foreach ($temp as $t) {
