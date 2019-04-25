@@ -6,6 +6,11 @@
     google.charts.setOnLoadCallback(drawVisualization);
     var cat_data = drupalSettings.cat_data;
     var cat_count = cat_data.length;
+     var extra = 0;
+      if (cat_count < 4) {
+        var extra = 40;
+      }
+      var height = cat_count * 65 + extra;
     google.load("visualization", "1", {
       packages: ["corechart"]
     });
@@ -24,7 +29,6 @@
                         });
                     }
                     return info;
-                    console.log(info)
                 }
 
     $(window).on("throttledresize", function (event) {
@@ -54,7 +58,7 @@
         var options = {
         title: 'Category',
         width: '70%',
-        height: cat_count*65 + 20,
+        height: height,
         axisTitlesPosition: 'out',
         'isStacked': true,
         pieSliceText: 'percentage',
@@ -132,6 +136,11 @@
                             }
             }
         });
+
+        var cat_chart = $('#category_details_chart svg').find('rect').height();
+        var no_row = $('.right_rating_section .tyg-table tbody tr').length;
+        var table_td_height = cat_chart / no_row;
+        $('.right_rating_section .tyg-table tbody td').css({'height': table_td_height});
       });
       google.visualization.events.addListener(chart, 'onmouseover', function () { 
           // Change annotation text color

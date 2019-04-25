@@ -35,7 +35,6 @@ class UserImporterForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-
     $validators = ['file_validate_extensions' => ['csv']];
 
     $form['upload_user'] = [

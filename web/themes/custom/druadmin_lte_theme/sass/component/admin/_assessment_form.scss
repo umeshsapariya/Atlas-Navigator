@@ -5,28 +5,19 @@
 .nav-tabs-custom {
   .node-assessment-form-form,
   .node-assessment-form-edit-form {
-    /*border: 1px solid $border;*/
     display: inline-block;
     padding: 20px 30px;
     width: 100%;
-
     @media screen and (max-width: 767px) {
-      /*border: 1px solid $border_mobile;*/
       padding: 0;
     }
     .form-item {
       margin: 0;
     }
     .paragraphs-subform {
-      /*border: 1px solid $border;*/
       display: inline-block;
       padding: 20px 0;
       width: 100%;
-
-      /*@media screen and (max-width: 767px) {
-        border: 1px solid $border_mobile;
-        padding: 20px 10px;
-      }*/
     }
     #edit-field-category-0,
     #edit-field-category-0-subform-field-skills-0 {
@@ -84,10 +75,6 @@
         span {
           font-family: $segoeui-semibold;
           font-weight: normal;
-
-          /*@media screen and (max-width: 420px) {
-            font-size: 12px;
-          }*/
         }
 
         @media screen and (max-width: 767px) {
@@ -298,10 +285,6 @@
       h4.label {
         font-family: $segoeui-semibold;
         font-weight: normal;
-
-        /*@media screen and (max-width: 420px) {
-          font-size: 12px;
-        }*/
       }
     }
     table {
@@ -377,10 +360,6 @@
         @media screen and (max-width: 767px) {
           width: 80px;
         }
-        /*@media screen and (max-width: 420px) {
-          font-size: 12px;
-          margin-right: 3px;
-        }*/
       }
       .form-control.input_text,
       .form-select.form-control {
@@ -395,10 +374,6 @@
         @media screen and (max-width: 767px) {
           width: calc(100% - 100px);
         }
-        /*@media screen and (max-width: 420px) {
-          font-size: 12px;
-          width: 130px;
-        }*/
       }
       &.form-type-textfield {
         margin-bottom: 5px;

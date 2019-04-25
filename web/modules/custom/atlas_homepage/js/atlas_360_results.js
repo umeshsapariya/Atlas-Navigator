@@ -156,7 +156,7 @@
                             1: {
                                 annotations: {
                                     stem: {
-                                        length: -8
+                                        length: -10
                                     }
                                 },
                                 type: 'line',

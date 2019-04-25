@@ -89,7 +89,7 @@ class RoleDashboardForm extends FormBase {
           'type' => 'none',
         ],
       ],
-      '#default_value' => $relationship_term->tid,
+      //'#default_value' => $relationship_term->tid,
     ];
 
     $filter_by_date = [
@@ -304,7 +304,7 @@ class RoleDashboardForm extends FormBase {
     }
     
     $query->condition('aid.completed', 1);
-    $query->condition('aid.relationship_tid', $relationship_tid);
+   // $query->condition('aid.relationship_tid', $relationship_tid);
     $query->orderBy('aid.invite_id', 'DESC');
     $query->distinct();
     $user_data = $query->execute()->fetchAll();
@@ -393,7 +393,7 @@ class RoleDashboardForm extends FormBase {
       $query->condition('ai.uid', $members_uids, 'IN');
     }
     $query->condition('aid.completed', 1);
-    $query->condition('aid.relationship_tid', $relationship_tid);
+    //$query->condition('aid.relationship_tid', $relationship_tid);
     $query->condition('u.status', 1);
     $query->orderBy('aid.invite_id', 'DESC');
     $query->distinct();

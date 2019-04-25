@@ -20,7 +20,6 @@
   padding: 40px 35px;
   @media screen and (max-width: 767px) {
     padding: 10px;
-    /*height: auto !important;*/
   }
   .table {
     border: none;
@@ -105,7 +104,6 @@
         > li {
           background-color: $theme_color;
           @include border-radius(20px);
-          /* padding-bottom: 0;*/
           padding-right: 26px;
         }
         .dropbutton-action {
@@ -227,7 +225,6 @@
     }
   }
   .btn {
-    /*margin-right: 35px;*/
     padding: 6px 30px !important;
     @media screen and (max-width: 767px) {
       margin-right: 5px;
@@ -280,17 +277,8 @@
     display: none;
   }
   .form-item-date-date {
-    position: relative;
     &:after {
-      color: #1f363f;
-      content: "\e911";
-      cursor: pointer;
-      display: inline-block;
-      font-family: "icomoon";
-      pointer-events: none;
       position: absolute;
-      right: 23px;
-      top: 7px;
     }
   }
 }

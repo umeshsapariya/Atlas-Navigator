@@ -241,19 +241,12 @@
               width: 100%;
 
               .text {
-                /* align-items: center;
-                  display: flex;*/
-                /*display: inline-block;*/
                 font-family: $segoeui-semibold;
                 font-size: 16px;
-                /*width: 60%;*/
                 line-height: 16px;
-                /*width: 55%;*/
                 text-align: center;
-                /* margin-left: 2%;*/
                 text-transform: capitalize;
                 vertical-align: middle;
-
                 @media only screen and (max-width: 1024px) {
                   font-size: 13px;
                 }
@@ -268,12 +261,10 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                /*padding: 10px;*/
                 width: 49%;
 
                 .total_no {
                   color: #00aeef;
-                  /*display: inline-block;*/
                   font-family: $segoeui-bold;
                   font-size: 35px;
                   line-height: 30px;
@@ -289,12 +280,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                /* display: flex;
-                  display: -ms-flexbox;
-                  -ms-flex-direction: column;*/
-                /*float: right;*/
                 margin-left: 2%;
-                /*padding: 10px;*/
                 width: 49%;
 
                 .image_area {
@@ -323,7 +309,6 @@
             }
             .table-responsive {
               margin-bottom: 0;
-              /*height: 100%;*/
               .mCSB_inside > .mCSB_container {
                 margin-right: 10px;
               }
@@ -438,8 +423,6 @@
 }
 
 .dashboard-user-info {
-  /* display: inline-block;*/
-
   .dashboard-user-image {
     background-size: 100%;
     border-radius: 50%;

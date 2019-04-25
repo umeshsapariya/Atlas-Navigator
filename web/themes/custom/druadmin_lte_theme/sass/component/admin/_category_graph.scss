@@ -3,7 +3,6 @@
 
 // Note: !important used to override other css file.
 
-.path-category-details,
 .path-category-details {
   .category_graph {
     background-color: #fff;
@@ -498,17 +497,19 @@
       width: 100%;
       > th,
       > td {
+        align-items: center;
         border-bottom: none;
         border-color: #a1a1a1;
         border-right: none;
+        display: flex;
         font-size: 15px;
+        justify-content: center;
         padding: 6% 10px;
         width: 33.33%;
         &:first-child {
           border-left: none;
         }
         &:last-child {
-          /*border-bottom-right-radius: 4px;*/
           color: #fff;
         }
       }

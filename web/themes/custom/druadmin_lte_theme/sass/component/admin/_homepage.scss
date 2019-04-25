@@ -17,7 +17,6 @@ body.admin_custom_theme {
 
       .outer_wrapper {
         display: flex;                 /* nested flex container */
-        /*display: inline-block;*/
         flex-direction: column;
         float: left;
         width: 59%;
@@ -33,7 +32,6 @@ body.admin_custom_theme {
           display: inline-block;
           height: 100%;
           margin-bottom: 1%;
-          /*min-height: 250px;*/
           padding: 0 2%;
           transition: min-height .3s ease-out;
 
@@ -103,18 +101,7 @@ body.admin_custom_theme {
               width: 100%;
             }
             .results-360-homepage-block {
-              /*min-height: 350px;*/
               position: relative;
-              /*@media screen and (min-width: 768px) and (max-width: 1024px) {
-                min-height: 320px;
-              }*/
-
-              /*@media screen and (max-width: 1024px) {
-                min-height: 280px;
-              }*/
-              /*@media screen and (max-width: 767px) {
-                min-height: auto;
-              }*/
               #user-name {
                 color: #416e7f;
                 display: inline-block;
@@ -125,7 +112,6 @@ body.admin_custom_theme {
               }
               .btn_wrapper {
                 align-items: center;
-                /*bottom: 15px;*/
                 display: flex;
                 justify-content: center;
                 left: 0;
@@ -353,9 +339,6 @@ body.admin_custom_theme {
               margin: 0 auto;
               position: relative;
               #chart_div {
-                /*height: 350px;*/
-                /*overflow-x: hidden;
-                overflow-y: auto;*/
                 width: 100%;
                 > div {
                   display: inline-block;

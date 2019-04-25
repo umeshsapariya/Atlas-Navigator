@@ -19,6 +19,7 @@ $(document).ready(function () {
   }
 
 
+
   const dev_default_val = function () {
     var dev_option_value = $('.right_rating_section .tyg-table td:nth-child(2)').text();
     var level;
@@ -153,7 +154,7 @@ $(document).ready(function () {
   $(".scroll_div_content").mCustomScrollbar({
   });
 
-  if ($(window).width() > 768) {
+  if ($(window).width() > 767) {
     $(".admin_custom_theme .content").addClass('scroll_div_content');
     $("#overall-proficiency-right tbody").addClass('scroll_div_content');
     $("#overall-proficiency-right tbody").addClass('scroll_div_content');
@@ -164,7 +165,7 @@ $(document).ready(function () {
 
   }
 
-  if ($(window).width() < 767) {
+  if ($(window).width() < 768) {
     $(".admin_custom_theme .content .atlasnavigator_home, .admin_custom_theme .content .overall-proficiency-wrapper").css({"height": "auto"});
     $(".admin_custom_theme .content .category_details_graph").css({"height": "auto", "padding-bottom": "30px"});
     $(".admin_custom_theme .content .skill_details_outer .inner_wrapper").css({"height": "auto", "padding-bottom": "30px"});
