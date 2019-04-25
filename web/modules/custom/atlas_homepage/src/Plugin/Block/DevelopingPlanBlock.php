@@ -9,6 +9,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Link;
 use Drupal\taxonomy\Entity\Term;
 use Drupal\file\Entity\File;
+use Drupal\Component\Serialization\Json;
 
 /**
  * Provides a 'Developing Plan Homepage' Block.
@@ -86,9 +87,16 @@ class DevelopingPlanBlock extends BlockBase {
                 ],
               ],
             ];
-            $activity_url = $activity_url_arr[0]['value'];
-            $activity_url = strpos($activity_url, 'http') !== 0 ? "http://".$activity_url : $activity_url;
-            $activity_url_obj = Url::fromUri($activity_url, $options);
+            //$activity_url = $activity_url_arr[0]['value'];
+            //$activity_url_obj = Url::fromUri($activity_url, $options);
+            $activity_url_obj = Url::fromRoute('development-plan.activity_popup', ['activity_id' => $assigned_activity]);
+            $activity_url_obj->setOptions([
+              'attributes' => [
+                'class' => ['use-ajax', 'button', 'button--small'],
+                'data-dialog-type' => 'modal',
+                'data-dialog-options' => Json::encode(['width' => 400]),
+              ],
+            ]);
             $activity_title = Link::fromTextAndUrl($activity_title, $activity_url_obj)->toString();
           }
           // Activity icon.
@@ -131,7 +139,7 @@ class DevelopingPlanBlock extends BlockBase {
       '#progress_button' => $form['in-progress'],
       '#complete_button' => $form['completed'],
       '#attached' => [
-        'library' => ['atlas_homepage/atlas_homepage_developing_plan'],
+        'library' => ['atlas_homepage/atlas_homepage_developing_plan', 'core/drupal.dialog.ajax'],
       ],
     ];
 

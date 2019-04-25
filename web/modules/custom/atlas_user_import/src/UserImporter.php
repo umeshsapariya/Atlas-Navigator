@@ -152,15 +152,24 @@ class UserImporter {
           }
           if($key == 15) {
             $birthdate_temp = str_replace('/', '-', $val);
-            $birthdate = format_date(strtotime($birthdate_temp), 'custom', 'Y-m-d');
+            $birthdate_time = strtotime($birthdate_temp);
+            if (is_numeric($birthdate_time)) {
+              $birthdate = format_date($birthdate_time, 'custom', 'Y-m-d');
+            }
           }
           if($key == 16) {
             $hiredate_temp = str_replace('/', '-', $val);
-            $hiredate = format_date(strtotime($hiredate_temp), 'custom', 'Y-m-d');
+            $hiredate_time = strtotime($hiredate_temp);
+            if (is_numeric($hiredate_time)) {
+            $hiredate = format_date($hiredate_time, 'custom', 'Y-m-d');
+            }
           }
           if($key == 17) {
             $role_start_date_temp = str_replace('/', '-', $val);
-            $role_start_date = format_date(strtotime($role_start_date_temp), 'custom', 'Y-m-d');
+            $role_start_date_time = strtotime($role_start_date_temp);
+            if (is_numeric($role_start_date_time)) {
+            $role_start_date = format_date($role_start_date_time, 'custom', 'Y-m-d');
+            }
           }
         }
         //Optional settings
@@ -187,7 +196,7 @@ class UserImporter {
             if (isset($role_id) && $role_id != '') {
               $profile_array['field_360_role'] = $role_id;
             }
-            if (isset($managerid) && $managerid != '') {
+            if (isset($managerid) && $managerid != '' && $managerid != 0) {
               $profile_array['field_manager'] = $managerid;
             }
             if (isset($dept_tid) && $dept_tid != '') {
@@ -196,13 +205,13 @@ class UserImporter {
             if (isset($timezone) && $timezone != '') {
               $profile_array['field_time_zone'] = $timezone;
             }
-            if (isset($birthdate) && $birthdate != '') {
+            if (isset($birthdate) && $birthdate != '' && validateDate($birthdate, 'Y-m-d')) {
               $profile_array['field_birthdate'] = $birthdate;
             }
-            if (isset($hiredate) && $hiredate != '') {
+            if (isset($hiredate) && $hiredate != '' && validateDate($hiredate, 'Y-m-d')) {
               $profile_array['field_hire_date'] = $hiredate;
             }
-            if (isset($role_start_date) && $role_start_date != '') {
+            if (isset($role_start_date) && $role_start_date != '' && validateDate($role_start_date, 'Y-m-d')) {
               $profile_array['field_role_start_date'] = $role_start_date;
             }
             
@@ -293,8 +302,11 @@ class UserImporter {
             $manager = reset($users);
             if ($manager) {
               $managerid = $manager->id();
+              if (isset($managerid) && $managerid != '' && $managerid != 0) {
+                $activeProfile->field_manager->target_id = $managerid;
+
+              }
             }
-            $activeProfile->field_manager->target_id = $managerid;
           }
 
           if($key == 7) {
@@ -320,24 +332,37 @@ class UserImporter {
             $activeProfile->field_phone->value = $val;
           }
 
-//          if($key == 15) {
-//            $birthdate_temp = str_replace('/', '-', $val);
-//            $birthdate = format_date(strtotime($birthdate_temp), 'custom', 'Y-m-d');
-//          }
-//          if($key == 16) {
-//            $hiredate_temp = str_replace('/', '-', $val);
-//            $hiredate = format_date(strtotime($hiredate_temp), 'custom', 'Y-m-d');
-//          }
-//          if($key == 17) {
-//            $role_start_date_temp = str_replace('/', '-', $val);
-//            $role_start_date = format_date(strtotime($role_start_date_temp), 'custom', 'Y-m-d');
-//          }
+        if($key == 15) {
+            $birthdate_temp = str_replace('/', '-', $val);
+            $birthdate_time = strtotime($birthdate_temp);
+            if (is_numeric($birthdate_time)) {
+              $birthdate = format_date($birthdate_time, 'custom', 'Y-m-d');
+              $activeProfile->field_birthdate->value = $birthdate;
+            }
+            
+          }
+          if($key == 16) {
+            $hiredate_temp = str_replace('/', '-', $val);
+            $hiredate_time = strtotime($hiredate_temp);
+            if (is_numeric($hiredate_time)) {
+            $hiredate = format_date($hiredate_time, 'custom', 'Y-m-d');
+            $activeProfile->field_hire_date->value = $hiredate;
+            }
+          }
+          if($key == 17) {
+            $role_start_date_temp = str_replace('/', '-', $val);
+            $role_start_date_time = strtotime($role_start_date_temp);
+            if (is_numeric($role_start_date_time)) {
+            $role_start_date = format_date($role_start_date_time, 'custom', 'Y-m-d');
+            $activeProfile->field_role_start_date->value = $role_start_date;
+            }
+          }
          
         }
          $existingUser->save();
          $activeProfile->save();
          $results[] = $existingUserID;
-         drupal_set_message("User with uid ".$existingUserID." is updasted");
+         drupal_set_message("User with uid ".$existingUserID." is updated");
         
       }
     }

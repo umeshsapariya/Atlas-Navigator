@@ -5,6 +5,7 @@ namespace Drupal\atlas_common\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * ModalForm class.
@@ -33,6 +34,12 @@ class SwitchViewForm extends FormBase {
       $form['actions']['submit']['#value'] = t('Switch to Admin View');
     }
     else {
+      $path = \Drupal::service('path.current')->getPath();
+      $path_alias = \Drupal::service('path.alias_manager')->getAliasByPath($path);
+      if($path_alias == "/home") {
+        return new RedirectResponse(URL::fromUserInput('/my-team/root')->toString());
+        exit();
+      }
       $form['actions']['submit']['#value'] = t('Switch to Learner View');
     }
 

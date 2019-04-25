@@ -59,6 +59,7 @@
         title: 'Category',
         width: '70%',
         height: height,
+         titlePosition: 'none',
         axisTitlesPosition: 'out',
         'isStacked': true,
         pieSliceText: 'percentage',
@@ -80,9 +81,6 @@
                 min: 0
               }, ticks: [0, 1, 2, 3, 4, 5],},
         vAxis: {textStyle: {color: '#416e7f', fontSize: 13}},
-        //  width: $('.outer_wrapper').width()*0.85,
-        // height: $('.outer_wrapper').height()*0.75,
-        // chartArea:{width:'60%',height:'auto'},
         seriesType: 'bars',
         bar: {groupWidth: "20"},
         annotations: {
