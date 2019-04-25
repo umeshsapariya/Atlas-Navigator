@@ -344,7 +344,7 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          operator: starts
+          operator: word
           value: ''
           group: 1
           exposed: true
@@ -424,7 +424,7 @@ display:
           empty: true
           tokenize: false
           content:
-            value: 'No activities has created.'
+            value: 'No Activity Found.'
             format: basic_html
           plugin_id: text
       relationships: {  }
