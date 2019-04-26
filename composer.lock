@@ -96,16 +96,16 @@
         },
         {
             "name": "chi-teck/drupal-code-generator",
-            "version": "1.29.0",
+            "version": "1.29.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Chi-teck/drupal-code-generator.git",
-                "reference": "79768f0c9a50337ecce81de1fdfa48d837b9b341"
+                "reference": "f1da0370113ee246cd8f6d744d4835e8d53ea61c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Chi-teck/drupal-code-generator/zipball/79768f0c9a50337ecce81de1fdfa48d837b9b341",
-                "reference": "79768f0c9a50337ecce81de1fdfa48d837b9b341",
+                "url": "https://api.github.com/repos/Chi-teck/drupal-code-generator/zipball/f1da0370113ee246cd8f6d744d4835e8d53ea61c",
+                "reference": "f1da0370113ee246cd8f6d744d4835e8d53ea61c",
                 "shasum": ""
             },
             "require": {
@@ -137,7 +137,7 @@
                 "GPL-2.0-or-later"
             ],
             "description": "Drupal code generator",
-            "time": "2019-04-13T14:36:40+00:00"
+            "time": "2019-04-26T08:30:10+00:00"
         },
         {
             "name": "commerceguys/addressing",
@@ -2065,7 +2065,7 @@
                 },
                 "drupal": {
                     "version": "8.x-1.26",
-                    "datestamp": "1549559402",
+                    "datestamp": "1549218480",
                     "security-coverage": {
                         "status": "covered",
                         "message": "Covered by Drupal's security advisory policy"
@@ -2223,7 +2223,7 @@
             "description": "Drupal administration theme with modern minimalist design.",
             "homepage": "https://www.drupal.org/project/adminimal_theme",
             "support": {
-                "source": "https://git.drupalcode.org/project/adminimal_theme",
+                "source": "http://cgit.drupalcode.org/adminimal_theme",
                 "issues": "https://www.drupal.org/project/issues/adminimal_theme"
             }
         },
@@ -3118,14 +3118,6 @@
                 {
                     "name": "RenatoG",
                     "homepage": "https://www.drupal.org/user/3326031"
-                },
-                {
-                    "name": "diamondsea",
-                    "homepage": "https://www.drupal.org/user/430714"
-                },
-                {
-                    "name": "hmartens",
-                    "homepage": "https://www.drupal.org/user/622826"
                 },
                 {
                     "name": "loopduplicate",
@@ -4253,7 +4245,7 @@
             "description": "Provides a user interface for the Token API and some missing core tokens.",
             "homepage": "https://www.drupal.org/project/token",
             "support": {
-                "source": "https://git.drupalcode.org/project/token"
+                "source": "http://cgit.drupalcode.org/token"
             }
         },
         {
