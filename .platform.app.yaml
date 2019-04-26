@@ -104,7 +104,6 @@ hooks:
     build: |
         curl -sS https://platform.sh/cli/installer | php
         
-hooks:
     # The deploy hook runs after your application has been deployed and started.
     deploy: |
         set -e
