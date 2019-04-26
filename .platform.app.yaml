@@ -95,6 +95,7 @@ mounts:
     '/web/sites/luckcompanies/files': 'shared:files/files-luckcompanies'
     '/tmp': 'shared:files/tmp'
     '/tmp/luckcompanies': 'shared:files/tmp-luckcompanies'
+    '/.drush': 'shared:files/.drush'
     '/private': 'shared:files/private'
     '/drush-backups': 'shared:files/drush-backups'
 
