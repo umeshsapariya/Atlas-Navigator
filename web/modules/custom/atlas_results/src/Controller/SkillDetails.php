@@ -37,7 +37,6 @@ class SkillDetails extends ControllerBase {
     $query->condition('asd.category_id', $category_id);
     $query->condition('asd.skill_id', $skill_id);
     $query->condition('asd.score', 0, '>');
-    $query->condition('ai.uid', $current_user_id);
     $query->condition('aid.completed', 1);
     $raters_skill_data = $query->execute()->fetchAll();
     $relationship_tid = get_self_relationship_tid();
