@@ -156,6 +156,7 @@ class AssessmentForm extends FormBase {
                   "level-" . $this->step => $default_value,
                 ]);
                 $form['level-' . $this->step] = [
+                  '#title' => t(''),
                   '#type' => 'radios',
                   '#options' => $level_options,
                   '#prefix' => $markup,
@@ -304,6 +305,10 @@ class AssessmentForm extends FormBase {
     $comment_count = $form_state->get('comment_count');
     // Save form data.
     $level_value = $form_state->getValue("level-" . $this->step);
+    if ($level_value == FALSE && $triggering_element['#value'] == 'Next') {
+      $form_state->setErrorByName('level-'.$this->step, t('Please select at least one option to proceed.'));
+      $form_state->setRebuild(TRUE);
+    }
     $category_value = $form_state->getValue("category-" . $this->step);
     $skill_value = $form_state->getValue("skill-" . $this->step);
     $form_state->setFormState([
