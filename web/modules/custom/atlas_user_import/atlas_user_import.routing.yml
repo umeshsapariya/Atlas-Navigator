@@ -5,4 +5,4 @@ atlas_user_import.user_importer:
     _form: '\Drupal\atlas_user_import\Form\UserImporterForm'
     _title: 'User Importer'
   requirements:
-    _role: 'administrator'
+    _role: 'administrator+super_admin'

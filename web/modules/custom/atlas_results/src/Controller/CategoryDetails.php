@@ -22,6 +22,7 @@ class CategoryDetails extends ControllerBase {
    */
   public function display($assessment_id = NULL, $category_id = NULL) {
     global $base_url;
+    $element = [];
     $connection = Database::getConnection();
     $current_user_id = \Drupal::currentUser()->id();
     $connection = Database::getConnection();
@@ -39,6 +40,8 @@ class CategoryDetails extends ControllerBase {
     $query->condition('asd.score', 0, '>');
     $query->condition('aid.completed', 1);
     $raters_skill_data = $query->execute()->fetchAll();
+    //echo '<pre>';print_r($raters_skill_data);exit;
+    if (!empty($raters_skill_data)) {
     $uid = $raters_skill_data[0]->uid;
 
     $user = User::load($uid);
@@ -51,7 +54,6 @@ class CategoryDetails extends ControllerBase {
     $others_score = [];
     $self_score = [];
     $category_wise_ratings_others = [];
-    if (!empty($raters_skill_data)) {
       foreach ($raters_skill_data as $rater_skill) {
         $category_wise_ratings[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
         if ($rater_skill->relationship_tid != $relationship_tid) {
@@ -122,7 +124,7 @@ class CategoryDetails extends ControllerBase {
       $category_skill_paragraph_ref = Paragraph::load($category_id);
       $category_name = $category_skill_paragraph_ref->field_new_category->getValue();
       $category_name = $category_name[0]['value'];
-    }
+
     $element = [
       '#theme' => 'category_details',
       '#category_details' => $category_details,
@@ -137,6 +139,10 @@ class CategoryDetails extends ControllerBase {
     ];
     $element['#attached']['drupalSettings']['cat_data'] = $cat_data;
     return $element;
+    } else {
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
+    
   }
 
 }

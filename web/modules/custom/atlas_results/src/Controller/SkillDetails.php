@@ -39,6 +39,7 @@ class SkillDetails extends ControllerBase {
     $query->condition('asd.score', 0, '>');
     $query->condition('aid.completed', 1);
     $raters_skill_data = $query->execute()->fetchAll();
+    if (!empty($raters_skill_data)) {
     $relationship_tid = get_self_relationship_tid();
     $uid = $raters_skill_data[0]->uid;
     $user = User::load($uid);
@@ -46,7 +47,7 @@ class SkillDetails extends ControllerBase {
     if ($user) {
       $default_username = $user->getUsername();
     }
-    if (!empty($raters_skill_data)) {
+    
       foreach ($raters_skill_data as $rater_skill) {
         $category_wise_ratings[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
         if ($rater_skill->relationship_tid != $relationship_tid) {
@@ -132,7 +133,7 @@ class SkillDetails extends ControllerBase {
         $rel_data[$rel_count][] = floatval($skill_details[$skill_id]['target_prof']);
       }
       $skill_details = $skill_details[$skill_id];
-    }
+    
     // For skill popup.
     $skillblock = \Drupal::service('plugin.manager.block')->createInstance('skill_popup', []);
     if (isset($skillblock) && !empty($skillblock)) {
@@ -153,6 +154,10 @@ class SkillDetails extends ControllerBase {
     ];
     $element['#attached']['drupalSettings']['rel_data'] = $rel_data;
     return $element;
+  }
+    else {
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException();
+    }
   }
 
 }

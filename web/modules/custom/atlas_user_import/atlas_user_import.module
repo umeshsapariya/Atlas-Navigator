@@ -22,3 +22,23 @@ function atlas_user_import_help($route_name, RouteMatchInterface $route_match) {
     default:
   }
 }
+
+/**
+ * Custom function to validate date in Y-m-d format.
+ */
+function validateDate($date, $format = 'Y-m-d') {
+  $d = DateTime::createFromFormat($format, $date);
+  return $d && $d->format($format) == $date;
+}
+
+/**
+ * Custom function to get allowed terms.
+ */
+function Allowedterms($vid) {
+  $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
+
+  foreach ($terms as $term) {
+    $allowed_term[] = $term->name;
+  }
+  return $allowed_term;
+}
