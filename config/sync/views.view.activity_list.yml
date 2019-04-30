@@ -424,7 +424,7 @@ display:
           empty: true
           tokenize: false
           content:
-            value: 'No Activity Found.'
+            value: 'No activities were returned from your search.'
             format: basic_html
           plugin_id: text
       relationships: {  }

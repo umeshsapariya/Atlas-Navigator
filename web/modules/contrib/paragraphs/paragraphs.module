@@ -362,7 +362,8 @@ function paragraphs_preprocess_field_multiple_value_form(&$variables) {
     }
 
     // Add the paragraph type as a class to every row.
-    if (isset($variables['element']['#paragraphs_widget'])) {
+    // if (isset($variables['element']['#paragraphs_widget'])) {
+    if (isset($variables['element'][0]['#paragraph_type'])) {
       foreach ($variables['table']['#rows'] as $key => $row) {
         if (isset($row['data'][1]['data']['#paragraph_type'])) {
           $variables['table']['#rows'][$key]['class'][] = 'paragraph-type--' . str_replace('_', '-', $row['data'][1]['data']['#paragraph_type']);
