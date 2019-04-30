@@ -39,7 +39,8 @@ class DevelopingPlanBlock extends BlockBase {
     $development_plan = [];
     $query = \Drupal::entityQuery('node')
       ->condition('type', 'developing_plan')
-      ->condition('field_assigned_user', \Drupal::currentUser()->id());
+      ->condition('field_assigned_user', \Drupal::currentUser()->id())
+      ->sort('field_due_date', 'ASC');
     $development_nids = $query->execute();
     if ($development_nids) {
       foreach ($development_nids as $nid) {

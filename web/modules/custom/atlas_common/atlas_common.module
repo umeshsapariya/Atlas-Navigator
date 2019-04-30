@@ -48,7 +48,7 @@ function get360Score($skills_data) {
       $num_of_relation = count($skills_data[$skill_name]);
     }
     $score = $relation_sum_value / $num_of_relation;
-    $score_360[$skill_name] = floor($score * 2) / 2;
+    $score_360[$skill_name] = number_format($score,1);
   }
   return $score_360;
 }
