@@ -210,9 +210,26 @@
       display: inline-block;
       float: right;
       max-height: 270px;
+      position: relative;
       width: 25%;
       @media screen and (max-width: 767px) {
         width: 100% !important;
+      }
+      > a {
+        background-color: #fff;
+        display: block;
+        margin-bottom: 2px;
+        padding: 8px;
+        position: absolute;
+        text-align: center;
+        top: 235px;
+        width: 80%;
+        @media screen and (max-width: 767px) {
+          margin: 0 auto;
+          max-width: 300px;
+          position: relative;
+          top: 0;
+        }
       }
       legend {
         background-color: #fff;
@@ -223,14 +240,28 @@
         padding: 8px;
         text-align: center;
         width: 80%;
+        @media screen and (max-width: 767px) {
+          float: none;
+          max-width: 300px;
+        }
       }
       .fieldset-wrapper {
+        clear: both;
+        max-height: 195px;
+        overflow-y: scroll;
+        @media screen and (max-width: 767px) {
+          max-height: none;
+        }
         .assigned-activity {
           background-color: #fff;
-          margin-bottom: 2px;
+          margin-bottom: 3px;
           padding: 8px;
           text-align: center;
           width: 80%;
+          @media screen and (max-width: 767px) {
+            margin: 0 auto 2px;
+            max-width: 300px;
+          }
           a {
             font-family: $segoeui-regular;
           }
