@@ -37,8 +37,11 @@ class SwitchViewForm extends FormBase {
       $path = \Drupal::service('path.current')->getPath();
       $path_alias = \Drupal::service('path.alias_manager')->getAliasByPath($path);
       if($path_alias == "/home") {
-        return new RedirectResponse(URL::fromUserInput('/my-team/root')->toString());
-        exit();
+        $query_params = \Drupal::request()->query->get('type');
+        if (!$query_params) {
+          return new RedirectResponse(URL::fromUserInput('/my-team/root')->toString());
+          exit();
+        }
       }
       $form['actions']['submit']['#value'] = t('Switch to Learner View');
     }

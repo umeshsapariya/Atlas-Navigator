@@ -205,9 +205,16 @@ function yorkshire_preprocess_menu(&$variables) {
     }
 
     if ((in_array('super_admin', $roles) || in_array('res', $roles) || in_array('administrator', $roles)) && $session->get('view') == 'admin') {
-      $learner_links = ['New Assessment', 'Assessments in Progress', 'Dashboard', 'Development Plan', 'Overall Proficiency', 'View Verbatim Comments'];
+      $learner_links = ['New Assessment', 'Assessments in Progress', 'Development Plan', 'Overall Proficiency', 'View Verbatim Comments'];
       if (in_array($title, $learner_links)) {
         unset($variables['items'][$id]);
+      }
+      // For Admin View, Extra query parameter added to Dashboard link to redirect admins to Dashboard.
+      if ($title == 'Dashboard') {
+        $dashboard_url = $variables['items'][$id]['url'];
+        $url_args['type'] = 'admin_dashboard';
+        $dashboard_url->setOptions(array('query' => $url_args));
+        $variables['items'][$id]['url'] = $dashboard_url;
       }
     }
     else {
