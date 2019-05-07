@@ -39,9 +39,13 @@ body.path-assessment-form {
           font-size: 16px;
         }
         .skill {
-          float: right;
+          display: inline-block;
           font-size: 16px;
           font-style: italic;
+          margin-left: 5px;
+          &:before {
+            content: " > ";
+          }
         }
       }
       .rating_main_wrapper {

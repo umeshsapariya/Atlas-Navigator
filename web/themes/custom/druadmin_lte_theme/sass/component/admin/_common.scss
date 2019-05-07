@@ -862,3 +862,36 @@ input[type="date"]::-webkit-clear-button {
     }
   }
 }
+
+.ui-autocomplete {
+  max-width: 500px !important;
+  li.ui-menu-item {
+    height: 30px;
+    &:hover,
+    &:focus,
+    &:active,
+    &:visited {
+      background: $theme_color;
+      border-color: $theme_color;
+      display: block;
+    }
+  }
+  .ui-menu-item-wrapper {
+    background: transparent;
+    border: none;
+    color: #000;
+    text-transform: capitalize;
+  }
+}
+
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-state-active.ui-button:hover {
+  background: $theme_color;
+  border: none;
+  display: block;
+  height: 30px;
+}
