@@ -31,7 +31,7 @@
           width: 100%;
         }
         #category_details_chart {
-          padding-top: 20px;
+          padding-top: 30px;
           > div {
             * {
               display: inline-block;
@@ -40,6 +40,9 @@
                 font-size: 12px;
               }
             }
+          }
+          svg {
+            overflow: visible !important;
           }
         }
         #skill_details_chart {
@@ -51,6 +54,9 @@
                 font-size: 12px;
               }
             }
+          }
+          svg {
+            overflow: visible !important;
           }
         }
       }
