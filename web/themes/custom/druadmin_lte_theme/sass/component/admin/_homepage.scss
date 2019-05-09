@@ -339,7 +339,6 @@ body.admin_custom_theme {
               margin: 0 auto;
               position: relative;
               #chart_div {
-                overflow: visible !important;
                 width: 100%;
                 > div {
                   display: inline-block;
@@ -351,6 +350,9 @@ body.admin_custom_theme {
                       font-size: 12px;
                     }
                   }
+                }
+                svg {
+                  overflow: visible !important;
                 }
               }
             }
