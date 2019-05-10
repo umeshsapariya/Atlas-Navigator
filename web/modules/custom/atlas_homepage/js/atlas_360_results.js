@@ -103,7 +103,7 @@
                         colors: ['#008ec3', '#D5D5D5'],
                         chartArea: {
                             height: "90%",
-                            width: "60%",
+                            width: "70%",
                             bottom: '80',
                             left: '20%',
                         },

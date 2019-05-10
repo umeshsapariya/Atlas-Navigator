@@ -120,7 +120,6 @@ function get_latest_invite_id() {
   $query->fields('aid', ['relationship_tid', 'id']);
   $query->fields('ad', ['assessment_id']);
   $query->fields('asd');
-  $query->condition('asd.score', 0, '>');
   $query->condition('ai.uid', $current_user_id);
   $query->condition('aid.completed', 1);
   $query->orderBy('ai.invite_id', 'DESC');
@@ -136,12 +135,30 @@ function get_latest_invite_id() {
 /**
  * Returns top strenghts and oppoutunities.
  */
-function get_top_strengths_opportunities($role_id, $type, $number) {
+function get_top_strengths_opportunities($role_id, $type, $number,$filter_by_role, $relationship, $required_date,$status) {
   // GetAssessmentInvitesSkillData.
   $connection = Database::getConnection();
   $query = $connection->select('assessment_invite', 'ai');
   $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
   $query->fields('ai', ['invite_id']);
+  if ($filter_by_role == 0) {
+    $query->join('profile', 'pr', 'pr.uid = ai.uid');
+    $query->join('profile__field_360_role', 'p', 'p.entity_id = pr.profile_id');
+  }elseif ($filter_by_role == 1) {
+    $query->join('profile', 'pr', 'pr.uid = ai.uid');
+    $query->join('profile__field_360_role', 'p', 'p.entity_id = pr.profile_id');
+    $query->condition('p.field_360_role_target_id', $role_id, '=');
+  }
+  if ($relationship != 'All') {
+    $query->condition('aid.relationship_tid', $relationship);
+  }
+  if ($required_date) {
+    $query->condition('ai.invited_date', $required_date, '>=');
+  }
+  if ($status != 'All') {
+    $query->join('users_field_data', 'u', 'u.uid = ai.uid');
+    $query->condition('u.status', (int) $status);
+  }
   $query->condition('aid.completed', 1);
   $query->condition('ai.role_id', $role_id);
   $query->distinct();

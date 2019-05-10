@@ -339,7 +339,8 @@ body.admin_custom_theme {
               margin: 0 auto;
               position: relative;
               #chart_div {
-                width: 100%;
+                margin: 0 auto;
+                width: 92%;
                 > div {
                   display: inline-block;
                   width: 100% !important;

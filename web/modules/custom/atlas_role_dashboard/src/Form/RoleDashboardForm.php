@@ -26,7 +26,7 @@ class RoleDashboardForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $role_id = NULL) {
-    $form['#prefix'] = '<div class="role-container">';
+    $form['#prefix'] = '<div class="role-container" id="output-results">';
     $form['#suffix'] = '</div>';
     $form_state->setFormState([
       'role_id' => $role_id,
@@ -145,7 +145,7 @@ class RoleDashboardForm extends FormBase {
       '#rows' => $rows,
       '#header' => $header_table,
       '#empty' => t('No Result Found'),
-      '#prefix' => '<div class="role-tab-container" id="output-results">',
+      '#prefix' => '<div class="role-tab-container" >',
       "#suffix" => '</div>',
       '#cache' => [
         'max-age' => 0,
@@ -184,7 +184,7 @@ class RoleDashboardForm extends FormBase {
     $strengths_rows = [];
     $number = 5;
 
-    $top_strenghts = get_top_strengths_opportunities($role_id, "strengths", $number);
+    $top_strenghts = get_top_strengths_opportunities($role_id, "strengths", $number,0,'All','All',1);
 
     if ($top_strenghts) {
       foreach ($top_strenghts as $strength) {
@@ -209,7 +209,7 @@ class RoleDashboardForm extends FormBase {
     ];
     $opportunities_rows = [];
     $number = 5;
-    $top_opportunities = get_top_strengths_opportunities($role_id, "opportunities", $number);
+    $top_opportunities = get_top_strengths_opportunities($role_id, "opportunities", $number, 0, 'All','All',1);
 
     if ($top_opportunities) {
       foreach ($top_opportunities as $opportunities) {
@@ -361,8 +361,36 @@ class RoleDashboardForm extends FormBase {
     }
 
     $form['lef_section']['role_results']['#rows'] = $rows;
+    // right section
+    $strengths_rows = [];
+    $number = 5;
 
-    return $form['lef_section']['role_results'];
+    $top_strenghts = get_top_strengths_opportunities($role_id, "strengths", $number, $filter_by_role,$relationship, $required_date,$status);
+
+    if ($top_strenghts) {
+      foreach ($top_strenghts as $strength) {
+        $element = [];
+        $star_percentage = ($strength['360_score'] * 100) / 5;
+        $element['#markup'] = '<div class="ratings"><div class="star-percentage">' . $star_percentage . '</div><div class="empty-stars"></div><div class="full-stars"></div></div>';
+        $star_rating = \Drupal::service('renderer')->render($element);
+        $strengths_rows[] = [$strength['name'], $star_rating, $strength['360_score']];
+      }
+    }
+    $form['right_section']['top_strenghts']['#rows'] = $strengths_rows;
+    $opportunities_rows = [];
+    $number = 5;
+    $top_opportunities = get_top_strengths_opportunities($role_id, "opportunities", $number, $filter_by_role,$relationship, $required_date,$status);
+        if ($top_opportunities) {
+      foreach ($top_opportunities as $opportunities) {
+        $element = [];
+        $star_percentage = ($opportunities['360_score'] * 100) / 5;
+        $element['#markup'] = '<div class="ratings"><div class="star-percentage">' . $star_percentage . '</div><div class="empty-stars"></div><div class="full-stars"></div></div>';
+        $star_rating = \Drupal::service('renderer')->render($element);
+        $opportunities_rows[] = [$opportunities['name'], $star_rating, $opportunities['360_score']];
+      }
+    }
+    $form['right_section']['top_opportunities']['#rows'] = $opportunities_rows;
+    return $form;
   }
 
   /**
@@ -483,10 +511,11 @@ class RoleDashboardForm extends FormBase {
         $designation_name = $designation->getName();
       }
     }
+    $login_link = $account->toUrl('masquerade')->toString();
     $element['#markup'] = '<div class="dashboard-user-info">
           <div class="dashboard-user-image"><img src="' . $picture . '"/></div>
           <div class="dashboard-user-text">
-            <div class="dashboard-user-title">' . $username . '</div>
+            <div class="dashboard-user-title"><a href="' . $login_link . '">' . $username . '</div>
             <div class="dashboard-user-designation">' . $designation_name . '</div>
           </div>
        </div>';
