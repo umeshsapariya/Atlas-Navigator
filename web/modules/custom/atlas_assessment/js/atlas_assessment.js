@@ -6,6 +6,7 @@ Drupal.behaviors.atlas_assessmentform = {
     var i;
     var j;
     var k;
+    jQuery('.field--name-field-number-of-levels').trigger('change');
     jQuery('.field--name-field-number-of-levels').change(function () {
       for (i = 0; i <= numcats; i++) {
         for (j = 0; j <= numItems; j++) {
