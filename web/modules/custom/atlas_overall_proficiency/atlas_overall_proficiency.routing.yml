@@ -1,7 +1,7 @@
-atlas_overall_proficiency.details:
-  path: '/overall-proficiency-details/{invite_id}'
+atlas_overall_proficiency.form:
+  path: 'overall-proficiency-details/{invite_id}'
   defaults:
-    _controller: '\Drupal\atlas_overall_proficiency\Controller\OverallProficiencyDetails::content'
-    _title: 'Assessment results'
+    _form: '\Drupal\atlas_overall_proficiency\Form\OverallProficiencyDetails'
+    _title: 'Assessment Form'
   requirements:
-    _access: 'TRUE'
+    _permission: 'access content'
