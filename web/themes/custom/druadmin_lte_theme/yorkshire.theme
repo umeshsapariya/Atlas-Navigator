@@ -69,6 +69,12 @@ function yorkshire_preprocess_skill_details(&$variables) {
 }
 
 function yorkshire_preprocess_html(&$variables) {
+  // Add custom class to error pages   
+  $route_name = \Drupal::routeMatch()->getRouteName();
+
+  if ($route_name == 'system.401' || $route_name == 'system.403' || $route_name == 'system.404') {
+    $variables['attributes']['class'][] = 'custom-error-page';  
+  }
   $variables['skin'] = theme_get_setting('skin');
   $user = \Drupal\user\Entity\User::load(\Drupal::currentUser()->id());
 
@@ -110,7 +116,7 @@ function yorkshire_preprocess_html(&$variables) {
   }
 }
 
-function yorkshire_preprocess_page(&$variables) {
+function yorkshire_preprocess_page(&$variables) { 
   // Get current URL.
   $current_uri = \Drupal::request()->getRequestUri();
   $current_user = \Drupal::currentUser();

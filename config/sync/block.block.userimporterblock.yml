@@ -1,0 +1,26 @@
+uuid: a42a57af-57ff-4140-8156-936fa15bbe31
+langcode: en
+status: true
+dependencies:
+  module:
+    - atlas_user_import
+    - system
+  theme:
+    - yorkshire
+id: userimporterblock
+theme: yorkshire
+region: content
+weight: -5
+provider: null
+plugin: UserImporterBlock
+settings:
+  id: UserImporterBlock
+  label: 'User Importer block'
+  provider: atlas_user_import
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    pages: /users
+    negate: false
+    context_mapping: {  }

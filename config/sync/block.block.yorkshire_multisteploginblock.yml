@@ -11,7 +11,7 @@ dependencies:
 id: yorkshire_multisteploginblock
 theme: yorkshire
 region: content
-weight: -4
+weight: -3
 provider: null
 plugin: atlas_multistep_login_block
 settings:

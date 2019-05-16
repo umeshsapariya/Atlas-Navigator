@@ -58,9 +58,18 @@ class UserImporterForm extends FormBase {
       $allowed_managers .= '<li>' . $user->getUsername() . '</li>';
     }
     $allowed_managers .= '</ul>';
-
+    
     $form['template'] = [
       '#markup' => $markup,
+    ];
+    $form['upload_user'] = [
+      '#type' => 'managed_file',
+      '#name' => 'Upload User',
+      '#title' => t('User Uploader CSV File'),
+      '#size' => 20,
+      '#upload_validators' => $validators,
+      '#upload_location' => 'public://',
+      '#required' => TRUE,
     ];
     $form['columns'] = [
       '#markup' => "<div> CSV file column order must be same as in template. It contain following columns</div>"
@@ -75,15 +84,6 @@ class UserImporterForm extends FormBase {
       . "<li>Work Location (Optional) </li>"
       . "<li>Phone (Optional) </li>"
       . "<li>Birthdate (Optional): Format must be Y-m-d </li><li>Hire Date (Optional): Format must be Y-m-d </li></ul>",
-    ];
-    $form['upload_user'] = [
-      '#type' => 'managed_file',
-      '#name' => 'Upload User',
-      '#title' => t('User Uploader CSV File'),
-      '#size' => 20,
-      '#upload_validators' => $validators,
-      '#upload_location' => 'public://',
-      '#required' => TRUE,
     ];
 
     $form['submit'] = [
