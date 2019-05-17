@@ -69,7 +69,7 @@ class OverallProficiencyDetails extends FormBase {
     ];
 
     $form['invite_id'] = [
-      '#type' => 'textfield',
+      '#type' => 'hidden',
       '#default_value' => $invite_id,
     ];
 

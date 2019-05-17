@@ -65,14 +65,19 @@ class RespondentList extends FormBase {
       // 'role_id' => t('Role Id'),
       // 'assessment_hash' => t('Hashcode'),.
     ];
-    // \Drupal::logger('Search name')->debug('<pre>' . print_r($search_name, TRUE) . '</pre>');
+    
     // Fetch all respondents data.
     $db = \Drupal::database();
     $query = $db->select('assessment_invite', 'ai');
     $query->innerJoin('assessment_invite_details', 'aid', 'aid.invite_id = ai.invite_id');
     $query->fields('aid');
     $query->fields('ai', ['role_id']);
-    $query->condition('ai.uid', $uid);
+    if (!in_array('super_admin', $roles) && !in_array('administrator', $roles)) {
+      $current_user_id = \Drupal::currentUser()->id();
+      $roles = \Drupal::currentUser()->getRoles();
+      $members_uids = get_team_members_uid($current_user_id);
+      $query->condition('ai.uid', $members_uids, 'IN');
+    }
 
     $respondents = $query->execute()->fetchAll();
     $form['respondents-wrapper'] = [

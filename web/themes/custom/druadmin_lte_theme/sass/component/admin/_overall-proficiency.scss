@@ -221,5 +221,48 @@
         }
       }
     }
+
+    .btn_wrapper_top {
+      .search-filter {
+        text-align: right;
+        .js-form-item {
+          display: inline-block;
+          margin-top: 0;
+          max-width: 300px;
+          position: relative;
+          width: 100%;
+          input[type="text"] {
+            background: #e2e2e2;
+            border-radius: 25px;
+            color: #9b9797;
+            padding-left: 40px;
+            text-transform: capitalize;
+          }
+          &:after {
+            color: #008ec3;
+            content: "\e908";
+            cursor: pointer;
+            display: inline-block;
+            font-family: "icomoon";
+            font-size: 23px;
+            height: 22px;
+            left: 8px;
+            position: absolute;
+            text-rendering: auto;
+            top: 1px;
+            width: 26px;
+          }
+        }
+        .ajax-progress-throbber {
+          display: none;
+        }
+      }
+    }
+
+    #invite-id {
+      .form-item-invite-id {
+        display: none;
+      }
+    }
   }
 }

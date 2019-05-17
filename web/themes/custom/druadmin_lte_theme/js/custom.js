@@ -55,14 +55,14 @@ $(document).ready(function () {
     $(".admin_custom_theme .content .atlasnavigator_home").css({"height": heightWindow - 120});
     $(".admin_custom_theme .content .category_details_graph").css({"min-height": heightWindow - 150});
     $(".admin_custom_theme .content .skill_details_outer .inner_wrapper").css({"height": heightWindow - 150});
-    $(".admin_custom_theme .content .overall-proficiency-wrapper").css({"height": heightWindow - 150});
+    $(".admin_custom_theme .content .overall-proficiency-wrapper").css({"height": heightWindow - 200});
     $(".admin_custom_theme .content .role-container").css({"height": heightWindow - 150});
     var path_assessment_form = $('.path-assessment-form .content').height() - $('.path-assessment-form .heading_titles').outerHeight() - $('.path-assessment-form .bottom_content').outerHeight() - $('.path-assessment-form .no_of_levels').outerHeight() - $('.path-assessment-form .rating_heading').outerHeight()- $('.path-assessment-form .content-header').outerHeight();
     $(".path-assessment-form .rating_main_wrapper .content_wrapper").css({"height": path_assessment_form - 40});
 
 
     var page_prof_content = $('.path-overall-proficiency-details .content').height();
-    var scroll_prof_box = page_prof_content - 220;
+    var scroll_prof_box = page_prof_content - 250;
     $("#overall-proficiency-right tbody").css({"height": scroll_prof_box});
     var path_role_page = $('.path-role-page #left-outer-section').height() - $('.path-role-page #left-outer-section #filter-container').height() - 85;
     $(".path-role-page #left-outer-section tbody").css({"height": path_role_page});
@@ -214,6 +214,20 @@ $(document).ready(function () {
   });
   /* End Display form field on value present - Multistep Assessment Page*/
 });
+
+ $( document ).ajaxComplete(function( event, request, settings ) {
+  var heightWindow = $(window).height();
+  $(".admin_custom_theme .content .overall-proficiency-wrapper").css({"height": heightWindow - 200});
+  $("#overall-proficiency-right tbody").addClass('scroll_div_content');
+  $(".scroll_div_content").mCustomScrollbar({
+  });
+    var page_prof_content = $('.path-overall-proficiency-details .content').height();
+    var scroll_prof_box = page_prof_content - 250;
+    $("#overall-proficiency-right tbody").css({"height": scroll_prof_box});
+   $(".centerLabel").fadeIn(); 
+    
+    
+  });
 
 
 $(window).on('load', function () {
