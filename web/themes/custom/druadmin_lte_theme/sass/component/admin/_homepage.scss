@@ -266,6 +266,8 @@ body.admin_custom_theme {
               width: 100%;
             }
             &.order4 {
+              padding: 5px;
+
               @media screen and (max-width: 767px) {
                 order: 4;
               }
@@ -319,10 +321,10 @@ body.admin_custom_theme {
           .box_content {
             background-color: #fff;
             border-radius: 10px;
-            display: inline-block;
+            display: inline-block; 
             padding: 1%;
             width: 100%;
-
+  
             @media screen and (max-width: 767px) {
               border-radius: 10px;
               padding: 20px 10px;
@@ -351,18 +353,28 @@ body.admin_custom_theme {
                       font-size: 12px;
                     }
                   }
-                }
+                } 
                 svg {
                   overflow: visible !important;
                 }
               }
             }
             &.overall-proficiency-homepage-block {
+              justify-content: space-between;
+             display: flex !important;
+             padding-left: 5%;
+
+             @media screen and (max-width: 980px) {
+                display: inline-block !important;
+                padding-left: 0;
+             } 
               .donut_single_wrap {
                 display: inline-block;
                 position: relative;
                 text-align: center;
                 .donut_home_wrap {
+                  position: relative;
+
                   @media screen and (max-width: 767px) {
                     display: inline-block;
                   }
@@ -379,18 +391,22 @@ body.admin_custom_theme {
                 }
               }
               .donut_single_labels {
-                float: right;
+                /*float: right;*/
+                /*width: 40%;*/
+                display: inline-block;
                 padding-top: 10px;
-                width: 40%;
+                width: auto;
+                align-self: flex-end;
+
                 @media screen and (max-width: 1156px) {
                   width: 30%;
                 }
-                @media screen and (max-width: 930px) {
+                @media screen and (max-width: 980px) {
                   display: block;
                   float: none;
                   margin: 10px auto;
                   text-align: left;
-                  width: 50%;
+                  width: 40%;
                 }
                 > div {
                   font-family: $segoeui-regular;

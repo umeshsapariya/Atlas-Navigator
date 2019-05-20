@@ -30,9 +30,13 @@ $(document).once().ajaxComplete(function (event, xhr, settings) {
         ['Skills gap', 100 - percentage],
       ]);
 
-      var options = {
-        width: 170,
-        height: 170,
+      var order4 = $('.main_box.right_section.wrapper_div.order4').width()/1.65;
+      if ($(window).width() < 980) {
+        var order4 = 180;
+      }
+      var options = { 
+        width: order4,
+        height: order4,
         pieHole: 0.6,
         pieSliceTextStyle: {
           color: 'black',
@@ -46,6 +50,7 @@ $(document).once().ajaxComplete(function (event, xhr, settings) {
 
       var chart = new google.visualization.PieChart(document.getElementById('donut_home'));
       chart.draw(data, options);
+
     }
   } else {
     $(".order4 .blue_title").html('Overall Proficiency');
