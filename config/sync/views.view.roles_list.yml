@@ -38,7 +38,7 @@ display:
             res: res
             super_admin: super_admin
       cache:
-        type: tag
+        type: none
         options: {  }
       query:
         type: views_query
