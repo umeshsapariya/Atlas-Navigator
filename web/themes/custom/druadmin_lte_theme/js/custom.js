@@ -226,7 +226,35 @@ $(document).ready(function () {
     $("#overall-proficiency-right tbody").css({"height": scroll_prof_box});
    $(".centerLabel").fadeIn(); 
     
-    
+      $('#overall-proficiency-right input').click(function (e) {
+        e.preventDefault();
+    $('#overall-proficiency-right input').removeClass('active');
+    $(this).addClass('active');
+    var active_val = $(this).val();
+    if (active_val == 'Strengths') {
+      $('#overall-proficiency-right thead tr th:nth-child(3)').click();
+      if ($('#overall-proficiency-right thead tr th:nth-child(3)').hasClass("asc")) {
+        $('#overall-proficiency-right thead tr th:nth-child(3)').click();
+      }
+      $('tr.Opportunities').hide();
+      $('tr.Strengths').show();
+    } else if (active_val == 'Opportunities') {
+      $('#overall-proficiency-right thead tr th:nth-child(4)').click();
+      if ($('#overall-proficiency-right thead tr th:nth-child(3)').hasClass("desc")) {
+        $('#overall-proficiency-right thead tr th:nth-child(3)').click();
+      }
+      $('tr.Opportunities').show();
+      $('tr.Strengths').hide();
+    } else {
+      $('tr.Opportunities').show();
+      $('tr.Strengths').show();
+    }
+  });
+      $('tr .ratings').each(function () {
+    var star_width = $(this).find('.star-percentage').text();
+    star_width = star_width * 0.98;
+    $(this).find('.full-stars').css('width', star_width + '%');
+  });
   });
 
 

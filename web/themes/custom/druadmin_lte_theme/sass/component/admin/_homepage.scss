@@ -235,7 +235,7 @@ body.admin_custom_theme {
                     margin: 0;
 
                     .input_text.form-control {
-                      background-color: #e2e2e2;
+                      background: #e2e2e2;
                       border-radius: 25px;
                       color: #9b9797;
                       padding-left: 35px;
@@ -321,10 +321,10 @@ body.admin_custom_theme {
           .box_content {
             background-color: #fff;
             border-radius: 10px;
-            display: inline-block; 
+            display: inline-block;
             padding: 1%;
             width: 100%;
-  
+
             @media screen and (max-width: 767px) {
               border-radius: 10px;
               padding: 20px 10px;
@@ -353,21 +353,20 @@ body.admin_custom_theme {
                       font-size: 12px;
                     }
                   }
-                } 
+                }
                 svg {
                   overflow: visible !important;
                 }
               }
             }
             &.overall-proficiency-homepage-block {
-              justify-content: space-between;
-             display: flex !important;
-             padding-left: 5%;
+              display: block;
+              text-align: center;
 
-             @media screen and (max-width: 980px) {
+              @media screen and (max-width: 980px) {
                 display: inline-block !important;
                 padding-left: 0;
-             } 
+              }
               .donut_single_wrap {
                 display: inline-block;
                 position: relative;
@@ -391,12 +390,12 @@ body.admin_custom_theme {
                 }
               }
               .donut_single_labels {
+                align-self: flex-end;
                 /*float: right;*/
                 /*width: 40%;*/
                 display: inline-block;
                 padding-top: 10px;
                 width: auto;
-                align-self: flex-end;
 
                 @media screen and (max-width: 1156px) {
                   width: 30%;

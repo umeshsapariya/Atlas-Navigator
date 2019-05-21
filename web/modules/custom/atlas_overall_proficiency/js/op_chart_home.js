@@ -29,14 +29,15 @@ $(document).once().ajaxComplete(function (event, xhr, settings) {
         ['Proficient skills', percentage],
         ['Skills gap', 100 - percentage],
       ]);
-
-      var order4 = $('.main_box.right_section.wrapper_div.order4').width()/1.65;
-      if ($(window).width() < 980) {
-        var order4 = 180;
+      if ($(window).width() < 767) {
+          var pie_size = 180;
+      } else {
+        var pie_size = $('.atlas-home .right_section').height()*0.75 - $('.box_title').height() - 10;
       }
-      var options = { 
-        width: order4,
-        height: order4,
+
+      var options = {
+        width: pie_size,
+        height: pie_size,
         pieHole: 0.6,
         pieSliceTextStyle: {
           color: 'black',
@@ -50,7 +51,6 @@ $(document).once().ajaxComplete(function (event, xhr, settings) {
 
       var chart = new google.visualization.PieChart(document.getElementById('donut_home'));
       chart.draw(data, options);
-
     }
   } else {
     $(".order4 .blue_title").html('Overall Proficiency');
