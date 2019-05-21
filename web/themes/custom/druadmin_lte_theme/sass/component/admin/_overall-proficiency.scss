@@ -1,0 +1,268 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+
+.admin_custom_theme {
+  &.path-overall-proficiency-details {
+    #overall-proficiency-left {
+      background-color: #fff;
+      display: inline-block;
+      float: left;
+      height: 100%;
+      min-height: 450px;
+      text-align: center;
+      width: 49%;
+      @media only screen and (max-width: 767px) {
+        float: none;
+        margin-bottom: 20px;
+        min-height: 350px;
+        width: 100%;
+      }
+      .proficiency-title {
+        margin: 20px 0;
+        text-align: center;
+        @media only screen and (max-width: 767px) {
+          margin: 20px 0;
+          padding-top: 20px;
+        }
+      }
+      .donutCell {
+        display: inline-block;
+        position: relative;
+      }
+      .centerLabel {
+        display: none;
+        font-size: 250%;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .donut_single_labels {
+        margin: 0 auto;
+        position: relative;
+        text-align: left;
+        width: 200px;
+
+        > div {
+          font-family: $segoeui-regular;
+          font-size: 18px;
+          line-height: 35px;
+          padding-left: 25px;
+          position: relative;
+          width: 100%;
+          &:before {
+            border-radius: 50%;
+            content: "";
+            height: 15px;
+            left: 0;
+            position: absolute;
+            top: 10px;
+            width: 15px;
+          }
+          &.proficient_skill {
+            color: $theme_color;
+            &:before {
+              background: $theme_color;
+            }
+          }
+          &.skill_gap {
+            color: $theme_second_color;
+            &:before {
+              background: $theme_second_color;
+            }
+          }
+        }
+      }
+    }
+    #overall-proficiency-right {
+      background-color: #fff;
+      float: right;
+      height: 100%;
+      min-height: 450px;
+      padding: 0 15px;
+      text-align: center;
+      width: 49%;
+      @media only screen and (max-width: 767px) {
+        float: none;
+        height: auto !important;
+        min-height: 350px;
+        width: 100%;
+      }
+      input {
+        background-color: #ccc;
+        border: none;
+        color: #5a5555;
+        &.active {
+          background-color: $theme_color;
+          color: #fff;
+        }
+      }
+      .js-form-submit {
+        box-shadow: none;
+        margin: 20px 10px;
+        padding: 6px 30px;
+        @media only screen and (max-width: 767px) {
+          margin: 10px 10px;
+        }
+      }
+      .table-responsive {
+        border: none !important;
+        box-shadow: none;
+        overflow-x: initial;
+        .table-bordered {
+          border: none;
+          tr {
+            td {
+              border: none;
+              color: #416e7f;
+              font-family: $segoeui-regular;
+              margin: 0 auto;
+              padding: 15px 0;
+              text-transform: capitalize;
+              vertical-align: middle;
+              a {
+                color: #416e7f;
+                font-family: "Conv_segoeui",Sans-Serif;
+              }
+              &:first-child {
+                text-align: left;
+              }
+            }
+            th {
+              border: none;
+              font-size: 1.0em;
+              &:nth-child(3),
+              &:nth-child(4) {
+                cursor: pointer;
+                position: relative;
+                &:before {
+                  content: "\f0de";
+                  font-family: FontAwesome;
+                  font-size: 1.3rem;
+                  font-weight: 900;
+                  opacity: .3;
+                  position: absolute;
+                  right: 1em;
+                  @media only screen and (max-width: 1024px) {
+                    right: 0;
+                  }
+                }
+                &:after {
+                  content: "\f0dd";
+                  font-family: FontAwesome;
+                  font-size: 1.3rem;
+                  font-weight: 900;
+                  opacity: .3;
+                  position: absolute;
+                  right: 1em;
+                  @media only screen and (max-width: 1024px) {
+                    right: 0;
+                  }
+                }
+                &.active {
+                  &.asc {
+                    &:before {
+                      opacity: 1;
+                    }
+                  }
+                  &.desc {
+                    &:after {
+                      opacity: 1;
+                    }
+                  }
+                }
+              }
+            }
+            &:nth-of-type(odd) {
+              background-color: transparent;
+              &:hover {
+                background-color: transparent;
+              }
+            }
+          }
+          thead {
+            tr {
+              border-top: 1px solid #cdcdcd;
+              th {
+                text-align: center;
+                &:first-child {
+                  text-align: left;
+                }
+              }
+            }
+          }
+
+
+          tbody,
+          thead tr {
+            display: block;
+          }
+
+          tbody {
+            height: 350px;
+            #mCSB_2_container {
+              margin-right: 10px;
+            }
+          }
+
+          tbody td,
+          thead th {
+            width: 140px;
+            @media only screen and (max-width: 767px) {
+              font-size: .9em;
+            }
+          }
+
+          thead th:last-child {
+            width: 156px;
+          }
+        }
+      }
+    }
+
+    .btn_wrapper_top {
+      .search-filter {
+        text-align: right;
+        .js-form-item {
+          display: inline-block;
+          margin-top: 0;
+          max-width: 300px;
+          position: relative;
+          width: 100%;
+          input[type="text"] {
+            background: #e2e2e2;
+            border-radius: 25px;
+            color: #9b9797;
+            padding-left: 40px;
+            text-transform: capitalize;
+          }
+          &:after {
+            color: #008ec3;
+            content: "\e908";
+            cursor: pointer;
+            display: inline-block;
+            font-family: "icomoon";
+            font-size: 23px;
+            height: 22px;
+            left: 8px;
+            position: absolute;
+            text-rendering: auto;
+            top: 1px;
+            width: 26px;
+          }
+        }
+        .ajax-progress-throbber {
+          display: none;
+        }
+      }
+    }
+
+    #invite-id {
+      .form-item-invite-id {
+        display: none;
+      }
+    }
+  }
+}

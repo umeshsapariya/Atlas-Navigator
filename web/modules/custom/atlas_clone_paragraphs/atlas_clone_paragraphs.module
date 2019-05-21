@@ -1,0 +1,149 @@
+<?php
+
+/**
+ * @file
+ * Contains atlas_clone_paragraphs.module.
+ */
+
+use Drupal\node\Entity\Node;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Database\Database;
+use Drupal\paragraphs\Entity\Paragraph;
+
+/**
+ * Implements hook_theme().
+ */
+function atlas_clone_paragraphs_theme($existing, $type, $theme, $path) {
+  return [
+    'copy_skill_form' => [
+      'render element' => 'form',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function atlas_clone_paragraphs_field_widget_entity_reference_paragraphs_form_alter(&$element, &$form_state, $context) {
+  $field_definition = $context['items']->getFieldDefinition();
+  $paragraph_entity_reference_field_name = $field_definition->getName();
+  if ($paragraph_entity_reference_field_name == 'field_skills') {
+    $cat_no = $skill_no = 0;
+    if ($element['subform']['field_skill']['#parents'][1]) {
+      $cat_no = intval($element['subform']['field_skill']['#parents'][1]);
+    }
+    if ($element['subform']['field_skill']['#parents'][4]) {
+      $skill_no = intval($element['subform']['field_skill']['#parents'][4]);
+    }
+    // Create Copy Skill link and append to title.
+    $url = Url::fromRoute('atlas_clone_paragraphs.copy_skill_popup', ['cat_id' => $cat_no, 'skill_id' => $skill_no]);
+    $copy_link = Link::fromTextAndUrl(t('Copy Skill'), $url);
+    $copy_link = $copy_link->toRenderable();
+    $copy_link['#attributes'] = [
+      'class' => ['use-ajax', 'btn', 'copy-skill-link'],
+      'data-dialog-type' => 'modal',
+      'data-dialog-options' => Json::encode([
+        'width' => 700,
+        'dialogClass' => 'copy-skill-dialog',
+      ]),
+    ];
+    $element['subform']['field_skill']['#prefix'] = '<div id="skill-name">';
+    $element['subform']['field_skill']['#suffix'] = '</div><span class="copy-skill-div">' . render($copy_link) . '</span>';
+  }
+}
+
+/**
+ * Helper function for get Roles array.
+ *
+ * @return array
+ */
+function getRoles() {
+  $connection = Database::getConnection();
+  $query = $connection->select('node_field_data', 'nfd');
+  $query->fields('nfd', ['nid', 'title']);
+  $query->condition('nfd.type', 'assessment_form');
+  $data = $query->execute()->fetchAll();
+
+  $role = [];
+  foreach ($data as $d) {
+    $role[$d->nid] = $d->title;
+  }
+  return $role;
+}
+
+/**
+ * Helper function to get category based on role id.
+ */
+function getCategoriesByRolesID($role_id) {
+  $category = ['_none' => '- Select -'];
+  $node = Node::load($role_id);
+  $paragraph = $node->field_category->getValue();
+  foreach ($paragraph as $element) {
+
+    $p = Paragraph::load($element['target_id']);
+    $category_nm = $p->field_new_category->value;
+    $category[$element['target_id']] = $category_nm;
+  }
+  return $category;
+}
+
+/**
+ * Helper function to get Skill based on category id.
+ */
+function getSkillsByCategoryID($category_id) {
+  $skill = ['_none' => '- Select -'];
+  $category_para = Paragraph::load($category_id);
+  $paragraph = $category_para->field_skills->getValue();
+  foreach ($paragraph as $element) {
+    $p = Paragraph::load($element['target_id']);
+    $skill_nm = $p->field_skill->value;
+    $skill[$element['target_id']] = $skill_nm;
+  }
+  return $skill;
+}
+
+/**
+ * Fetch all categories.
+ */
+function getAllCategories() {
+  $category = ['_none' => '- Select -'];
+  $query = \Drupal::database()->select('paragraph__field_new_category', 'pfc');
+  $query->fields('pfc', ['entity_id', 'field_new_category_value']);
+  $query->fields('pfd', ['parent_id']);
+  $query->join('paragraphs_item_field_data', 'pfd', 'pfd.revision_id = pfc.revision_id');
+  $query->condition('pfd.parent_field_name', 'field_category');
+  $query->condition('pfc.bundle', 'category');
+  $query->distinct('pfc.entity_id');
+
+  $data = $query->execute()->fetchAll();
+  if (!empty($data)) {
+    foreach ($data as $id => $category_data) {
+      $category[$category_data->entity_id] = $category_data->field_new_category_value;
+    }
+  }
+  return $category;
+}
+
+/**
+ * Fetch all skills.
+ */
+function getAllSkills() {
+  $skill = ['_none' => '- Select -'];
+  $query = \Drupal::database()->select('paragraph__field_skill', 'pfc');
+  $query->fields('pfc', ['entity_id', 'field_skill_value']);
+  $query->fields('pfd', ['parent_id']);
+  $query->join('paragraphs_item_field_data', 'pfd', 'pfd.revision_id = pfc.revision_id');
+  $query->condition('pfd.parent_field_name', 'field_skills');
+  $query->condition('pfc.bundle', 'skill');
+  $query->distinct('pfc.entity_id');
+
+  $data = $query->execute()->fetchAll();
+  if (!empty($data)) {
+    foreach ($data as $id => $skill_data) {
+      $skill[$skill_data->entity_id] = $skill_data->field_skill_value;
+    }
+  }
+  return $skill;
+}

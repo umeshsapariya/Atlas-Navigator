@@ -1,0 +1,61 @@
+uuid: f129df2b-1620-468b-bcd0-6d4dd3ed7149
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.skill.field_include_na
+    - field.field.paragraph.skill.field_number_of_levels
+    - field.field.paragraph.skill.field_skill
+    - field.field.paragraph.skill.field_skill_level_information
+    - field.field.paragraph.skill.field_target_proficiency
+    - paragraphs.paragraphs_type.skill
+  module:
+    - entity_reference_revisions
+    - options
+id: paragraph.skill.default
+targetEntityType: paragraph
+bundle: skill
+mode: default
+content:
+  field_include_na:
+    weight: 2
+    label: above
+    settings:
+      format: default
+      format_custom_false: ''
+      format_custom_true: ''
+    third_party_settings: {  }
+    type: boolean
+    region: content
+  field_number_of_levels:
+    weight: 5
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+  field_skill:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_skill_level_information:
+    type: entity_reference_revisions_entity_view
+    weight: 4
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_target_proficiency:
+    weight: 6
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: list_default
+    region: content
+hidden: {  }

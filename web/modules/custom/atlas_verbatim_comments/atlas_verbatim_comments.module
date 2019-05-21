@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Contains .module.
+ */
+
+use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_theme().
+ */
+function atlas_verbatim_comments_theme($existing, $type, $theme, $path) {
+  return [
+    'verbatile_comments_form' => [
+      'render element' => 'form',
+    ],
+  ];
+}
+
+/**
+ * Helper function to get List of Questions the user taken assessment of.
+ */
+function getQuestionsList($user_id) {
+  $results = [];
+  if ($user_id) {
+    $connection = Database::getConnection();
+    $query = $connection->select('assessment_invite', 'ai');
+    $query->innerJoin('assessment_invite_details', 'aid', 'aid.invite_id = ai.invite_id');
+    $query->fields('ai', ['role_id']);
+    $query->condition('ai.uid', $user_id);
+    $query->condition('aid.completed', 1);
+    $query->distinct();
+    $data = $query->execute()->fetchAll();
+    foreach ($data as $d) {
+      $role_details = Node::load($d->role_id);
+      $field_verbatim_comments = $role_details->get('field_verbatim_comments')->getValue();
+      foreach ($field_verbatim_comments as $field_verbatim_comment) {
+        $vc = Paragraph::load($field_verbatim_comment['target_id']);
+        $questions = $vc->field_question->getValue();
+        if (!empty($questions)) {
+          $results[$field_verbatim_comment['target_id']] = $questions[0]['value'];
+        }
+      }
+    }
+  }
+  return $results;
+}
+
+/**
+ * Helper function to get List of Comments on Questions.
+ */
+function getVerbatimComments($user_id, $comment_id) {
+  $results = [];
+  if ($user_id && $comment_id) {
+    $connection = Database::getConnection();
+    $query = $connection->select('assessment_invite', 'ai');
+    $query->innerJoin('assessment_invite_details', 'aid', 'aid.invite_id = ai.invite_id');
+    $query->innerJoin('assessment_data', 'ad', 'ad.invite_id = aid.id');
+    $query->innerJoin('assessment_verbatim_comments', 'avc', 'avc.assessment_id = ad.assessment_id');
+    $query->fields('aid', ['invite_id', 'raters_email', 'relationship_tid']);
+    $query->fields('ai', ['assessment_id']);
+    $query->fields('avc', ['answer']);
+    $query->condition('ai.uid', $user_id);
+    $query->condition('aid.completed', 1);
+    $query->condition('avc.verbatim_id', $comment_id);
+    // $query->distinct();
+    $vdata = $query->execute()->fetchAll();
+
+    foreach ($vdata as $d) {
+      if ($d->relationship_tid) {
+        $term = Term::load($d->relationship_tid);
+        $relationship = $term->getName();
+      }
+      $results[] = [
+        'relationship' => $relationship,
+        'comment' => $d->answer,
+        'assessment_id' => $d->assessment_id,
+      ];
+    }
+  }
+  return $results;
+}

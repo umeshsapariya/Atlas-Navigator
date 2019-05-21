@@ -1,0 +1,9 @@
+uuid: 57dc525b-c8f0-4c2b-8a88-3c7911b0a8f5
+langcode: en
+status: true
+dependencies: {  }
+id: activity_categories
+label: 'Activity Categories'
+icon_uuid: null
+description: ''
+behavior_plugins: {  }

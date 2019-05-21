@@ -1,0 +1,233 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+.path-roles-list,
+.path-activity-list {
+  .wrapper {
+    .content-wrapper {
+      .content {
+        .view-id-roles_list,
+        .view-activity-list {
+          .view-header {
+            float: left;
+            .button-action:before {
+              display: none;
+            }
+            a {
+              padding: 6px 30px;
+              @media screen and (max-width: 480px) {
+                padding: 6px 20px;
+              }
+            }
+          }
+          .view-filters {
+            float: right;
+            position: relative;
+            .views-exposed-form {
+              .js-form-type-textfield {
+                input {
+                  &.input_text {
+                    background-color: $level_background;
+                    @media screen and (max-width: 450px) {
+                      width: 170px;
+                    }
+                  }
+                }
+              }
+            }
+            &:after {
+              color: $theme_color;
+              content: "\e908";
+              cursor: pointer;
+              display: inline-block;
+              font-family: $icomoon-font;
+              font-size: 23px;
+              height: 26px;
+              left: 8px;
+              position: absolute;
+              text-rendering: auto;
+              top: 0;
+              width: 26px;
+            }
+            label {
+              display: none;
+            }
+            .form-control {
+              border-radius: 15px;
+              border-radius: 15px;
+              padding-left: 35px;
+              width: 200px;
+            }
+            .form-item {
+              margin: 0;
+            }
+          }
+          .view-empty {
+            clear: both;
+          }
+          .view-content {
+            display: inline-block;
+            width: 100%;
+          }
+        }
+      }
+    }
+    .table-responsive {
+      box-shadow: none;
+      margin-bottom: 30px;
+      margin-top: 25px;
+      @media screen and (min-width: 480px) {
+        overflow: visible;
+      }
+      .table-bordered {
+        border: 0;
+        color: #1c394d !important;
+        text-align: center !important;
+        > thead {
+          > tr {
+            > th {
+              border-bottom-width: 0;
+            }
+          }
+        }
+        thead {
+          tr {
+            border-bottom: 1px solid #ccc;
+            border-top: 1px solid #ccc;
+          }
+        }
+        th {
+          font-family: $segoeui-semibold;
+          font-size: 14px;
+          padding: 17px 8px;
+          text-align: center ;
+          &:first-child {
+            text-align: left !important;
+          }
+        }
+        tbody {
+          background-color: transparent;
+          td {
+            color: #2b4853;
+            font-family: $segoeui-regular;
+            font-size: 14px;
+            a {
+              color: #2b4853;
+              font-family: $segoeui-regular;
+              font-size: 14px;
+            }
+            &:first-child {
+              text-align: left !important;
+            }
+
+            &.views-field.views-field-edit-node {
+              a {
+                background: $theme_color;
+                border-radius: 25px;
+                color: #fff;
+                cursor: pointer;
+                font-family: "Conv_segoeui",Sans-Serif;
+                font-weight: normal;
+                padding: 6px 30px;
+                text-transform: capitalize;
+              }
+            }
+          }
+          tr {
+            border-top: 1px solid #ccc;
+
+            &:nth-of-type(odd) {
+              background-color: transparent;
+            }
+            td {
+              border: none;
+              padding: 17px 8px;
+            }
+          }
+        }
+        .views-field-dropbutton {
+          .dropbutton-wrapper {
+            margin: auto;
+            .dropbutton-widget {
+              background: transparent;
+              border: none;
+              color: #fff;
+              cursor: pointer;
+              font-family: "Conv_segoeui",Sans-Serif;
+              font-weight: normal;
+              left: 0;
+              margin: 0 auto;
+              padding: 0;
+              position: absolute;
+              right: 0;
+              width: 110px;
+              @media screen and (max-width: 480px) {
+                width: 92px;
+              }
+              .dropbutton {
+                border-right: none;
+                li {
+                  background: $theme_color;
+                  -webkit-border-radius: 25px;
+                  -moz-border-radius: 25px;
+                  border-radius: 25px;
+                  padding: 3px;
+                  @media screen and (max-width: 480px) {
+                    padding: 0;
+                  }
+                  &.dropbutton-toggle {
+                    background: transparent;
+                  }
+                  a {
+                    color: $white-color;
+                    font-family: $segoeui-regular;
+                    text-transform: capitalize;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.path-assessment-list {
+  @extend .path-roles-list;
+  .table-responsive {
+    border-top: 1px solid #ccc;
+    @media screen and (max-width: 767px) {
+      border: 0;
+      border-top: 1px solid #ccc;
+    }
+    .table-bordered {
+      margin-top: 10px;
+      tbody {
+        td {
+          text-align: left;
+          &:first-child {
+            width: 20%;
+            @media screen and (max-width: 767px) {
+              width: 50%;
+            }
+          }
+          a {
+            background: $theme_color;
+            border-radius: 25px;
+            color: #fff;
+            font-family: $segoeui-regular;
+            padding: 8px 20px;
+            text-transform: capitalize;
+          }
+        }
+        tr {
+          border-top: 0 !important;
+        }
+      }
+    }
+  }
+}
+

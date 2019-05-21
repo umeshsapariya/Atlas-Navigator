@@ -1,0 +1,23 @@
+uuid: 68c6608f-36d4-44d7-a611-3e5a467f1794
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_no_of_associates
+    - node.type.assessment_form
+id: node.assessment_form.field_no_of_associates
+field_name: field_no_of_associates
+entity_type: node
+bundle: assessment_form
+label: 'no of associates'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

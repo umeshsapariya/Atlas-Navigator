@@ -1,0 +1,21 @@
+uuid: 4b39147e-6376-47a6-a6a3-28a50c7c8012
+langcode: en
+status: true
+dependencies:
+  module:
+    - entity_reference_revisions
+    - node
+    - paragraphs
+id: node.field_verbatim_comments
+field_name: field_verbatim_comments
+entity_type: node
+type: entity_reference_revisions
+settings:
+  target_type: paragraph
+module: entity_reference_revisions
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

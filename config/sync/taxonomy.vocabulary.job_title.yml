@@ -1,0 +1,9 @@
+uuid: b28bffee-c282-465e-9f07-bd9cfb4dbece
+langcode: en
+status: true
+dependencies: {  }
+name: 'Job Title'
+vid: job_title
+description: 'Job Title for User Profile'
+hierarchy: 0
+weight: 0

@@ -1,0 +1,5 @@
+name: Atlas Results
+type: module
+description: Custom Atlas 360 Results
+core: 8.x
+package: Custom

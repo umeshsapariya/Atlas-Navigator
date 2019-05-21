@@ -1,0 +1,11 @@
+altas_magnific_popup:
+  js:
+    js/atlas_video_popup.js: {}
+    /libraries/magnific-popup/dist/jquery.magnific-popup.min.js: {minified: true}
+  css:
+    base:
+      /libraries/magnific-popup/dist/magnific-popup.css: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/jquery.once

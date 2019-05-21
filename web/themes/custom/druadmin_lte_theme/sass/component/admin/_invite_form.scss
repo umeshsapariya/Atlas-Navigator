@@ -1,0 +1,248 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file. 
+.path-assessment-invite {
+  .page-title {
+    text-align: center;
+  }
+  .nav-tabs-custom {
+    text-align: center;
+    .assessment-invite-form {
+      @media screen and (max-width: 767px) {
+        border: none;
+      }
+      .form-group {
+        .label {
+          padding-left: 15%;
+          text-align: left;
+          width: 45%;
+          @media only screen and (min-width: 768px) and (max-width: 991px) {
+            padding-left: 5%;
+          }
+          @media only screen and (min-width: 768px) and (max-width: 798px) {
+            font-size: 12px;
+          }
+          @media only screen and (max-width: 767px) {
+            padding-left: 0;
+          }
+          @media screen and (max-width: 767px) {
+            text-align: left;
+            width: 100%;
+          }
+        }
+        .form-control {
+          &.input_text,
+          &.form-select {
+            width: 230px;
+            @media only screen and (min-width: 768px) and (max-width: 991px) {
+              width: 200px;
+            }
+          }
+        }
+      }
+      .form-item {
+        margin: 0 auto;
+        margin-bottom: 0;
+        max-width: 768px;
+        &.form-item-user-name,
+        &.form-item-select-role {
+          border-bottom: 1px solid $border_mobile;
+          padding: 10px 0 15px;
+        }
+      }
+      legend {
+        border-bottom: 0;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+      }
+      .description {
+        display: inline-block;
+        text-align: left;
+        width: 100%;
+      }
+      .fieldset-wrapper {
+        .form-group {
+          &.js-form-type-radio {
+            border-bottom: 0;
+          }
+        }
+      }
+      #raters-outer-container {
+        label {
+          padding: 10px 0 10px 15%;
+          width: 45%;
+          @media only screen and (min-width: 768px) and (max-width: 991px) {
+            padding: 10px 0 10px 5%;
+          }
+          @media only screen and (min-width: 768px) and (max-width: 798px) {
+            width: 40% !important;
+          }
+          @media screen and (max-width: 767px) {
+            padding: 5px 0 0 5px;
+            text-align: left;
+            width: 100%;
+          }
+        }
+        input,
+        select {
+          margin: 10px 0;
+          @media screen and (max-width: 767px) {
+            margin: 10px 5px;
+          }
+        }
+        .form-type-select {
+          &:after {
+            top: 18px;
+          }
+        }
+        fieldset {
+          border: 1px solid $border_mobile;
+          margin: 10px auto;
+          @media screen and (max-width: 767px) {
+            margin: 0 0 10px 0;
+          }
+          .form-item {
+            border-top: 1px solid $border_mobile;
+          }
+          .js-form-type-textfield {
+            .ajax-progress-throbber {
+              float: left;
+              position: relative;
+              top: 15px;
+              .message {
+                display: none;
+              }
+            }
+          }
+        }
+        [class*=form-item-other-relationship] {
+          label {
+            &:after {
+              background-image: url(../../../../core/misc/icons/ee0000/required.svg);
+              background-repeat: no-repeat;
+              background-size: 6px 6px;
+              content: "";
+              display: inline-block;
+              height: 6px;
+              margin: 0 .3em;
+              vertical-align: super;
+              width: 6px;
+            }
+          }
+        }
+        .submit-wrapper {
+          margin: 0 auto;
+          max-width: 768px;
+          .form-submit {
+            float: right;
+          }
+        }
+      }
+      #edit-number-of-raters--wrapper {
+        margin-top: 20px;
+        padding: 30px 0 20px 110px;
+        position: relative;
+        @media only screen and (min-width: 992px) and (max-width: 1024px) {
+          padding: 30px 0 20px 95px;
+        }
+        @media only screen and (min-width: 768px) and (max-width: 991px) {
+          padding: 30px 0 20px 20px;
+        }
+        @media only screen and (max-width: 768px) {
+          padding: 20px 10px 15px 0;
+        }
+        #edit-number-of-raters--wrapper--description {
+          display: block;
+          font-family: $segoeui-regular;
+          position: absolute;
+          top: -25px;
+          @media screen and (max-width: 418px) {
+            top: -30px;
+          }
+        }
+        .fieldset-wrapper {
+          position: relative;
+        }
+        #edit-number-of-raters {
+          @media screen and (max-width: 767px) {
+            margin: 20px 0;
+          }
+          .ajax-progress + label.label.option {
+            background: #b0c6d4;
+            border-radius: 50%;
+            color: #fff !important;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 12px !important;
+            height: 30px;
+            line-height: 26px !important;
+            padding: 0 5px;
+            position: relative;
+            text-align: center;
+            width: 30px !important;
+          }
+          .js-form-item-number-of-raters {
+            position: relative;
+            @media screen and (max-width: 767px) {
+              padding: 5px 4px;
+            }
+            @media screen and (max-width: 418px) {
+              margin: 0 5px;
+              padding: 5px 4px;
+            }
+            .ajax-progress-throbber {
+              position: absolute;
+              right: 3px;
+              top: 30px;
+              @media screen and (max-width: 767px) {
+                left: 30px;
+                top: 8px;
+              }
+            }
+          }
+        }
+      }
+      .form-type-select {
+        position: relative;
+        &:after {
+          float: left;
+          top: 7px;
+        }
+        select {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          display: block;
+          padding: 0 10px;
+          position: relative;
+          &.form-control {
+            @media screen and (max-width: 767px) {
+              width: 190px;
+            }
+          }
+        }
+        select::-ms-expand {
+          display: none;
+        }
+      }
+    }
+    #edit-actions {
+      margin: 50px auto 0;
+      max-width: 768px;
+    }
+  }
+  .ui-menu {
+    .ui-menu-item {
+      .ui-menu-item-wrapper {
+        display: block;
+        width: 100%;
+        &:hover {
+          background: $theme_color !important;
+          border: none;
+        }
+      }
+    }
+  }
+}

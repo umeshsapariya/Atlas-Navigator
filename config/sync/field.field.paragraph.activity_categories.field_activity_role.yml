@@ -1,0 +1,28 @@
+uuid: 6e7da330-cf1b-4e63-a80e-afc08259b48f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_activity_role
+    - node.type.assessment_form
+    - paragraphs.paragraphs_type.activity_categories
+id: paragraph.activity_categories.field_activity_role
+field_name: field_activity_role
+entity_type: paragraph
+bundle: activity_categories
+label: Role
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      assessment_form: assessment_form
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

@@ -1,0 +1,9 @@
+atlas_clone_paragraphs.copy_skill_popup:
+  path: 'copy/skills'
+  defaults:
+    _form: '\Drupal\atlas_clone_paragraphs\Form\CloneSkills'
+    _title: 'Copy Skill'
+  requirements:
+    _access: 'TRUE'
+  options:
+    no_cache: 'TRUE'

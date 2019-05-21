@@ -1,0 +1,5 @@
+name: Atlas Respondents
+description: Raters Listing and Mail.
+package: Custom
+type: module
+core: 8.x

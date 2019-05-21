@@ -1,0 +1,9 @@
+uuid: fb6c81fd-2d48-4609-9cd3-61d1dc42779c
+langcode: en
+status: true
+dependencies: {  }
+name: 'Raters Relationship'
+vid: raters_relationship
+description: ''
+hierarchy: 0
+weight: 0

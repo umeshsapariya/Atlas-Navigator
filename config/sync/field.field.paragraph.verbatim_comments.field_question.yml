@@ -1,0 +1,19 @@
+uuid: 2db43f88-0cf4-417e-8a0b-c104f8efdde0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_question
+    - paragraphs.paragraphs_type.verbatim_comments
+id: paragraph.verbatim_comments.field_question
+field_name: field_question
+entity_type: paragraph
+bundle: verbatim_comments
+label: Question
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

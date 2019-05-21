@@ -1,0 +1,18 @@
+uuid: c1576bac-9d59-44c7-8775-46f27a21e738
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.learning_activity
+id: node.learning_activity.title
+field_name: title
+entity_type: node
+bundle: learning_activity
+label: 'Activity Name'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

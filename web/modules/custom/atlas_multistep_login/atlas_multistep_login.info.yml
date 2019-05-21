@@ -1,0 +1,5 @@
+name: Atlas Multi Step
+type: module
+description: Custom Multi Step Login Form
+core: 8.x
+package: Custom

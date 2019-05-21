@@ -1,0 +1,471 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+
+
+.path-role-page {
+  .page-title {
+    display: none;
+  }
+  .role-container {
+    .role-dashboard-form {
+      align-items: stretch;
+      display: inline-block;
+      display: -ms-flexbox;
+      display: flex;
+      display: inline-block;
+      -ms-flex-align: stretch;
+      -ms-flex-direction: row;
+      flex-direction: row;
+      height: 100%;
+      width: 100%;
+      * {
+        font-family: $segoeui-regular;
+      }
+      .outer-section {
+        border-radius: 10px;
+        display: -ms-flexbox;
+        display: flex;
+        display: inline-block;
+        display: inline-block;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        height: 100%;
+
+        &#left-outer-section {
+          background: #fff;
+          border: 1px solid #d7d7d7;
+          float: left;
+          padding: 10px 10px;
+          width: 60%;
+
+          .insert_position_label {
+            color: #2b4853;
+            font-size: 23px;
+            margin-bottom: 10px;
+            padding: 0 10px;
+            text-transform: capitalize;
+          }
+          #filter-container {
+            display: inline-block;
+            margin-bottom: 10px;
+            text-align: center;
+            width: 100%;
+
+            .js-form-type-select {
+              display: inline-block;
+              margin: 0 .5%;
+              width: 23%;
+
+              select {
+                background-color: #e2e2e2;
+                border-color: #dfdfdf;
+                border-radius: 15px;
+                color: #5e5e5e;
+                font-size: 13px;
+
+                @media only screen and (max-width: 1150px) {
+                  font-size: 12px;
+                }
+                @media only screen and (max-width: 1050px) {
+                  font-size: 12px;
+                }
+                @media screen and (max-width: 767px) {
+                  width: 100%;
+                }
+                @media only screen and (max-width: 420px) {
+                  font-size: 14px;
+                }
+              }
+              &:after {
+                position: absolute;
+                right: 10px;
+              }
+              @media only screen and (max-width: 1150px) {
+                display: inline-block;
+                margin: 6px .5%;
+                width: 40%;
+              }
+              @media only screen and (max-width: 991px) {
+                width: 48%;
+              }
+              @media only screen and (max-width: 480px) {
+                display: inline-block;
+                margin: 5px 1%;
+                width: 70%;
+              }
+            }
+          }
+          .table-responsive {
+            margin-bottom: 0;
+            table {
+              border: 0;
+
+              thead {
+                > tr {
+                  border-bottom: 1px solid #b7b7b7;
+                  padding-bottom: 2px;
+                  > th {
+                    border: 0;
+                    border-bottom-width: 0;
+                    color: #2b4853;
+                    font-family: $segoeui-semibold;
+                    text-align: center;
+
+                    &:first-child {
+                      padding-left: 8%;
+                      text-align: left;
+
+                      @media only screen and (max-width: 420px) {
+                        padding-left: 5px;
+                      }
+                    }
+                    @media only screen and (max-width: 420px) {
+                      font-size: 12px;
+                    }
+                  }
+                }
+              }
+              tbody,
+              tr {
+                display: inline-block;
+                width: 100%;
+                th,
+                td {
+                  border: 0;
+                  display: inline-block;
+                  width: 49%;
+                }
+                th:last-child {
+                  cursor: pointer;
+                  position: relative;
+
+                  &:before {
+                    content: "\f0de";
+                    font-family: FontAwesome;
+                    font-size: 1.3rem;
+                    font-weight: 900;
+                    opacity: .3;
+                    position: absolute;
+                    right: 1em;
+                    top: 10px;
+                    @media only screen and (max-width: 767px) {
+                      right: 0;
+                    }
+                  }
+                  &:after {
+                    content: "\f0dd";
+                    font-family: FontAwesome;
+                    font-size: 1.3rem;
+                    font-weight: 900;
+                    opacity: .3;
+                    position: absolute;
+                    right: 1em;
+                    top: 15px;
+                    @media only screen and (max-width: 767px) {
+                      right: 0;
+                    }
+                  }
+                  &.active {
+                    &.asc {
+                      &:before {
+                        opacity: 1;
+                      }
+                    }
+                    &.desc {
+                      &:after {
+                        opacity: 1;
+                      }
+                    }
+                  }
+                }
+              }
+              tbody {
+                max-height: 340px;
+                tr {
+                  border: 0;
+                  border-bottom: 1px solid #cacaca;
+
+                  &:last-child {
+                    border-bottom: 0;
+                  }
+                  td {
+                    border: 0;
+                    border-bottom-width: 0;
+                    padding: 10px 25px;
+                    vertical-align: middle;
+
+                    @media screen and (max-width: 991px) {
+                      border: 0;
+                      padding: 8px 10px;
+                    }
+                    @media screen and (max-width: 767px) {
+                      padding: 8px 4px;
+                    }
+
+                    &:last-child {
+                      text-align: center;
+                    }
+                    &.empty.message {
+                      color: #2b4853;
+                      font-size: 15px;
+                      text-align: left;
+                      width: 100%;
+                    }
+                  }
+                }
+              }
+            }
+          }
+          @media screen and (max-width: 900px) {
+            display: inline-block;
+            float: none;
+            height: auto;
+            margin-bottom: 10px;
+            width: 100%;
+          }
+        }
+        &#right-outer-section {
+          float: right;
+          margin-left: 1%;
+          width: 39%;
+          .form-wrapper {
+            height: 100%;
+
+            .outer_Wrap {
+              display: -ms-flexbox;
+              display: flex;
+              height: 16%;
+              margin-bottom: 10px;
+              width: 100%;
+
+              .text {
+                font-family: $segoeui-semibold;
+                font-size: 16px;
+                line-height: 16px;
+                text-align: center;
+                text-transform: capitalize;
+                vertical-align: middle;
+                @media only screen and (max-width: 1024px) {
+                  font-size: 13px;
+                }
+                @media only screen and (max-width: 767px) {
+                  font-size: 14px;
+                }
+              }
+              .associates-people {
+                background-color: #fff;
+                border: 1px solid #d7d7d7;
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                width: 49%;
+
+                .total_no {
+                  color: #00aeef;
+                  font-family: $segoeui-bold;
+                  font-size: 35px;
+                  line-height: 30px;
+                  margin: 0 0 5px 0;
+                  text-align: center;
+                  vertical-align: middle;
+                }
+              }
+              .skill_analysis {
+                background-color: #fff;
+                border: 1px solid #d7d7d7;
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-left: 2%;
+                width: 49%;
+
+                .image_area {
+                  display: block;
+                  margin: 0 auto;
+                  vertical-align: middle;
+                  width: 35px;
+                  img {
+                    height: auto;
+                    margin: 0 0 3px 0;
+                    width: 100%;
+                  }
+                }
+              }
+              @media screen and (max-width: 900px) {
+                height: auto;
+              }
+            }
+            caption {
+              border-bottom: 1px solid #d7d7d7;
+              color: #2b4853;
+              font-family: $segoeui-semibold;
+              font-size: 18px;
+              padding: 10px;
+              text-transform: capitalize;
+            }
+            .table-responsive {
+              margin-bottom: 0;
+              .mCSB_inside > .mCSB_container {
+                margin-right: 10px;
+              }
+              @media screen and (max-width: 767px) {
+                border: 0;
+              }
+              .table-bordered {
+                border: 0;
+                margin-bottom: 0;
+                tbody {
+                  background-color: transparent;
+                  display: inline-block;
+                  min-height: 100px;
+                  padding: 5px;
+                  width: 100%;
+                  tr {
+                    display: inline-block;
+                    width: 100%;
+                    td {
+                      border: 0;
+                      color: #416e7f;
+                      display: inline-block;
+                      font-size: 15px;
+                      line-height: 20px;
+                      padding: 3px 5px;
+                      text-align: center;
+                      text-transform: capitalize;
+                      vertical-align: middle;
+                      width: 42%;
+
+                      &:nth-child(1) {
+                        text-align: left;
+                      }
+                      &:nth-child(3) {
+                        width: 10%;
+                      }
+                      @media only screen and (max-width: 1150px) {
+                        font-size: 15px;
+                        line-height: 16px;
+                      }
+                      @media only screen and (max-width: 991px) {
+                        font-size: 11px;
+                        padding: 4px 3px;
+                      }
+                      @media only screen and (max-width: 900px) {
+                        font-size: 16px;
+                      }
+                      @media only screen and (max-width: 767px) {
+                        font-size: 14px;
+                        line-height: 18px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                      }
+                      &.empty.message {
+                        color: #2b4853;
+                        font-size: 15px;
+                        text-align: left;
+                        width: 100%;
+                      }
+                    }
+                  }
+                }
+                &.table-striped tbody tr:nth-of-type(odd) {
+                  background-color: transparent;
+                }
+              }
+            }
+            .strengths-opportunities-wrap {
+              height: 79%;
+              .top-strengths,
+              .top-opportunities {
+                background: #fff;
+                border: 1px solid #d7d7d7;
+                border-radius: 10px;
+                display: inline-block;
+                height: 49.5%;
+                overflow: hidden;
+                width: 100%;
+
+                @media screen and (max-width: 900px) {
+                  display: inline-block;
+                  margin-bottom: 30px;
+                  width: 100%;
+                }
+                tr {
+                  padding: 5px 0;
+                }
+              }
+              .top-strengths {
+                margin-bottom: 10px;
+              }
+              @media screen and (max-width: 900px) {
+                height: auto;
+              }
+            }
+            @media screen and (max-width: 900px) {
+              height: auto;
+            }
+          }
+          @media screen and (max-width: 900px) {
+            display: inline-block;
+            float: none;
+            height: auto;
+            margin-left: 0;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.dashboard-user-info {
+  .dashboard-user-image {
+    background-size: 100%;
+    border-radius: 50%;
+    display: inline-block;
+    height: 60px;
+    overflow: hidden;
+    vertical-align: middle;
+    width: 60px;
+    img {
+      height: 60px;
+      width: 60px;
+    }
+  }
+  .dashboard-user-text {
+    color: #416e7f;
+    display: inline-block;
+    margin-left: 4%;
+    margin-top: 4px;
+    text-transform: capitalize;
+    vertical-align: middle;
+    width: 60%;
+
+    .dashboard-user-title {
+      font-family: $segoeui-semibold;
+      font-size: 16px;
+      a {
+        color: #416e7f;
+        font-family: $segoeui-semibold;
+        font-size: 16px;
+      }
+    }
+    .dashboard-user-designation {
+      font-family: $segoeui-regular;
+      font-size: 14px;
+    }
+    @media screen and (max-width: 991px) {
+      margin-left: 2%;
+    }
+    @media screen and (max-width: 480px) {
+      margin-left: 0;
+    }
+  }
+}
+
+
+

@@ -1,0 +1,14 @@
+uuid: 2a66e6ee-f60a-4e5a-97d8-800f188571ca
+langcode: en
+status: '1'
+dependencies: {  }
+id: anonymous_login_add_assessment
+label: 'Anonymous login - add Assessment'
+message: 'Yes'
+path: /node/add/assessment_form
+redirect_path: /
+checked_for: Role
+negate: false
+user: null
+roles:
+  anonymous: anonymous

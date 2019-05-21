@@ -1,0 +1,15 @@
+atlas_respondents.respondents:
+  path: '/respondents'
+  defaults:
+    _form: '\Drupal\atlas_respondents\Form\RespondentList'
+    _title: 'Respondents'
+  requirements:
+    _permission: 'access content'
+
+atlas_respondents.respondent_autocomplete:
+  path: '/respondents/data'
+  defaults:
+    _controller: '\Drupal\atlas_respondents\Controller\RespondentsAutocompleteController::handleRespondentsAutocomplete'
+    _format: json
+  requirements:
+    _access: 'TRUE'

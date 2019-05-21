@@ -1,0 +1,14 @@
+uuid: 2af2d51c-c3c9-48f5-ac9e-332a07369893
+langcode: en
+status: '1'
+dependencies: {  }
+id: anonymous_login_role_list
+label: 'Anonymous login - Role list'
+message: 'Yes'
+path: /roles-list
+redirect_path: /
+checked_for: Role
+negate: false
+user: null
+roles:
+  anonymous: anonymous

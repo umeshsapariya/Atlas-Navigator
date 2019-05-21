@@ -1,0 +1,9 @@
+atlas_role_dashboard.dashboard:
+  path: '/role-page/{role_id}'
+  defaults:
+    _form: '\Drupal\atlas_role_dashboard\Form\RoleDashboardForm'
+    _title: 'Role Dashboard'
+  requirements:
+   _permission: 'Atlas Role Dashboard'
+
+

@@ -1,0 +1,32 @@
+uuid: 8ee52aa7-eff7-4c25-a2e5-379d5fabde94
+langcode: en
+status: true
+dependencies: {  }
+id: super_admin
+label: 'Super Admin'
+weight: 4
+is_admin: null
+permissions:
+  - 'Atlas Role Dashboard'
+  - 'access content overview'
+  - 'administer profile form display'
+  - 'administer user form display'
+  - 'administer users'
+  - 'create assessment_form content'
+  - 'create learning_activity content'
+  - 'delete any learning_activity content'
+  - 'delete own learning_activity content'
+  - 'edit any assessment_form content'
+  - 'edit any learning_activity content'
+  - 'edit own assessment_form content'
+  - 'edit own learning_activity content'
+  - 'masquerade as non_admin'
+  - 'masquerade as res'
+  - 'masquerade as super_admin'
+  - 'publish any node type assessment_form'
+  - 'publish editable node type assessment_form'
+  - 'publish own node type assessment_form'
+  - 'unpublish any node type assessment_form'
+  - 'unpublish editable node type assessment_form'
+  - 'unpublish own node type assessment_form'
+  - 'update any general_profile profile'

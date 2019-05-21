@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains atlas_multistep_login.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function atlas_multistep_login_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the multi_step module.
+    case 'help.page.multi_step':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Multi Step Login Form') . '</p>';
+      return $output;
+
+    break;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function atlas_multistep_login_theme($existing, $type, $theme, $path) {
+  return [
+    'multistep_login_form' => [
+      'render element' => 'form',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function atlas_multistep_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'user_login_form') {
+    $form['name']['#type'] = 'hidden';
+  }
+}

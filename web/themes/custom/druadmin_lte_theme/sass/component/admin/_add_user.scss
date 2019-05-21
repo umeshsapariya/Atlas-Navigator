@@ -1,0 +1,212 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+
+.admin_custom_theme {
+  .user-register-form {
+    .field--name-user-picture {
+      border-bottom: 1px solid #e5e5e5;
+      border-top: 1px solid #e5e5e5;
+      margin-bottom: 15px;
+      padding: 20px 0;
+      .label {
+        font-family: $segoeui-semibold;
+        margin-top: 15px;
+      }
+      .description {
+        display: none;
+        font-size: 0;
+      }
+      .image-preview {
+        display: inline-block;
+        img {
+          border-radius: 50px;
+          height: 50px;
+          width: 50px;
+        }
+      }
+      .image-widget-data {
+        display: inline-block;
+        font-size: 0;
+        @media only screen and (max-width: 420px) {
+          width: 100%;
+        }
+        span {
+          display: none;
+        }
+      }
+    }
+    .form-type-password-confirm {
+      .form-type-password {
+        .password-strength {
+          float: right;
+          margin-right: 8px;
+          @media only screen and (max-width: 767px) {
+            margin-right: 12px;
+            max-width: 250px;
+            width: 100%;
+          }
+          @media only screen and (max-width: 478px) {
+            float: none;
+            width: 100%;
+          }
+          .password-strength__title {
+            display: none;
+          }
+        }
+      }
+    }
+    .form-control {
+      display: inline-block;
+      width: 250px;
+      @media only screen and (min-width: 421px) and (max-width: 767px) {
+        max-width: 250px;
+        width: 100%;
+      }
+      @media only screen and (max-width: 420px) {
+        width: 100%;
+      }
+    }
+    .form-wrapper {
+      margin-bottom: 15px;
+    }
+    .fieldset-wrapper {
+      margin: 10px 0;
+    }
+    .form-radio {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      -o-appearance: none;
+      appearance: none;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 50px;
+      color: #666;
+      cursor: pointer;
+      display: inline-block;
+      height: 16px;
+      margin-right: 7px;
+      outline: none;
+      position: relative;
+      width: 16px;
+      &:focus {
+        outline: none;
+      }
+    }
+    .form-radio:checked {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      &:before {
+        background-color: $theme_color;
+        border-radius: 50px;
+        content: "";
+        height: 6px;
+        position: absolute;
+        right: 4px;
+        top: 4px;
+        width: 6px;
+      }
+    }
+    .form-textarea-wrapper {
+      overflow: auto !important;
+      -webkit-overflow-scrolling: touch;
+    }
+    details {
+      border: none;
+      summary {
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 10px;
+      }
+      > .details-wrapper {
+        padding: .5em 0;
+      }
+    }
+    legend {
+      padding-bottom: 10px;
+    }
+    .js-form-type-date {
+      position: relative;
+      &::after {
+        color: #1f363f;
+        content: "\e911";
+        cursor: pointer;
+        display: inline-block;
+        font-family: "icomoon";
+        pointer-events: none;
+        position: absolute;
+        right: 20px;
+        top: 2px;
+      }
+    }
+  }
+
+  .user-form {
+    @extend .user-register-form;
+  }
+}
+
+
+.path-user {
+  .dialog-off-canvas-main-canvas {
+    .main-header {
+      .navbar {
+        display: block;
+      }
+    }
+  }
+  .wrapper {
+    .content-wrapper {
+      background: transparent;
+      margin-left: 250px;
+      max-width: 1280px;
+      text-align: left;
+      width: auto;
+      @media only screen and (max-width: 767px) {
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+.user-reset-page {
+  @extend .admin_custom_theme;
+}
+
+.path-thank-you {
+  @extend .admin_custom_theme;
+}
+
+.user-register-form {
+  .form-type-select {
+    &:after {
+      right: 33px;
+      top: 0;
+    }
+  }
+}
+
+#user-importer {
+  padding: 10px;
+  #ajax-wrapper {
+    width: 30%;
+    @media only screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
+  .form-submit {
+    margin: 0;
+  }
+}
+.views-exposed-form {
+  .js-form-item {
+    width: 30%;
+    @media only screen and (max-width: 767px) {
+      width: 100%;
+    }
+  }
+  #edit-actions {
+    text-align: left;
+  }
+}

@@ -1,0 +1,46 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+
+.admin_custom_theme {
+  &.node--type-assessment-form {
+    .node-preview-container {
+      right: 30px;
+      text-decoration: underline;
+      top: 90px;
+      width: 300px;
+    }
+
+    .page-title {
+      span {
+        font-size: 26px;
+      }
+    }
+    .nav-tabs-custom {
+      article {
+        &.node--view-mode-full {
+          .node__content {
+            margin: 20px 0;
+            .field--type-entity-reference-revisions {
+              > .field__label {
+                font-size: 20px;
+                margin: 20px 0 10px 0;
+              }
+            }
+            .field__label {
+              display: inline-block;
+              min-width: 150px;
+            }
+            .field__items {
+              .field__item {
+                display: inline-block;
+                font-family: $segoeui-regular;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

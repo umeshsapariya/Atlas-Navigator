@@ -1,0 +1,13 @@
+diff --git a/src/Plugin/views/field/PublishContentNode.php b/src/Plugin/views/field/PublishContentNode.php
+index 87aa5c3..027991d 100644
+--- a/src/Plugin/views/field/PublishContentNode.php
++++ b/src/Plugin/views/field/PublishContentNode.php
+@@ -52,6 +52,7 @@ class PublishContentNode extends FieldPluginBase {
+     $text = $values->_entity->isPublished() ? $this->t('Unpublish') : $this->t('Publish');
+     $link = Link::fromTextAndUrl($text, $url);
+ 
+-    return $this->getRenderer()->render($link->toRenderable());
++    $render_array = $link->toRenderable();
++    return $this->getRenderer()->render($render_array);
+   }
+ }

@@ -1,0 +1,196 @@
+<?php
+
+/**
+ * @file
+ * Contains atlas_assessment.module.
+ */
+
+use Drupal\views\ViewExecutable;
+use Drupal\user\Entity\User;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Database\Database;
+use Drupal\field\Entity\FieldStorageConfig;
+
+/**
+ * Implements hook_form_alter().
+ */
+function atlas_assessment_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == 'node_learning_activity_edit_form') {
+    $form['actions']['delete']['#attributes']['class'] = 'btn-primary';
+  }
+  if ($form_id == 'node_assessment_form_form') {
+    $form['actions']['submit']['#submit'][] = 'assessment_form_submit';
+    $form['#attached']['library'][] = 'atlas_assessment/altas_assessment_page';
+    $form['field_category']['widget']['#title'] = '';
+    $form['field_category']['widget']['#title_display'] = 'invisible';
+    $form['field_no_of_associates']['#access'] = FALSE;
+    $form['actions']['preview']['#access'] = FALSE;
+  }
+}
+
+/**
+ * Submit handler for assessment node form.
+ */
+function assessment_form_submit(&$form, $form_state) {
+  $fieldStorage = FieldStorageConfig::loadByName('paragraph', 'field_activity_category');
+  $fieldStorage->setSetting('allowed_values_function', 'getAllCategories');
+  // Save configuration.
+  $fieldStorage->save();
+
+  $fieldStorage = FieldStorageConfig::loadByName('paragraph', 'field_activity_skill');
+  $fieldStorage->setSetting('allowed_values_function', 'getAllSkills');
+  // Save configuration.
+  $fieldStorage->save();
+}
+
+/**
+ * Implements hook_form_FORM_ID_edit_form_alter().
+ */
+function atlas_assessment_form_node_assessment_form_edit_form_alter(&$form, FormStateInterface &$form_state, $form_id) {
+  $form['actions']['submit']['#submit'][] = 'assessment_form_submit';
+  $user = User::load(\Drupal::currentUser()->id());
+  if (!in_array('administrator', $user->getRoles())) {
+    $form['revision_information']['#access'] = FALSE;
+    $form['actions']['preview']['#access'] = FALSE;
+  }
+  $form['field_no_of_associates']['#access'] = FALSE;
+  $form['#attached']['library'][] = 'atlas_assessment/altas_assessment_page';
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function atlas_assessment_field_widget_entity_reference_paragraphs_form_alter(&$element, &$form_state, $context) {
+  $field_definition = $context['items']->getFieldDefinition();
+  $paragraph_entity_reference_field_name = $field_definition->getName();
+  // hide labels of skill level information paragraphs
+  if ($paragraph_entity_reference_field_name == "field_skills" || $paragraph_entity_reference_field_name == "field_verbatim_comments") {
+    $element['top']['links']['remove_button']['#value'] = "X";
+  }
+  if ($paragraph_entity_reference_field_name == 'field_skill_level_information') {
+    $element['top']['links']['remove_button']['#value'] = "X";
+    $element['subform']['field_level_description']['widget'][0]['#title_display'] = 'invisible';
+    $element['subform']['field_level_header']['widget'][0]['value']['#title_display'] = 'invisible';
+    $element['subform']['field_level_description']['widget']['#after_build'][] = '_allowed_formats_remove_textarea_help';
+  }
+  elseif ($paragraph_entity_reference_field_name == 'field_category') {
+    $element['top']['links']['remove_button']['#value'] = "X";
+    $element['subform']['field_skills']['widget']['#title'] = '';
+    $element['subform']['field_skills']['widget']['#title_display'] = 'invisible';
+  }
+}
+
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter().
+ */
+function atlas_assessment_field_widget_default_paragraphs_form_alter(&$element, &$form_state, $context) {
+  $field_definition = $context['items']->getFieldDefinition();
+  $paragraph_entity_reference_field_name = $field_definition->getName();
+  if ($paragraph_entity_reference_field_name == "field_activity") {
+    $element['subform']['field_description']['widget']['#after_build'][] = '_allowed_formats_remove_textarea_help';
+  }
+}
+
+/**
+ *
+ * @function
+ * after_build callback
+ */
+function _allowed_formats_remove_textarea_help($form_element, FormStateInterface $form_state) {
+  // Removes text format drowdown in skill level information.
+  if (isset($form_element[0]['format'])) {
+    // All this stuff is needed to hide the help text.
+    unset($form_element[0]['format']['guidelines']);
+    unset($form_element[0]['format']['help']);
+    unset($form_element[0]['format']['#type']);
+    unset($form_element[0]['format']['#theme_wrappers']);
+    $form_element[0]['format']['format']['#access'] = FALSE;
+  }
+
+  return $form_element;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function atlas_assessment_theme() {
+  return [
+    'assessment_multi_step_form' => [
+      'render element' => 'form',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function atlas_assessment_views_pre_render(ViewExecutable $view) {
+  // Calculate no of Associates.
+  if ($view->id() == "roles_list" && $view->current_display == 'page_1') {
+    foreach ($view->result as $value) {
+      $role_id = $value->_entity->get('nid')->value;
+      $relationship_tid = get_self_relationship_tid();
+      // // To get no of associate
+      //      $query = \Drupal::database()->select('assessment_invite_details', 'aid');
+      //      $query->fields('aid', ['id']);
+      //      $query->join('assessment_invite', 'ai', 'ai.invite_id = aid.invite_id');
+      //      $query->condition('ai.role_id', $nid);
+      //      $query->distinct();
+      //      $query->condition('aid.completed', 1);
+      //      $query->condition('aid.relationship_tid', $relationship_tid);
+      //
+      //      $results = $query->execute()->fetchAll();
+      //
+      // Getroleassociates
+      $connection = Database::getConnection();
+      $associates_query = $connection->select('assessment_invite', 'ai');
+      $associates_query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
+      $associates_query->fields('ai', ['uid']);
+      $associates_query->distinct();
+      $associates_query->condition('aid.completed', 1);
+      $associates_query->condition('ai.role_id', $role_id);
+      $associates_results = $associates_query->execute()->fetchAll();
+      if ($associates_results) {
+        $count_associates = count($associates_results);
+      }
+      else {
+        $count_associates = "0";
+      }
+      // Override nid with no of associates.
+      $value->_entity->set('field_no_of_associates', $count_associates);
+     
+    }
+  }
+}
+
+/**
+ * Implements hook_views_pre_view().
+ */
+function atlas_assessment_views_pre_view($view, $display_id, array &$args) {
+   // To remove dropown operations for other user than sueradmin and admin.
+   if ($view->id() == "roles_list" && $view->current_display == 'page_1') {
+      $roles = \Drupal::currentUser()->getRoles();
+      if (!in_array('super_admin', $roles) && !in_array('administrator', $roles)) {
+        $view->removeHandler($display_id, 'field', 'dropbutton');
+      }
+   }
+}
+
+/*
+ * Implements hook_menu_local_tasks_alter().
+ */
+function atlas_assessment_menu_local_tasks_alter(&$data, $route_name) {
+  // Remove View tab for assessment form.
+  $path = \Drupal::request()->getpathInfo();
+  $arg = explode('/', $path);
+  if ($route_name == 'entity.node.edit_form' && isset($arg[1]) && $arg[1] == 'node' && isset($arg[2]) && isset($arg[3]) && $arg[3] == 'edit') {
+    $nid = $arg[2];
+    if (is_numeric($arg[2])) {
+      $node = Node::load($nid);
+      if ($node->getType() == 'assessment_form') {
+        unset($data['tabs'][0]['entity.node.canonical']);
+      }
+    }
+  }
+}

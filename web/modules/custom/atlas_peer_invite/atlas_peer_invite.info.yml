@@ -1,0 +1,5 @@
+name: Atlas Peer invite
+type: module
+description: Custom Atlas assessment invitation form
+core: 8.x
+package: Custom

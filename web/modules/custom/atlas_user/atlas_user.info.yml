@@ -1,0 +1,5 @@
+name: Atlas User
+type: module
+description: Custom module to override contib user & masquerade module as per project requirements.
+core: 8.x
+package: Custom

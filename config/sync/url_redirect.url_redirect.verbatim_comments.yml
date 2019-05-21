@@ -1,0 +1,14 @@
+uuid: 26491f68-5c49-45f1-b60c-56707728079c
+langcode: en
+status: '1'
+dependencies: {  }
+id: verbatim_comments
+label: 'Verbatim comments'
+message: 'No'
+path: /verbatim-comments
+redirect_path: /home
+checked_for: Role
+negate: false
+user: null
+roles:
+  anonymous: anonymous

@@ -1,0 +1,394 @@
+<?php
+
+/**
+ * @file
+ * Contains atlas_common functions and hooks.
+ */
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Breadcrumb\Breadcrumb;
+use Drupal\node\Entity\Node;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\Core\Database\Database;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+
+/**
+ * Returns skills of given Role id.
+ */
+function getSkillsFromRoleID($nid) {
+  $role_skills = [];
+  $node = Node::load($nid);
+  $node_type = $node->bundle();
+  // Check for only assessment_form.
+  if ($node->bundle() == 'assessment_form') {
+    $field_category_paragraph_ref = $node->get('field_category')->getValue();
+    foreach ($field_category_paragraph_ref as $category) {
+      $category_id = $category['target_id'];
+      $paragraph_category = Paragraph::load($category['target_id']);
+      $category_skills = $paragraph_category->field_skills->getValue();
+      foreach ($category_skills as $skill) {
+        $category_skill_paragraph_ref = Paragraph::load($skill['target_id']);
+        $skill_name = $category_skill_paragraph_ref->field_skill->getValue();
+        $role_skills[$skill['target_id']] = $skill_name[0]['value'];
+      }
+    }
+  }
+  return $role_skills;
+}
+
+/**
+ * Returns skill wise 360 results array.
+ */
+function get360Score($skills_data) {
+  $score_360 = [];
+  foreach ($skills_data as $skill_name => $skill_values) {
+    $relation_sum_value = 0;
+    foreach ($skills_data[$skill_name] as $relation => $rating_values) {
+      $relation_sum_value += array_sum($rating_values) / count($rating_values);
+      $num_of_relation = count($skills_data[$skill_name]);
+    }
+    $score = $relation_sum_value / $num_of_relation;
+    $score_360[$skill_name] = number_format($score,1);
+  }
+  return $score_360;
+}
+
+/**
+ * Returns Normalised as per given skill.
+ */
+function normalised_score_to_5($score, $skill_id) {
+  $connection = Database::getConnection();
+  $query = $connection->select('paragraph__field_number_of_levels', 'p');
+  $query->condition('p.	entity_id', $skill_id);
+  $query->fields('p', ['field_number_of_levels_value']);
+  $no_of_levels = $query->execute()->fetchField();
+  $score = ($score * 5) / $no_of_levels;
+  return $score;
+}
+
+/**
+ * Returns all skill data of assessment invites.
+ */
+function GetAssessmentInvitesSkillData($assessment_id) {
+  // Loads current user ID.
+  $current_user_id = \Drupal::currentUser()->id();
+
+  // Get All skills with raters values of invited assessments.
+  $connection = Database::getConnection();
+  $query = $connection->select('assessment_invite', 'ai');
+  $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
+  $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
+  $query->Join('assessment_skill_data', 'asd', 'asd.assessment_id = ad.assessment_id');
+  $query->fields('ai');
+  $query->fields('aid', ['relationship_tid', 'id']);
+  $query->fields('ad', ['assessment_id']);
+  $query->fields('asd');
+  $query->condition('aid.completed', 1);
+  $query->condition('aid.invite_id', $assessment_id);
+  $raters_skill_data = $query->execute()->fetchAll();
+
+  if ($raters_skill_data) {
+    // Strengths and opportunities buttons.
+    foreach ($raters_skill_data as $rater_skill) {
+      if ($rater_skill->score > 0) {
+        $skill_wise_ratings[$rater_skill->skill_id][$rater_skill->relationship_tid][] = normalised_score_to_5($rater_skill->score, $rater_skill->skill_id);
+      }
+    }
+    if (isset($skill_wise_ratings)) {
+      $overall_proficiency_results = get360Score($skill_wise_ratings);
+      return $overall_proficiency_results;
+    }
+    return FALSE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+/**
+ * Returns all skill data of assessment invites.
+ */
+function get_latest_invite_id() {
+  $connection = Database::getConnection();
+  $current_user_id = \Drupal::currentUser()->id();
+  // To get default invite_id.
+  $query = $connection->select('assessment_invite', 'ai');
+  $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
+  $query->Join('assessment_data', 'ad', 'ad.invite_id = aid.id');
+  $query->Join('assessment_skill_data', 'asd', 'asd.assessment_id = ad.assessment_id');
+  $query->fields('ai');
+  $query->fields('aid', ['relationship_tid', 'id']);
+  $query->fields('ad', ['assessment_id']);
+  $query->fields('asd');
+  $query->condition('ai.uid', $current_user_id);
+  $query->condition('aid.completed', 1);
+  $query->orderBy('ai.invite_id', 'DESC');
+  $query->range(0, 1);
+  $default_invite_value = $query->execute()->fetchAll();
+  $default_invite_id = $default_invite_value[0]->invite_id;
+  if ($default_invite_id) {
+    return $default_invite_id;
+  }
+  return FALSE;
+}
+
+/**
+ * Returns top strenghts and oppoutunities.
+ */
+function get_top_strengths_opportunities($role_id, $type, $number,$filter_by_role, $relationship, $required_date,$status) {
+  // GetAssessmentInvitesSkillData.
+  $connection = Database::getConnection();
+  $query = $connection->select('assessment_invite', 'ai');
+  $query->Join('assessment_invite_details', 'aid', 'aid.invite_id= ai.invite_id');
+  $query->fields('ai', ['invite_id']);
+  if ($filter_by_role == 0) {
+    $query->join('profile', 'pr', 'pr.uid = ai.uid');
+    $query->join('profile__field_360_role', 'p', 'p.entity_id = pr.profile_id');
+  }elseif ($filter_by_role == 1) {
+    $query->join('profile', 'pr', 'pr.uid = ai.uid');
+    $query->join('profile__field_360_role', 'p', 'p.entity_id = pr.profile_id');
+    $query->condition('p.field_360_role_target_id', $role_id, '=');
+  }
+  if ($relationship != 'All') {
+    $query->condition('aid.relationship_tid', $relationship);
+  }
+  if ($required_date) {
+    $query->condition('ai.invited_date', $required_date, '>=');
+  }
+  if ($status != 'All') {
+    $query->join('users_field_data', 'u', 'u.uid = ai.uid');
+    $query->condition('u.status', (int) $status);
+  }
+  $query->condition('aid.completed', 1);
+  $query->condition('ai.role_id', $role_id);
+  $query->distinct();
+  $role_invites = $query->execute()->fetchAll();
+  $all_strenghts = [];
+  $all_opportunities = [];
+
+  if ($role_invites) {
+    foreach ($role_invites as $invite) {
+      $invites_results[] = GetAssessmentInvitesSkillData($invite->invite_id);
+    }
+
+    if ($invites_results) {
+      foreach ($invites_results as $each_result) {
+
+        if ($each_result) {
+          foreach ($each_result as $skill_id => $score) {
+            $category_skill_paragraph_ref = Paragraph::load($skill_id);
+            $skill_name = $category_skill_paragraph_ref->field_skill->getValue();
+
+            $target_proficiency_level = $category_skill_paragraph_ref->field_target_proficiency->getValue();
+            $normalised_target_proficiency_level = normalised_score_to_5($target_proficiency_level[0]['value'], $skill_id);
+            $floor_target_level = floor($normalised_target_proficiency_level * 2) / 2;
+            $gap = $score - $floor_target_level;
+            $all_skill_score[$skill_id][] = ["name" => $skill_name[0]['value'], "floor_target_level" => $floor_target_level, "360_score" => $score];
+          }
+        }
+      }
+    }
+  }
+
+  foreach ($all_skill_score as $skill_id => $raters_data) {
+    $total_score = 0;
+
+    foreach ($raters_data as $rater_score) {
+      $total_score = $total_score + $rater_score['360_score'];
+    }
+    $avg_score = $total_score / count($raters_data);
+    $avg_score = floor($avg_score * 2) / 2;
+    $gap = $avg_score - $rater_score['floor_target_level'];
+    if ($gap >= 0) {
+      $all_strenghts[] = [
+        '360_score' => $avg_score,
+        'name' => $rater_score['name'],
+        'gap' => $gap,
+      ];
+    }
+    else {
+      $all_opportunities[] = [
+        '360_score' => $avg_score,
+        'name' => $rater_score['name'],
+        'gap' => $gap,
+      ];
+    }
+  }
+  if ($all_strenghts && $type == 'strengths') {
+    array_sort_by_column($all_strenghts, "gap", SORT_DESC);
+    $top_strenghts = array_slice($all_strenghts, 0, $number, TRUE);
+    return $top_strenghts;
+  }
+
+  if ($all_opportunities && $type == "opportunities") {
+    array_sort_by_column($all_opportunities, "gap");
+    $top_opportunities = array_slice($all_opportunities, 0, $number, TRUE);
+    return $top_opportunities;
+  }
+  return FALSE;
+}
+
+/**
+ * Sorts multidimensional array.
+ */
+function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
+  $sort_col = [];
+  foreach ($arr as $key => $row) {
+    $sort_col[$key] = $row[$col];
+  }
+
+  array_multisort($sort_col, $dir, $arr);
+}
+
+/**
+ * Implements hook_system_breadcrumb_alter().
+ */
+function atlas_common_system_breadcrumb_alter(Breadcrumb &$breadcrumb, RouteMatchInterface $route_match, array $context) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name == "entity.node.edit_form" || $route_name == "entity.node.delete_form") {
+    $breadcrumb_links = $breadcrumb->getLinks();
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if (isset($breadcrumb_links[1])) {
+      $breadcrumb_links[1]->setText($node->getTitle());
+      $breadcrumb_links[1]->setUrl(Url::fromRoute('<nolink>'));
+      return $breadcrumb_links;
+    }
+    else {
+      $breadcrumb->addLink(Link::createFromRoute($node->getTitle(), '<nolink>'));
+    }
+  }
+  return $breadcrumb;
+}
+
+/**
+ * @return Normalised level
+ *   Respective level as per total level
+ */
+function get_normailised_level($level, $total_level) {
+  switch ($total_level) {
+    case 10:
+      $attached_level = [10 => [1], 9 => [1], 8 => [2], 7 => [2], 6 => [3], 5 => [3], 4 => [4], 3 => [4], 2 => [5], 1 => [5]];
+      break;
+
+    case 9:
+      $attached_level = [9 => [1], 8 => [1], 7 => [2], 6 => [2], 5 => [3], 4 => [3], 3 => [4], 2 => [4], 1 => [5]];
+      break;
+
+    case 8:
+      $attached_level = [8 => [1], 7 => [1], 6 => [2], 5 => [2], 4 => [3], 3 => [4], 2 => [4], 1 => [5]];
+      break;
+
+    case 7:
+      $attached_level = [7 => [1], 6 => [1], 5 => [2], 4 => [3], 3 => [4], 2 => [4], 1 => [5]];
+      break;
+
+    case 6:
+      $attached_level = [6 => [1], 5 => [2], 4 => [2], 3 => [3], 2 => [4], 1 => [5]];
+      break;
+
+    case 5:
+      $attached_level = [5 => [1], 4 => [2], 3 => [3], 2 => [4], 1 => [5]];
+      break;
+
+    case 4:
+      $attached_level = [4 => [1], 3 => [2], 2 => [3, 4], 1 => [5]];
+      break;
+
+    case 3:
+      $attached_level = [3 => [1, 2], 2 => [3, 4], 1 => [5]];
+      break;
+
+    case 2:
+      $attached_level = [2 => [1, 2, 3], 1 => [4, 5]];
+      break;
+
+    case 1:
+      $attached_level = [1 => [1, 2, 3, 4, 5]];
+      break;
+
+    default:
+      break;
+  }
+  return $attached_level[$level];
+}
+
+/**
+ * Implements hook_user_login().
+ */
+function atlas_common_user_login($account) {
+  $request = \Drupal::request();
+  $session = $request->getSession();
+  // Set Admin view by default for superadmin and resctricted user.
+  if ($account->hasRole('res') || $account->hasRole('administrator') || $account->hasRole('super_admin')) {
+    $session->set('view', 'admin');
+  }
+}
+
+/**
+ * Custom function to get team members uids.
+ */
+function get_team_members_uid($current_user_id) {
+  $request = \Drupal::request();
+  $session = $request->getSession();
+  $connection = Database::getConnection();
+  $results = [];
+  if ($session->get('view') == 'admin') {
+    $query = $connection->select('profile', 'p');
+    $query->Join('profile__field_manager', 'pm', 'pm.entity_id = p.profile_id');
+    $query->fields('p', ['uid']);
+    $query->condition('pm.field_manager_target_id', $current_user_id);
+    $results = $query->execute()->fetchAll(PDO::FETCH_ASSOC);
+  }
+  array_unshift($results, ['uid' => $current_user_id]);
+  foreach ($results as $members_uid) {
+    $members_uids[] = $members_uid['uid'];
+  }
+  return $members_uids;
+}
+
+/**
+ * Custom function to get all team members uids.
+ */
+function get_all_team_members($parentId, array &$elements) {
+  $connection = Database::getConnection();
+  $query = $connection->select('profile', 'p');
+  $query->Join('profile__field_manager', 'pm', 'pm.entity_id = p.profile_id');
+  $query->fields('p', ['uid']);
+  $query->condition('pm.field_manager_target_id', $parentId);
+  $results = $query->execute()->fetchAll(PDO::FETCH_ASSOC);
+  if ($results) {
+    foreach ($results as $result) {
+      if (!in_array($result['uid'], $elements)) {
+        $elements[] = $result['uid'];
+        get_all_team_members($result['uid'], $elements);
+      }
+    }
+    return $elements;
+  }
+  return FALSE;
+}
+
+/**
+ * My team page
+ * Get parent user ids for creating breacrumbs.
+ */
+function get_parent_members($member_id, array &$elements) {
+  $connection = Database::getConnection();
+  $query = $connection->select('profile', 'p');
+  $query->Join('profile__field_manager', 'pm', 'pm.entity_id = p.profile_id');
+  $query->Join('users_field_data', 'ufd', 'ufd.uid = p.uid');
+  $query->fields('pm', ['field_manager_target_id']);
+  $query->fields('ufd', ['name']);
+  $query->fields('p', ['uid']);
+  $query->condition('p.uid', $member_id);
+  $results = $query->execute()->fetchAll(PDO::FETCH_ASSOC);
+
+  if (!empty($results)) {
+    if ($results[0]['field_manager_target_id'] != \Drupal::currentUser()->id()) {
+      $elements[] = $results[0]['field_manager_target_id'];
+      get_parent_members($results[0]['field_manager_target_id'], $elements);
+    }
+  }
+
+  return array_reverse($elements, TRUE);
+}

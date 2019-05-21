@@ -1,0 +1,16 @@
+atlas_common.switch_view:
+  path: '/switch-view'
+  defaults:
+    _form: '\Drupal\atlas_common\Form\SwitchViewForm'
+    _title: 'Switch View'
+  requirements:
+   _permission: 'Atlas Role Dashboard'
+
+atlas_common.my-team:
+  path: '/my-team/{userid}'
+  defaults:
+    _controller: '\Drupal\atlas_common\Controller\MyTeamController::content'
+    _title: 'My Team'
+  requirements:
+    _custom_access: '\Drupal\atlas_common\Controller\MyTeamController::access'
+

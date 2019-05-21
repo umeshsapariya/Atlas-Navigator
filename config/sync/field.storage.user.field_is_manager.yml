@@ -1,0 +1,27 @@
+uuid: 07f22f1e-9dda-4cb2-86fd-f448bbed13a2
+langcode: en
+status: true
+dependencies:
+  module:
+    - options
+    - user
+id: user.field_is_manager
+field_name: field_is_manager
+entity_type: user
+type: list_integer
+settings:
+  allowed_values:
+    -
+      value: 0
+      label: 'No'
+    -
+      value: 1
+      label: 'Yes'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

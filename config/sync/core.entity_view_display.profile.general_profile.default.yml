@@ -1,0 +1,143 @@
+uuid: abd77872-170c-4454-9bbc-0676988dfd0a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.profile.general_profile.field_360_role
+    - field.field.profile.general_profile.field_birthdate
+    - field.field.profile.general_profile.field_department
+    - field.field.profile.general_profile.field_employee_id
+    - field.field.profile.general_profile.field_first_name
+    - field.field.profile.general_profile.field_hire_date
+    - field.field.profile.general_profile.field_job_title
+    - field.field.profile.general_profile.field_last_name
+    - field.field.profile.general_profile.field_manager
+    - field.field.profile.general_profile.field_phone
+    - field.field.profile.general_profile.field_preferred_name
+    - field.field.profile.general_profile.field_role_start_date
+    - field.field.profile.general_profile.field_time_zone
+    - field.field.profile.general_profile.field_work_location
+    - profile.type.general_profile
+  module:
+    - datetime
+    - telephone
+id: profile.general_profile.default
+targetEntityType: profile
+bundle: general_profile
+mode: default
+content:
+  field_360_role:
+    weight: 5
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_birthdate:
+    weight: 11
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_department:
+    weight: 8
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_employee_id:
+    weight: 3
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_first_name:
+    weight: 0
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_hire_date:
+    weight: 12
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_job_title:
+    weight: 4
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_last_name:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_manager:
+    weight: 6
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_phone:
+    weight: 10
+    label: above
+    settings:
+      title: ''
+    third_party_settings: {  }
+    type: telephone_link
+    region: content
+  field_preferred_name:
+    weight: 7
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_role_start_date:
+    weight: 13
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_time_zone:
+    weight: 2
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: content
+  field_work_location:
+    weight: 9
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

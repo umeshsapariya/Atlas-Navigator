@@ -1,0 +1,320 @@
+.path-development-plan-details {
+  .page-title {
+    display: none;
+  }
+  .ui-dialog {
+    .container-inline {
+      display: flex;
+      width: 100%;
+      > .form-item {
+        margin-right: 15px;
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.dev-page-wrap {
+  background-color: $white-color;
+  @include border-radius(8px);
+  padding: 40px 35px;
+  @media screen and (max-width: 767px) {
+    padding: 10px;
+  }
+  .table {
+    border: none;
+    thead {
+      tr {
+        th {
+          display: none;
+        }
+      }
+    }
+    tbody {
+      tr {
+        &.selected {
+          .table-select {
+            .label {
+              &:after {
+                background-image: url("../images/tick.png");
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: 70%;
+                content: "";
+                height: 30px;
+                left: 0;
+                position: absolute;
+                top: 0;
+                width: 30px;
+              }
+            }
+          }
+          td {
+            background-color: transparent;
+          }
+        }
+        td {
+          border-color: $border_mobile;
+          border-left: none;
+          border-right: none;
+          border-width: 2px;
+          font-family: $segoeui-regular;
+          vertical-align: middle;
+        }
+      }
+    }
+    .table-select {
+      width: 45px;
+      .label {
+        font-size: 0;
+        height: 30px;
+        position: relative !important;
+        width: 30px;
+        &:before {
+          border: 2px solid $border;
+          content: "";
+          height: 30px;
+          @include border-radius(7px);
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 30px;
+        }
+      }
+      .visually-hidden {
+        .activity-info {
+          clip: rect(1px, 1px, 1px, 1px);
+          height: 1px;
+          overflow: hidden;
+          position: absolute !important;
+          width: 1px;
+          word-wrap: normal;
+        }
+      }
+    }
+  }
+  .dropbutton-multiple,
+  .dropbutton-single {
+    .dropbutton-widget {
+      background-color: transparent;
+      border: none;
+      padding-right: 0;
+      .dropbutton {
+        border: none;
+        > li {
+          background-color: $theme_color;
+          @include border-radius(20px);
+          padding-right: 26px;
+        }
+        .dropbutton-action {
+          > a {
+            color: $white-color;
+            font-family: $segoeui-regular;
+            margin-right: 0;
+            padding: 4px 6px 0 15px;
+          }
+          .ajax-progress-throbber {
+            left: -25px;
+            position: absolute;
+            top: 3px;
+          }
+          &.remove {
+            a {
+              padding: 2px 6px 1px 5px;
+            }
+          }
+        }
+        .dropbutton-toggle {
+          border-bottom-left-radius: 0;
+          border-left: 1px solid $white-color;
+          border-top-left-radius: 0;
+          height: 26px;
+          button {
+            color: $white-color;
+            height: 100%;
+          }
+        }
+        .secondary-action {
+          border-top: 1px solid $white-color;
+          color: $white-color;
+          font-family: $segoeui-regular;
+          padding: 3px 13px;
+        }
+      }
+    }
+  }
+  .dropbutton-single {
+    .dropbutton-action {
+      &.remove {
+        a {
+          padding: 2px 6px 1px 25px !important;
+        }
+      }
+    }
+  }
+  .atlas-developing-plan-details-form {
+    td {
+      color: #416e7f;
+      font-family: $segoeui-regular;
+      .dropbutton-multiple,
+      .dropbutton-single {
+        padding-right: 3em;
+      }
+    }
+  }
+}
+
+.dev-page-head {
+  margin-bottom: 35px;
+  > .form-wrapper {
+    display: flex;
+    justify-content: space-between;
+    @media screen and (max-width: 767px) {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.dev-page-head-cta {
+  @media screen and (max-width: 767px) {
+    margin-top: 10px;
+  }
+  .activity-info-btn {
+    a {
+      padding: 8px 25px;
+      &:hover {
+        border: none;
+      }
+      @media screen and (max-width: 767px) {
+        margin: 6px 14px;
+        padding: 7px 25px;
+      }
+    }
+    @media screen and (max-width: 767px) {
+      margin: 10px auto;
+    }
+  }
+  > .form-wrapper {
+    align-items: center;
+    display: flex;
+    @media screen and (max-width: 767px) {
+      flex-wrap: wrap;
+    }
+    input {
+      text-transform: capitalize;
+      @media screen and (max-width: 767px) {
+        font-size: 14px;
+        margin: 10px auto 10px;
+      }
+    }
+  }
+  .form-type-select {
+    margin: 0;
+    &:after {
+      position: absolute;
+      right: 10px;
+    }
+    select {
+      background-color: $level_background;
+      border: none;
+      border-radius: 20px;
+      padding-right: 30px;
+    }
+    @media screen and (max-width: 767px) {
+      margin: 5px auto;
+    }
+  }
+  .btn {
+    padding: 6px 30px !important;
+    @media screen and (max-width: 767px) {
+      margin-right: 5px;
+    }
+  }
+}
+
+.dev-page-title {
+  margin-bottom: 0;
+  @media screen and (max-width: 767px) {
+    margin-bottom: 10px;
+  }
+}
+
+.activity-info {
+  align-items: center;
+  display: flex;
+  .activity-image {
+    margin-right: 5px;
+    min-width: 50px;
+    @media screen and (max-width: 767px) {
+      min-width: 25px;
+    }
+    img {
+      height: 35px;
+      @media screen and (max-width: 767px) {
+        height: 30px;
+        margin-right: 20px;
+      }
+    }
+  }
+  .use-ajax {
+    color: #416e7f;
+    font-family: $segoeui-regular;
+    text-transform: capitalize;
+  }
+}
+
+
+.atlas-developing-plan-details-form {
+  tbody {
+    tr {
+      height: 70px;
+    }
+  }
+}
+
+.change-activity-due-date-form {
+  .js-form-item-date-time {
+    display: none;
+  }
+  .form-item-date-date {
+    &:after {
+      position: absolute;
+    }
+  }
+}
+
+.add-development-plan-form {
+  .form-type-textarea {
+    label {
+      float: none;
+    }
+  }
+  .form-type-select {
+    &:after {
+      position: absolute;
+      right: 11px;
+      top: 33px;
+    }
+    select {
+      @media screen and (max-width: 767px) {
+        width: 100%;
+      }
+    }
+  }
+
+  .js-form-type-date {
+    position: relative;
+    width: 200px;
+    &::after {
+      color: #1f363f;
+      content: "\e911";
+      cursor: pointer;
+      display: inline-block;
+      font-family: "icomoon";
+      pointer-events: none;
+      position: absolute;
+      right: 23px;
+      top: 33px;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+<div class="category_graph skill_details_outer">
+  <div class="inner_wrapper">
+    <div class="left_rating_section common_rating">
+      <div class ="user-360-header">{{ user_name }} - 360 Results </div>
+      <div class="category_name">{{ skill_name }}</div>
+      {#    <p>test_var: {{ kint(skill_details) }}</p>#}
+      <div class="skill_chart_wrp"><div id="skill_details_chart"></div></div>
+    </div>
+    {% if skill_details %}
+      <div class="right_rating_section skill_right common_rating">
+        <div class="top_section common_box">
+          <div class="table_wrap">
+            <table class="table table-bordered tyg-table">
+              <thead>
+                <tr>
+                  <th>Target Proficiency</th>
+                  <th>Your 360 Score*</th>
+                  <th>Gap</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class = {{ skill_details.row_class }} >
+                  <td>{{ skill_details.target_prof }}</td>
+                  <td>{{ skill_details.total }}</td>
+                  <td>{{ skill_details.sign }}{{ skill_details.gap }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="rubric">
+            {{ skill_popup }}
+          </div>
+        </div>
+        <div class="skill_dev_plan common_box">
+          {{ skill_developing_block }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>

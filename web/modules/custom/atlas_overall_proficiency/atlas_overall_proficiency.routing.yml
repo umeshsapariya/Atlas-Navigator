@@ -1,0 +1,7 @@
+atlas_overall_proficiency.form:
+  path: 'overall-proficiency-details/{invite_id}'
+  defaults:
+    _form: '\Drupal\atlas_overall_proficiency\Form\OverallProficiencyDetails'
+    _title: 'Assessment Form'
+  requirements:
+    _permission: 'access content'

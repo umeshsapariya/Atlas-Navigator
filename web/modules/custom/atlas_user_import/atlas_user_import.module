@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Contains atlas_user_import.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function atlas_user_import_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the mrw_user_import module.
+    case 'help.page.atlas_user_import':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('User Importer module') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Custom function to validate date in Y-m-d format.
+ */
+function validateDate($date, $format = 'Y-m-d') {
+  $d = DateTime::createFromFormat($format, $date);
+  return $d && $d->format($format) == $date;
+}
+
+/**
+ * Custom function to get allowed terms.
+ */
+function Allowedterms($vid) {
+  $terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree($vid);
+
+  foreach ($terms as $term) {
+    $allowed_term[] = $term->name;
+  }
+  return $allowed_term;
+}

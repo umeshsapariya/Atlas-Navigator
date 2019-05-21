@@ -1,0 +1,21 @@
+uuid: 8e8d5e5a-a059-48ea-94a7-c891828b44a4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.field_hire_date
+    - profile.type.general_profile
+  module:
+    - datetime
+id: profile.general_profile.field_hire_date
+field_name: field_hire_date
+entity_type: profile
+bundle: general_profile
+label: 'Hire Date'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

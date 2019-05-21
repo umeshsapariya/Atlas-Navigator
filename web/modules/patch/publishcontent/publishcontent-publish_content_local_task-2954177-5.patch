@@ -1,0 +1,21 @@
+diff --git a/src/Plugin/Menu/LocalTask/PublishContentLocalTask.php b/src/Plugin/Menu/LocalTask/PublishContentLocalTask.php
+index a051066..c54de2e 100644
+--- a/src/Plugin/Menu/LocalTask/PublishContentLocalTask.php
++++ b/src/Plugin/Menu/LocalTask/PublishContentLocalTask.php
+@@ -7,6 +7,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
+ use Drupal\Core\Routing\RouteMatchInterface;
+ use Drupal\node\Entity\Node;
+ use Drupal\node\NodeInterface;
++use Symfony\Component\HttpFoundation\Request;
+ 
+ /**
+  * Defines a local task plugin with a dynamic title.
+@@ -31,7 +32,7 @@ class PublishContentLocalTask extends LocalTaskDefault {
+   /**
+    * {@inheritdoc}
+    */
+-  public function getTitle() {
++  public function getTitle(Request $request = NULL) {
+     return $this->node->isPublished() ? $this->t('Unpublish') : $this->t('Publish');
+   }
+ 

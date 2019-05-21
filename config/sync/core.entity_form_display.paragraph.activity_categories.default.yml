@@ -1,0 +1,43 @@
+uuid: 726d2484-98b0-4f34-9ff8-1f0133548208
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.activity_categories.field_activity_category
+    - field.field.paragraph.activity_categories.field_activity_level
+    - field.field.paragraph.activity_categories.field_activity_role
+    - field.field.paragraph.activity_categories.field_activity_skill
+    - paragraphs.paragraphs_type.activity_categories
+id: paragraph.activity_categories.default
+targetEntityType: paragraph
+bundle: activity_categories
+mode: default
+content:
+  field_activity_category:
+    type: options_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_activity_level:
+    type: options_buttons
+    weight: 3
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_activity_role:
+    type: options_select
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_activity_skill:
+    type: options_select
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
+  uid: true

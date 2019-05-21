@@ -1,0 +1,47 @@
+<div class="box_title blue_title"  rel="box1"><a href="/development-plan-details">Development plan</a></div>
+<div class="developing-homepage-block box_content box1">
+  <div class="home_dev_block">
+
+    {% if development_plan %}
+      <div class="dev_plan_cont scroll_div_content">
+        {% for development in development_plan %}
+          <div class="row_plan_block {{ development.class }}">
+
+            {% if development.class != 'plan_completed' %}
+              <div class="act_check">
+                <span class ="checkbox-dev"></span>
+                <span class="hidded-nid">{{ development.nid }}</span>
+              </div>
+            {% endif %}
+            {% if development.icon %}
+              <div class="title-logo">
+                {{ development.icon }}
+              </div>
+            {% endif %}
+            <div class="act_title_details">
+
+              <div class="act_title">
+                {{ development.activity_title }}
+              </div>
+            </div>
+            <div class="act_due">
+              <div class="due-btn {{ development.expired }}">{{ development.due_date }}</div>
+            </div>
+            <!--<div class="act_status {{ development.expired }}">
+              <div class="sts-btn"></div>
+            </div>-->
+          </div>
+        {% endfor %}
+      </div>
+      <div class="status-btn">
+        <div class="inprogress-btn">{{ progress_button }}
+        </div>
+        <div class="completed-btn"> {{ complete_button }}
+        </div>
+      </div>
+
+    {% else %}
+      <div class="no-developement">No Development Plan found</div>
+    {% endif %}
+  </div>
+</div>

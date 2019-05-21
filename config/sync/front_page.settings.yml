@@ -1,0 +1,11 @@
+enable: 1
+rid_anonymous:
+  weigth: '0'
+  path: /home
+rid_authenticated:
+  enabled: '1'
+  weigth: '0'
+  path: /home
+rid_administrator:
+  weigth: '0'
+  path: ''

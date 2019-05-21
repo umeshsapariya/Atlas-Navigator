@@ -1,0 +1,121 @@
+<?php
+
+/**
+ * @file
+ */
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ *
+ * @see hook_schema()
+ *
+ * @ingroup lotus
+ */
+function atlas_peer_invite_schema() {
+  $schema = [];
+  $schema['assessment_invite'] = [
+    'description' => 'Stores the Invitation Information form data',
+    'fields' => [
+      'invite_id' => [
+        'description' => 'Invite ID',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'uid' => [
+        'description' => 'ID of user who have invited.',
+        'type' => 'int',
+        'default' => 0,
+        'not null' => TRUE,
+      ],
+      'role_id' => [
+        'description' => 'Role for fill up assessment.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+    ],
+    'primary key' => ['invite_id'],
+  ];
+
+  $schema['assessment_invite_details'] = [
+    'description' => 'Stores the data about Assessment Raters',
+    'fields' => [
+      'id' => [
+        'description' => 'ID',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'invite_id' => [
+        'description' => 'Assessment Invite ID.',
+        'type' => 'int',
+        'not null' => TRUE,
+      ],
+      'raters_uid' => [
+        'description' => 'Raters User ID.',
+        'type' => 'int',
+        'default' => 0,
+        'not null' => TRUE,
+      ],
+      'raters_name' => [
+        'description' => 'Rater Name',
+        'type' => 'varchar',
+        'length' => 255,
+      ],
+      'relationship_tid' => [
+        'description' => 'Relationship Term ID',
+        'type' => 'int',
+        'default' => 0,
+      ],
+      'new_relationship' => [
+        'description' => 'New Relationship Name.',
+        'type' => 'varchar',
+        'length' => 255,
+      ],
+      'raters_email' => [
+        'description' => 'store email id of raters',
+        'type' => 'varchar',
+        'length' => 255,
+      ],
+      'hash' => [
+        'description' => 'create hash URL for fill assessment form.',
+        'type' => 'varchar',
+        'length' => 255,
+      ],
+      'completed' => [
+        'description' => 'check URL is active or not',
+        'type' => 'int',
+        'size' => 'tiny',
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['id'],
+    'foreign keys' => [
+      'atlas_invites' => [
+        'table' => 'assessment_invite',
+        'columns' => ['invite_id' => 'invite_id'],
+      ],
+    ],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_update_N().
+ * Creates new column in assessment_invite table.
+ */
+function atlas_peer_invite_update_8001(&$sandbox) {
+  $spec = [
+    'description' => 'stores Assessment id of each invite',
+    'type' => 'varchar',
+    'length' => 255,
+  ];
+  db_add_field('assessment_invite', 'assessment_id', $spec);
+  $timestamp = [
+    'type' => 'int',
+    'not null' => TRUE,
+    'default' => 0,
+  ];
+  db_add_field('assessment_invite', 'invited_date', $timestamp);
+}

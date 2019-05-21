@@ -1,0 +1,5 @@
+name: Atlas assessment
+type: module
+description: Custom Atlas assessment Form
+core: 8.x
+package: Custom

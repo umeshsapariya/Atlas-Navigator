@@ -1,0 +1,9 @@
+atlas_masquerade.block:
+  path: '/login-as-user'
+  defaults:
+    _form: '\Drupal\masquerade\Form\MasqueradeForm'
+    _title: 'Login as User'
+  options:
+    no_cache: TRUE
+  requirements:
+    _masquerade_switch_access: 'TRUE'

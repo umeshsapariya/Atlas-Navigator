@@ -1,0 +1,15 @@
+assessment-form:
+  path: 'assessment-form/{hash}'
+  defaults:
+    _form: '\Drupal\atlas_assessment\Form\AssessmentForm'
+    _title: 'Assessment Form'
+  requirements:
+    _permission: 'access content'
+
+assessment-form.thank_you_page:
+  path: '/thank_you'
+  defaults:
+    _controller: '\Drupal\atlas_assessment\Controller\AssesssmentController::thankYouPage'
+    _title: 'Thank You'
+  requirements:
+    _permission: 'access content'

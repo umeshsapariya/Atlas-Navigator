@@ -1,0 +1,550 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+
+.path-category-details {
+  .category_graph {
+    background-color: #fff;
+    display: inline-block;
+    width: 100%;
+
+    .inner_wrapper {
+      display: inline-block;
+      width: 100%;
+
+      .left_rating_section {
+        float: left;
+        padding-right: 10px;
+        width: 65%;
+
+        .category_name {
+          border-bottom: 1px solid #ccc;
+          display: inline-block;
+          margin-bottom: 22px;
+          padding: 7px 0;
+          text-align: center;
+          width: 100%;
+        }
+        @media screen and (max-width: 1024px) {
+          height: auto !important;
+          width: 100%;
+        }
+        #category_details_chart {
+          padding-top: 30px;
+          > div {
+            * {
+              display: inline-block;
+              font-size: 14px;
+              @media screen and (max-width: 767px) {
+                font-size: 12px;
+              }
+            }
+          }
+          svg {
+            overflow: visible !important;
+          }
+        }
+        #skill_details_chart {
+          > div {
+            * {
+              display: inline-block;
+              font-size: 14px;
+              @media screen and (max-width: 767px) {
+                font-size: 12px;
+              }
+            }
+          }
+          svg {
+            overflow: visible !important;
+          }
+        }
+      }
+      .right_rating_section {
+        float: right;
+        padding-top: 55px;
+        text-align: center;
+        width: 30%;
+
+        @media screen and (max-width: 1024px) {
+          width: 100%;
+        }
+        &.skill_right {
+          background-color: transparent !important;
+          background-color: #dbe8f0;
+          border: 0 !important;
+          border: 0;
+          border-radius: 10px;
+          border-radius: 10px;
+          padding: 0 !important;
+          text-align: left;
+          width: 30%;
+
+
+          @media screen and (max-width: 1024px) {
+            float: none;
+            width: 100%;
+          }
+          .top_section {
+            background-color: #fff;
+            border: 1px solid #d7d7d7;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 1%;
+            padding: 10px;
+            width: 100%;
+            .table_wrap {
+              float: left;
+              width: 75%;
+
+              @media screen and (max-width: 767px) {
+                width: auto;
+              }
+            }
+            .rubric {
+              display: inline-block;
+              float: left;
+              position: relative;
+              width: 25%;
+              .ajax-progress-throbber {
+                position: absolute;
+                right: -5px;
+              }
+              @media screen and (max-width: 1024px) {
+                width: 17%;
+              }
+              a {
+                display: inline-block;
+
+                img {
+                  height: auto;
+                  width: 100%;
+                }
+              }
+            }
+          }
+          .skill_dev_plan {
+            .atlas-skill-developing-plan-form {
+              width: 100%;
+              .dev-head {
+                display: block;
+                .box_title {
+                  display: inline-block;
+                  float: left;
+                }
+                .form-item-level-select {
+                  display: inline-block;
+                  float: right;
+                  margin: 0 0 10px 0;
+                  width: 30%;
+                  select {
+                    background-color: #e2e2e2;
+                    border-color: #dfdfdf;
+                    border-radius: 15px;
+                    color: #5e5e5e;
+                    font-size: 13px;
+
+                    @media only screen and (max-width: 1150px) {
+                      font-size: 12px;
+                    }
+                    @media only screen and (max-width: 1050px) {
+                      font-size: 12px;
+                    }
+                    @media screen and (max-width: 767px) {
+                      width: 100%;
+                    }
+                    @media only screen and (max-width: 420px) {
+                      font-size: 14px;
+                    }
+                  }
+                  &:after {
+                    position: absolute;
+                    right: 10px;
+                  }
+                  @media only screen and (max-width: 1150px) {
+                    display: inline-block;
+                    margin: 6px .5%;
+                    width: 40%;
+                  }
+                  @media only screen and (max-width: 991px) {
+                    width: 48%;
+                  }
+                  @media only screen and (max-width: 480px) {
+                    display: inline-block;
+                    margin: 5px 1%;
+                    width: 50%;
+                  }
+                }
+              }
+              .dev-addplan {
+                clear: both;
+                margin-bottom: 10px;
+                .addplan_dev {
+                  text-align: right;
+                  input {
+                    padding: 5px 30px;
+                  }
+                }
+              }
+              .dev-plan-cont {
+                .dev_row_cont {
+                  border-bottom: 1px solid #d7d7d7;
+                  display: table;
+                  height: 70px;
+                  width: 100%;
+                  .title-logo {
+                    display: table-cell;
+                    vertical-align: middle;
+                    width: 15%;
+                    img {
+                      display: inline-block;
+                      height: auto;
+                      width: 30px;
+                    }
+                  }
+                  .dev-date {
+                    color: #416e7f;
+                    display: table-caption;
+                    font-family: $segoeui-regular;
+                    font-size: 12px;
+                    text-align: right;
+                    vertical-align: middle;
+                    @media screen and (max-width: 767px) {
+                      font-size: 10px;
+                    }
+                  }
+                  .title-plan {
+                    color: #416e7f;
+                    display: table-cell;
+                    font-family: $segoeui-regular;
+                    font-size: 13px;
+                    position: relative;
+                    vertical-align: middle;
+                    width: 60%;
+                    a {
+                      color: #416e7f;
+                      font-family: $segoeui-regular;
+                      font-size: 13px;
+                    }
+                  }
+                }
+                .form-type-checkbox {
+                  display: table-cell;
+                  vertical-align: middle;
+                  width: 10%;
+                  label {
+                    top: -10px;
+                    width: auto;
+                  }
+                }
+                .js-form-type-date {
+                  display: table-cell;
+                  vertical-align: middle;
+                  width: 10%;
+                  &:after {
+                    color: $theme_color;
+                    content: "\e915";
+                    cursor: pointer;
+                    display: inline-block;
+                    font-family: "icomoon";
+                    font-size: 30px;
+                    left: 7px;
+                    pointer-events: none;
+                    position: relative;
+                    top: 0;
+                  }
+                  &.no-after {
+                    &:after {
+                      content: none;
+                    }
+                  }
+                  input {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    display: inline-block;
+                    font-size: 20px;
+                    opacity: 0;
+                    padding: 0;
+                    position: absolute;
+                    width: 40px;
+                  }
+                  &:hover {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                  }
+                  .form-item--error-message {
+                    display: none;
+                  }
+                  &.form-item--error {
+                    &:after {
+                      color: red;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        @media screen and (max-width: 1024px) {
+          display: inline-block;
+          float: none;
+          width: 100%;
+        }
+        &.cat_right {
+          .table_wrap {
+            table {
+              @media screen and (max-width: 1024px) {
+                width: auto !important;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.skill_details_outer {
+      background-color: transparent;
+
+      .inner_wrapper {
+        align-items: stretch;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: stretch;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding-top: 0;
+
+        @media screen and (max-width: 767px) {
+          display: inline-block;
+          float: none;
+          width: 100%;
+        }
+
+        .left_rating_section {
+          background-color: #fff;
+          border: 1px solid #d7d7d7;
+          border-radius: 10px;
+          padding: 10px;
+          width: 60%;
+          @media screen and (max-width: 1199px) {
+            width: 50%;
+          }
+          @media screen and (max-width: 991px) {
+            height: auto !important;
+            margin-bottom: 20px;
+            width: 100%;
+          }
+          @media screen and (max-width: 767px) {
+            margin-bottom: 1%;
+          }
+        }
+        .right_rating_section {
+          background-color: #fff;
+          border: 1px solid #d7d7d7;
+          border-radius: 10px;
+          display: flex;
+          margin-left: 1%;
+          padding: 10px;
+          width: 39%;
+          @media screen and (max-width: 1199px) {
+            width: 49%;
+          }
+          @media screen and (max-width: 991px) {
+            margin-left: 0;
+            width: 100%;
+          }
+        }
+        .common_rating {
+          display: -ms-flexbox;
+          display: flex;
+          -ms-flex-direction: column;
+          flex-direction: column;
+
+          @media screen and (max-width: 767px) {
+            display: inline-block;
+            float: none;
+            width: 100%;
+          }
+        }
+        .skill_dev_plan {
+          background-color: #fff;
+          border: 1px solid #d7d7d7;
+          border-radius: 10px;
+          display: flex;
+          height: 100%;
+          padding: 10px;
+          width: 100%;
+
+          @media screen and (max-width: 767px) {
+            display: inline-block;
+          }
+
+          .box_title {
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+    &.category_details_graph {
+      border: 1px solid #d7d7d7;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    @media screen and (max-width: 1024px) {
+      padding: 0 10px;
+    }
+  }
+  .rating_desc_popup {
+    .rating_main_wrapper {
+      border-bottom: 1px solid #ccc;
+      display: inline-block;
+      width: 100%;
+
+      .rating_heading {
+        background: $theme_color;
+        color: #fff;
+        display: inline-block;
+        font-family: $segoeui-semibold;
+        padding: 10px 20px;
+        text-transform: capitalize;
+        width: 100%;
+      }
+      .content_wrapper {
+        background: #fff;
+        display: inline-block;
+        width: 100%;
+
+        @media screen and (max-width: 767px) {
+          max-height: 170px;
+        }
+        .rating_outer_box {
+          border-bottom: 1px solid #ccc;
+          display: inline-block;
+          padding: 0 20px;
+          width: 100%;
+
+          .rating_label {
+            border-bottom: 1px solid #818181;
+            display: inline-block;
+            font-family: $segoeui-semibold;
+            padding: 10px;
+            text-transform: capitalize;
+            width: 100%;
+          }
+          .rating_desc {
+            display: inline-block;
+            padding: 10px 10px 0 10px;
+            width: 100%;
+          }
+          @media screen and (max-width: 1024px) {
+            padding: 0 10px;
+          }
+          &:last-child {
+            border-bottom: 0;
+          }
+        }
+        ul,
+        ol {
+          margin: .5em 0 1em;
+          padding: 0 0 0 2em;
+
+          li {
+            display: list-item;
+            line-height: 17px;
+            list-style-image: none;
+            list-style-type: disc;
+            margin: 0;
+            padding: 0 0 5px;
+          }
+          @media screen and (max-width: 1024px) {
+            padding: 0 0 0 1.4em;
+          }
+        }
+      }
+    }
+  }
+  .mCSB_inside > .mCSB_container {
+    margin-right: 10px;
+  }
+}
+
+
+.tyg-table {
+  border-color: #a1a1a1;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  > thead {
+    > tr {
+      display: flex;
+      width: 100%;
+      th {
+        min-height: 52px;
+      }
+      > th,
+      > td {
+        border-bottom: none;
+        border-bottom-width: 1px;
+        border-color: #a1a1a1;
+        border-right: none;
+        font-size: 13px;
+        text-transform: capitalize;
+        width: 33.63%;
+        &:first-child {
+          border-left: none;
+        }
+      }
+    }
+  }
+
+  > tbody {
+    background-color: transparent;
+    > tr {
+      display: flex;
+      width: 100%;
+      > th,
+      > td {
+        align-items: center;
+        border-bottom: none;
+        border-color: #a1a1a1;
+        border-right: none;
+        display: flex;
+        font-size: 15px;
+        justify-content: center;
+        padding: 6% 10px;
+        width: 33.33%;
+        &:first-child {
+          border-left: none;
+        }
+        &:last-child {
+          color: #fff;
+        }
+      }
+      &.Opportunities {
+        td {
+          &:last-child {
+            background-color: #d02323;
+          }
+        }
+      }
+      &.Strengths {
+        td {
+          &:last-child {
+            background-color: $theme_color;
+          }
+        }
+      }
+    }
+  }
+}
+
+.category_chart_wrp {
+  text-align: center;
+  #category_details_chart {
+    display: inline-block;
+    text-align: center;
+    width: 90%;
+  }
+}

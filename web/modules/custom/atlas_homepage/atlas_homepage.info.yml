@@ -1,0 +1,5 @@
+name: Atlas Homepage
+type: module
+description: Custom Atlas home page related blocks
+core: 8.x
+package: Custom

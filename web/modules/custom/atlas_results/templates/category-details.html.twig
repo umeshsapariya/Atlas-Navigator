@@ -1,0 +1,34 @@
+<div class="category_graph category_details_graph">
+<div class="inner_wrapper">
+<div class="left_rating_section">
+  <div class ="user-360-header">{{ user_name }} - 360 Results </div>
+	<div class="category_name">{{ category_name }}</div>
+   {# <p>test_var: {{ kint(category_details) }}</p>#}
+<div class="category_chart_wrp"><div id="category_details_chart"></div></div>
+</div>
+{% if category_details %}
+<div class="right_rating_section cat_right">
+  <div class="table_wrap">
+  <table class="table table-bordered tyg-table">
+   <thead>
+   <tr> 
+     <th>target proficiency</th>
+     <th>your 360 score*</th> 
+     <th>gap</th>
+   </tr>
+   </thead>
+              <tbody>
+  {% for category_detail in category_details %}
+      <tr class = {{ category_detail.row_class }} >
+          <td>{{ category_detail.target_prof }}</td>
+          <td>{{ category_detail.total }}</td>
+          <td>{{ category_detail.sign }}{{ category_detail.gap }}</td>
+      </tr>
+  {% endfor %}
+   </tbody>
+  </table>
+</div>
+</div>
+{% endif %}
+</div>
+</div>

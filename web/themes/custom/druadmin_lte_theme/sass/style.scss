@@ -1,0 +1,35 @@
+// Default variables.
+/*@import "default-variables";*/
+
+// Bootstrap Framework.
+/*@import '../bootstrap/assets/stylesheets/bootstrap';*/
+
+// Base-theme overrides.
+/*@import 'overrides';*/
+
+// Theme specific.
+@import "component/admin/_common";
+@import "component/admin/checkbox-radio";
+@import "component/admin/form";
+@import "component/admin/_login";
+@import "component/admin/_homepage";
+@import "component/admin/_roles_list";
+@import "component/admin/_assessment_form";
+@import "component/admin/_header";
+@import "component/admin/_sidebar";
+@import "component/admin/_add_user";
+@import "component/admin/_reset_pass";
+@import "component/admin/_preview";
+@import "component/admin/_invite_form";
+@import "component/admin/_rating_form";
+@import "component/admin/_copy_skill";
+@import "component/admin/_overall-proficiency";
+@import "component/admin/_category_graph";
+@import "component/admin/_verbatim-comments";
+@import "component/admin/_role_dashboard";
+@import "component/admin/add-activity";
+@import "component/admin/development-plan-listing";
+@import "component/admin/my_team";
+@import "component/admin/color";
+
+

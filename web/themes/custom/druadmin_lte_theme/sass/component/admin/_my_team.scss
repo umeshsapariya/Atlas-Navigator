@@ -1,0 +1,151 @@
+@import "sass/mixins/global-variables";
+@import "sass/mixins/global-mixins";
+
+// Note: !important used to override other css file.
+
+.path-my-team {
+  .page-title {
+    display: none;
+  }
+  .table-responsive {
+    margin-bottom: 0;
+    table {
+      border: 0;
+
+      thead {
+        > tr {
+          border-bottom: 1px solid #b7b7b7;
+          padding-bottom: 2px;
+          > th {
+            border: 0;
+            border-bottom-width: 0;
+            color: #2b4853;
+            font-family: $segoeui-semibold;
+            text-align: center;
+
+            &:first-child {
+              padding-left: 8%;
+              text-align: left;
+
+              @media only screen and (max-width: 420px) {
+                padding-left: 5px;
+              }
+            }
+            @media only screen and (max-width: 420px) {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+      tbody,
+      tr {
+        display: inline-block;
+        width: 100%;
+        th,
+        td {
+          border: 0;
+          display: inline-block;
+          width: 49%;
+        }
+      }
+      tbody {
+        background-color: transparent;
+        tr {
+          border: 0;
+
+          &:last-child {
+            border-bottom: 0;
+          }
+          &:nth-of-type(odd) {
+            background: transparent;
+          }
+          td {
+            border: 0;
+            border-bottom-width: 0;
+            padding: 15px 25px;
+            vertical-align: middle;
+
+            @media screen and (max-width: 991px) {
+              border: 0;
+              padding: 8px 10px;
+            }
+            @media screen and (max-width: 767px) {
+              display: table-cell;
+              padding: 8px 4px;
+              width: 100%;
+            }
+            .dashboard-user-info {
+              width: 100%;
+            }
+            &:last-child {
+              text-align: center;
+            }
+            &.empty.message {
+              color: #2b4853;
+              font-size: 15px;
+              text-align: left;
+              width: 100%;
+            }
+            .dropbutton-multiple,
+            .dropbutton-single {
+              .dropbutton-widget {
+                background-color: transparent;
+                border: none;
+                left: 50%;
+                padding-right: 0;
+                position: absolute;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                .dropbutton {
+                  border: none;
+                  width: 150px;
+                  > li {
+                    background-color: $theme_color;
+                    @include border-radius(14px);
+                    padding-bottom: 0;
+                    padding-right: 26px;
+                  }
+                  .dropbutton-action {
+                    > a {
+                      color: $white-color;
+                      font-family: $segoeui-regular;
+                      margin-right: 0;
+                      padding: 4px 6px;
+                      text-transform: capitalize;
+                    }
+                    .ajax-progress-throbber {
+                      left: -25px;
+                      position: absolute;
+                      top: 3px;
+                    }
+                    &.login-as-user {
+                      a {
+                        padding: 2px 6px 1px 5px;
+                      }
+                    }
+                  }
+                  .dropbutton-toggle {
+                    border-bottom-left-radius: 0;
+                    border-left: 1px solid $white-color;
+                    border-top-left-radius: 0;
+                    height: 26px;
+                    button {
+                      color: $white-color;
+                      height: 100%;
+                    }
+                  }
+                  .secondary-action {
+                    border-top: 1px solid $white-color;
+                    color: $white-color;
+                    font-family: $segoeui-regular;
+                    padding: 3px 13px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
